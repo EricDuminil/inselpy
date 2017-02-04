@@ -1,0 +1,12 @@
+% Calculates x[1] + x[2]
+s 1 SUM  3.1 2.1
+s 2 CONST
+p 2
+% NOTE: Ruby Arrays begin with index 0!
+           $ x[0] $
+s 3 CONST
+p 3
+           $ x[1] $
+s 4 SCREEN  1.1
+p 4
+    '*'

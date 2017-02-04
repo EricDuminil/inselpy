@@ -44,5 +44,4 @@ class Model:
     return tempfile.NamedTemporaryFile(mode = 'w+', suffix = Insel.extension, prefix = 'python_')
 
   def content(self):
-    return """s 1 PI 
-    s 2 SCREEN 1.1"""
+    raise Exception("IMPLEMENT ME")
