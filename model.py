@@ -44,4 +44,4 @@ class Model:
     return tempfile.NamedTemporaryFile(mode = 'w+', suffix = Insel.extension, prefix = 'python_')
 
   def content(self):
-    raise Exception("IMPLEMENT ME")
+    raise Exception("Implement %s.content() !" % self.__class__.__name__)
