@@ -9,6 +9,7 @@ class Insel:
   extension = ".insel"
   regexp = re.compile('Running insel [\d\w \.]+ \.\.\.\s+([^\*]*)Normal end of run', re.I | re.DOTALL)
 
+#TODO: use private methods
 class Model:
   def run(self):
     raw = self.raw_results()
@@ -16,7 +17,7 @@ class Model:
     if match:
       output = match.group(1)
       floats = self.extract([self.parse_line(line) for line in output.split("\n") if line])
-      print '%r' % floats
+      return floats
     else:
       raise Exception("Problem with INSEL : %s" % raw)
 
@@ -34,11 +35,13 @@ class Model:
     os.chdir(Insel.dirname)
     with self.tempfile() as file:
       file.write(self.content())
+      file.flush()
+      os.fsync(file.fileno())
       var = subprocess.check_output([Insel.command, file.name], shell = False)
     return var
 
   def tempfile(self):
-    return tempfile.NamedTemporaryFile(mode = 'w+', suffix = Insel.extension, prefix = 'python_', bufsize = 0)
+    return tempfile.NamedTemporaryFile(mode = 'w+', suffix = Insel.extension, prefix = 'python_')
 
   def content(self):
     return """s 1 PI 
