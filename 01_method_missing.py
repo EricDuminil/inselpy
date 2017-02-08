@@ -1,6 +1,6 @@
 #TODO: import insel. nothing more
-from one_block_model import *
-from template import *
+from one_block_model import OneBlockModel
+from template import Template
 
 print OneBlockModel('pi').run()
 print OneBlockModel('sum', inputs = [3,2]).run()
