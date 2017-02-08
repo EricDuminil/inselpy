@@ -3,11 +3,6 @@ from model import *
 class OneBlockModel(Model):
   def __init__(self, name = '', inputs = [], parameters = []):
     self.name = name
-    print "name %s" % name
-    if inputs:
-        print "inputs %r" % inputs
-    if parameters:
-        print "parameters %r" % parameters
     self.parameters = ["'%s'" % p if isinstance(p,basestring) else str(p) for p in parameters]
     self.inputs = inputs
 
