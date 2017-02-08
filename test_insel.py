@@ -10,10 +10,9 @@ class TestBlock(unittest.TestCase):
         self.assertAlmostEqual(insel.block('sum', 2), 2, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4, 5), 11, places=8)
-    def test_sum(self):
-        self.assertAlmostEqual(insel.block('sum', 2), 2, places=8)
-        self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
-        self.assertAlmostEqual(insel.block('sum', 2, 4, 5), 11, places=8)
+
+    def test_do(self):
+        self.assertEqual(len(insel.block('do', 1, 10, 1)), 10)
 
 class TestTemplate(unittest.TestCase):
     def test_a_times_b(self):
