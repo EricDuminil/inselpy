@@ -3,7 +3,7 @@ from os import path
 import re
 
 class Template(Model):
-  dirname = path.join(path.dirname(__file__), 'templates')
+  dirname = path.join(path.dirname(__file__), '../templates')
   pattern = re.compile('\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w \.]*))?\$')
 
   def __init__(self, name = '', **parameters):
