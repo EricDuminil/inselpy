@@ -3,7 +3,12 @@ from model import *
 class OneBlockModel(Model):
   def __init__(self, name = '', inputs = [], parameters = []):
     self.name = name
-    self.parameters = parameters
+    print "name %s" % name
+    if inputs:
+        print "inputs %r" % inputs
+    if parameters:
+        print "parameters %r" % parameters
+    self.parameters = ["'%s'" % p if isinstance(p,basestring) else str(p) for p in parameters]
     self.inputs = inputs
 
   def content(self):
@@ -16,6 +21,7 @@ class OneBlockModel(Model):
       lines.append("\t%r" % arg)
 
     lines.append("s %d %s %s" % (len(self.inputs)+1,self.name.upper(), " ".join(input_ids)))
+    lines.append("p %d %s" % (len(self.inputs)+1, " ".join(self.parameters)))
 
     lines.append("s %d SCREEN %d.1" % (len(self.inputs)+2, len(self.inputs)+1))
     return "\n".join(lines)
