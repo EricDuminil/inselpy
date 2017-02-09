@@ -53,6 +53,7 @@ class Model:
             output = match.group(1)
             floats = self.extract([self.parse_line(line)
                                    for line in output.split("\n") if line])
+            os.remove(self.insel_file.name)
             return floats
         else:
             raise Exception("Problem with INSEL : %s" % raw)
@@ -69,17 +70,16 @@ class Model:
     def raw_results(self):
         # TODO: come back to cwd
         os.chdir(Insel.dirname)
-        with self.tempfile() as file:
-            file.write(self.content())
-            file.flush()
-            os.fsync(file.fileno())
-            var = subprocess.check_output(
-                [Insel.command, file.name], shell=False)
-        return var
+        f = self.insel_file = self.tempfile()
+        f.write(self.content())
+        f.close()
+        return subprocess.check_output(
+            [Insel.command, f.name], shell=False)
 
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
-            mode='w+', suffix=Insel.extension, prefix='python_%s_' % self.name)
+            mode='w+', suffix=Insel.extension, prefix='python_%s_' % self.name,
+            delete=False)
 
     def content(self):
         raise Exception("Implement %s.content() !" % self.__class__.__name__)
