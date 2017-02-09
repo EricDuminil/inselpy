@@ -40,7 +40,7 @@ class Template(Model):
         if 'longitude' in parameters:
             defaults['insel_longitude'] = -parameters['longitude']
         if 'timezone' in parameters:
-            defaults['insel_timezone'] = (24-parameters['timezone']) % 24
+            defaults['insel_timezone'] = (24 - parameters['timezone']) % 24
         defaults.update(parameters)
         return defaults
 
