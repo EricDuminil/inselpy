@@ -12,7 +12,7 @@ class Insel:
 
         default_configs = {
         'linux': {'dirname' : "/usr/local/INSEL/resources/", 'command': './insel'},
-        'windows': {'dirname' : os.path.join(os.getenv('ProgramFiles'), 'INSEL 8.2', 'resources'), 'command': 'insel.exe'},
+        'windows': {'dirname' : os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.2', 'resources'), 'command': 'insel.exe'},
         'darwin': {'dirname' : "/Users/Shared", 'command': 'insel'}
         }
 
