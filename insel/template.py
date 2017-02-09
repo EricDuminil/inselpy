@@ -22,7 +22,7 @@ class Template(Model):
         var_name, index, default = string.groups()
         var_name = var_name.strip()
         if var_name in ['longitude', 'timezone']:
-            print "WARNING : Make sure to use INSEL convention for %s" % var_name
+            print "WARNING : Make sure to use INSEL convention for {0}. Rename to insel_{0} to remove warning".format(var_name)
         if var_name in self.parameters:
             if index:
                 return str(self.parameters[var_name][int(index)])
