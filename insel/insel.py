@@ -5,18 +5,21 @@ import re
 import platform
 import ConfigParser
 
+
 class Insel:
+
     def get_config():
         system = platform.system().lower()
 
         default_configs = {
-        'linux': {'dirname' : "/usr/local/INSEL/resources/", 'command': './insel'},
-        'windows': {'dirname' : os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.2', 'resources'), 'command': 'insel.exe'},
-        'darwin': {'dirname' : "/Users/Shared", 'command': 'insel'}
+            'linux': {'dirname': "/usr/local/INSEL/resources/", 'command': './insel'},
+            'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.2', 'resources'), 'command': 'insel.exe'},
+            'darwin': {'dirname': "/Users/Shared", 'command': 'insel'}
         }
 
         if system == 'windows':
-            ini_filename = os.path.join(os.getenv('ALLUSERSPROFILE'), 'INSEL', 'inselroot.ini')
+            ini_filename = os.path.join(
+                os.getenv('ALLUSERSPROFILE'), 'INSEL', 'inselroot.ini')
         else:
             ini_filename = "/Users/Shared/insel/inselroot.ini"
 
@@ -28,7 +31,7 @@ class Insel:
             subfolder = 'resources'
 
         if os.path.exists(ini_filename):
-            ini_file = ConfigParser.SafeConfigParser({'INSELROOT' : None})
+            ini_file = ConfigParser.SafeConfigParser({'INSELROOT': None})
             ini_file.read(ini_filename)
             insel_root = ini_file.get('InstallDir', 'INSELROOT')
             if insel_root:
@@ -44,7 +47,9 @@ class Insel:
         'Running insel [\d\w \.]+ \.\.\.\s+([^\*]*)Normal end of run',
         re.I | re.DOTALL)
 
+
 class Model:
+
     def run(self):
         raw = self.raw_results()
         match = Insel.regexp.search(raw)
@@ -122,6 +127,7 @@ class OneBlockModel(Model):
         lines.append("s %d SCREEN %d.1" %
                      (len(self.inputs) + 2, len(self.inputs) + 1))
         return "\n".join(lines)
+
 
 class Template(Model):
     dirname = os.path.join(os.path.dirname(__file__), '../templates')
