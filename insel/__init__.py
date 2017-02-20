@@ -1,5 +1,5 @@
-from one_block_model import OneBlockModel
-from template import Template
+from insel import OneBlockModel
+from insel import Template
 
 def block(name, *args, **kwargs):
     parameters = kwargs.get('parameters', [])
