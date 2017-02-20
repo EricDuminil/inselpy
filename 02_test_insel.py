@@ -6,7 +6,6 @@ import math
 class TestBlock(unittest.TestCase):
 
     def test_pi(self):
-        # WTF INSEL? single float precision
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
 
     def test_sum(self):
