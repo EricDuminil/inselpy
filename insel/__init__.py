@@ -1,5 +1,5 @@
-from insel import OneBlockModel
-from insel import Template
+from .insel import OneBlockModel
+from .insel import Template
 
 
 def block(name, *args, **kwargs):

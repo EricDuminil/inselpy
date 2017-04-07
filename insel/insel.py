@@ -3,7 +3,7 @@ import subprocess
 import tempfile
 import re
 import platform
-import ConfigParser
+import configparser
 
 
 class Insel:
@@ -31,7 +31,7 @@ class Insel:
             subfolder = 'resources'
 
         if os.path.exists(ini_filename):
-            ini_file = ConfigParser.SafeConfigParser({'INSELROOT': None})
+            ini_file = configparser.SafeConfigParser({'INSELROOT': None})
             ini_file.read(ini_filename)
             insel_root = ini_file.get('InstallDir', 'INSELROOT')
             if insel_root:
@@ -52,7 +52,7 @@ class Model:
 
     def run(self):
         raw = self.raw_results()
-        match = Insel.regexp.search(raw)
+        match = Insel.regexp.search(raw.decode())
         if match:
             output = match.group(1)
             floats = self.extract([self.parse_line(line)
@@ -93,11 +93,7 @@ class OneBlockModel(Model):
 
     def __init__(self, name='', inputs=[], parameters=[]):
         self.name = name
-        self.parameters = [
-            "'%s'" %
-            p if isinstance(
-                p,
-                basestring) else str(p) for p in parameters]
+        self.parameters = ["'%s'" % p if isinstance(p, str) else str(p) for p in parameters]
         self.inputs = inputs
 
     def content(self):
@@ -148,7 +144,7 @@ class Template(Model):
         var_name, index, default = string.groups()
         var_name = var_name.strip()
         if var_name in ['longitude', 'timezone']:
-            print "WARNING : Make sure to use INSEL convention for {0}. Rename to insel_{0} to remove warning".format(var_name)
+            print("WARNING : Make sure to use INSEL convention for {0}. Rename to insel_{0} to remove warning".format(var_name))
         if var_name in self.parameters:
             if index:
                 return str(self.parameters[var_name][int(index)])
