@@ -4,7 +4,7 @@ import tempfile
 import re
 import platform
 import configparser
-
+import logging
 
 class Insel:
 
@@ -43,27 +43,36 @@ class Insel:
     dirname = config['dirname']
     command = config['command']
     extension = ".insel"
-    regexp = re.compile(
+    normal_run = re.compile(
         'Running insel [\d\w \.]+ \.\.\.\s+([^\*]*)Normal end of run',
         re.I | re.DOTALL)
+    warning = re.compile('^[EFW]\d+')
 
 
 class Model:
 
     def run(self):
         raw = self.raw_results()
-        match = Insel.regexp.search(raw.decode())
+        match = Insel.normal_run.search(raw.decode())
         if match:
             output = match.group(1)
-            floats = self.extract([self.parse_line(line)
-                                   for line in output.split("\n") if line])
+            floats = []
+            for line in output.split("\n"):
+                if line:
+                    values = self.parse_line(line)
+                    if values is not None:
+                        floats.append(values)
             os.remove(self.insel_file.name)
-            return floats
+            return self.extract(floats)
         else:
             raise Exception("Problem with INSEL : %s" % raw)
 
     def parse_line(self, line):
-        return self.extract([float(x) for x in line.split() if x])
+        match = Insel.warning.search(line)
+        if match:
+            logging.warning('INSEL : %s', line)
+        else:
+            return self.extract([float(x) for x in line.split() if x])
 
     def extract(self, array):
         if len(array) == 1:
