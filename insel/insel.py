@@ -3,8 +3,14 @@ import subprocess
 import tempfile
 import re
 import platform
-import configparser
 import logging
+
+import sys
+
+if sys.version_info < (3, 0):
+    import ConfigParser as configparser
+else:
+    import configparser
 
 class Insel:
 
