@@ -23,7 +23,7 @@ def cwd(path):
     finally:
         os.chdir(oldpwd)
 
-class Insel:
+class Insel(object):
 
     def get_config():
         system = platform.system().lower()
@@ -66,7 +66,10 @@ class Insel:
     warning = re.compile('^[EFW]\d+')
 
 
-class Model:
+class Model(object):
+
+    def __init__(self):
+        self.warnings = []
 
     def run(self):
         raw = self.raw_results()
@@ -88,6 +91,7 @@ class Model:
         match = Insel.warning.search(line)
         if match:
             logging.warning('INSEL : %s', line)
+            self.warnings.append(line)
         else:
             return self.extract([float(x) for x in line.split() if x])
 
@@ -117,6 +121,7 @@ class Model:
 class OneBlockModel(Model):
 
     def __init__(self, name='', inputs=[], parameters=[]):
+        super(OneBlockModel, self).__init__()
         self.name = name
         self.parameters = ["'%s'" % p if isinstance(p, str) else str(p) for p in parameters]
         self.inputs = inputs
@@ -155,6 +160,7 @@ class Template(Model):
     pattern = re.compile('\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w \.]*))?\$')
 
     def __init__(self, name='', **parameters):
+        super(Template, self).__init__()
         self.name = name
         self.parameters = self.add_defaults_to(parameters)
 
