@@ -1,4 +1,3 @@
-
 B 1 AVEC            
     4.2
     2.1
@@ -30,9 +29,9 @@ P 3
     0               % Year-to-year variability
     0.3             % Autocorrelation coefficient lag one
     0.171           % Autocorrelation coefficient lag two
-    4711            % Initialisation of random number generator
-    0.05            % Maximum allowed mean temperature deviation
-    10000           % Maximum number of iterations
+    4700            % Initialisation of random number generator
+    $ max_deviation || 0.05 $            % Maximum allowed mean temperature deviation
+    $ max_iterations || 10000 $           % Maximum number of iterations
 
 B 4 CLOCK           
 P 4
@@ -42,7 +41,7 @@ P 4
     0               % Start hour
     0               % Start minute
     0               % Start second
-    2111            % End year
+    2015            % End year
     1               % End month
     1               % End day
     0               % End hour
@@ -52,7 +51,6 @@ P 4
     'h'             % Unit
 
 B 5 SCREEN          
-   13.1
    13.2
 P 5
     '*'             % Format
