@@ -4,6 +4,7 @@ import tempfile
 import re
 import platform
 import logging
+from contextlib import contextmanager
 
 import sys
 
@@ -11,6 +12,16 @@ if sys.version_info < (3, 0):
     import ConfigParser as configparser
 else:
     import configparser
+
+# Used to switch back to old dir
+@contextmanager
+def cwd(path):
+    oldpwd = os.getcwd()
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(oldpwd)
 
 class Insel:
 
@@ -87,13 +98,12 @@ class Model:
             return array
 
     def raw_results(self):
-        # TODO: come back to cwd
-        os.chdir(Insel.dirname)
-        f = self.insel_file = self.tempfile()
-        f.write(self.content())
-        f.close()
-        return subprocess.check_output(
-            [Insel.command, f.name], shell=False)
+        with cwd(Insel.dirname):
+            f = self.insel_file = self.tempfile()
+            f.write(self.content())
+            f.close()
+            return subprocess.check_output(
+                [Insel.command, f.name], shell=False)
 
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
@@ -159,7 +169,7 @@ class Template(Model):
         var_name, index, default = string.groups()
         var_name = var_name.strip()
         if var_name in ['longitude', 'timezone']:
-            print("WARNING : Make sure to use INSEL convention for {0}. Rename to insel_{0} to remove warning".format(var_name))
+            logging.warning("WARNING : Make sure to use INSEL convention for {0}. Rename to insel_{0} to remove warning".format(var_name))
         if var_name in self.parameters:
             if index:
                 return str(self.parameters[var_name][int(index)])
