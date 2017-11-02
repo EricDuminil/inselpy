@@ -1,0 +1,16 @@
+01_insel_example.py
+02_test_insel.py
+insel
+insel/insel.py
+insel/__init__.py
+templates
+templates/fill_factor.insel
+templates/x1_plus_x2.insel
+templates/mpp.insel
+templates/get_irradiance_profile.insel
+templates/a_times_b.insel
+templates/u_oc.insel
+templates/average_irradiance_on_tilted_surface.insel
+templates/average_irradiance_and_temperature.insel
+templates/one_to_ten.insel
+templates/i_sc.insel
