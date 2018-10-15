@@ -9,9 +9,9 @@ from contextlib import contextmanager
 import sys
 
 if sys.version_info < (3, 0):
-    import ConfigParser as configparser
+    from ConfigParser import SafeConfigParser as ConfigParser
 else:
-    import configparser
+    from configparser import ConfigParser
 
 # Used to switch back to old dir
 @contextmanager
@@ -48,7 +48,7 @@ class Insel(object):
             subfolder = 'resources'
 
         if os.path.exists(ini_filename):
-            ini_file = configparser.SafeConfigParser({'INSELROOT': None})
+            ini_file = ConfigParser()
             ini_file.read(ini_filename)
             insel_root = ini_file.get('InstallDir', 'INSELROOT')
             if insel_root:
