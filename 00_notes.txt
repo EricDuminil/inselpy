@@ -1,1 +1,1 @@
-cat 99_zip_files.txt| zip -@ release/python_insel_0.03.zip
+cat 99_zip_files.txt| zip -@ release/python_insel_0.04.zip
