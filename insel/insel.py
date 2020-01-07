@@ -85,7 +85,7 @@ class Model(object):
             os.remove(self.insel_file.name)
             return self.extract(floats)
         else:
-            raise Exception("Problem with INSEL : %s" % raw)
+            raise Exception("Problem with INSEL\n%s\n%s\n%s\n" % ('#' * 30, raw.decode(), '#' * 30))
 
     def parse_line(self, line):
         match = Insel.warning.search(line)
