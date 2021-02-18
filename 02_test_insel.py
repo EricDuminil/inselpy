@@ -5,8 +5,6 @@ import math
 import logging
 logging.basicConfig(level=logging.ERROR)
 
-# Block ANINT, INT, FRAC
-
 
 class TestBlock(unittest.TestCase):
 
@@ -102,6 +100,25 @@ class TestBlock(unittest.TestCase):
         self.assertAlmostEqual(insel.block('int', -1.7), -1.0, places=5)
         self.assertEqual(repr(insel.block('int', -9.7, 16.2, -25.7, outputs=3)),
                          '[-9.0, 16.0, -25.0]')
+
+    def test_anint(self):
+        self.assertAlmostEqual(insel.block('anint', 10.0), 10.0, places=5)
+        self.assertAlmostEqual(insel.block('anint', 1.23), 1.0, places=5)
+        self.assertAlmostEqual(insel.block('anint', 1.67), 2.0, places=5)
+        self.assertAlmostEqual(insel.block('anint', -1.3), -1.0, places=5)
+        self.assertAlmostEqual(insel.block('anint', -1.7), -2.0, places=5)
+        self.assertEqual(repr(insel.block('anint', -9.7, 16.2, -25.7, outputs=3)),
+                         '[-10.0, 16.0, -26.0]')
+
+    def test_frac(self):
+        self.assertAlmostEqual(insel.block('frac', 10.0), 0.0, places=5)
+        self.assertAlmostEqual(insel.block('frac', 1.23), 0.23, places=5)
+        self.assertAlmostEqual(insel.block('frac', 1.67), 0.67, places=5)
+        self.assertAlmostEqual(insel.block('frac', -1.3), -0.3, places=5)
+        self.assertAlmostEqual(insel.block('frac', -1.7), -0.7, places=5)
+        self.assertEqual(' '.join(['%.1f' % x for x in
+                                   insel.block('frac', 3.5, 2.0, -1.4, -2.6, -4.7, outputs=5)]),
+                         '0.5 0.0 -0.4 -0.6 -0.7')
 
     def test_mtm(self):
         december = insel.block('mtm', 12, parameters=['Strasbourg'], outputs=9)
