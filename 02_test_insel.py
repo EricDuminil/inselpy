@@ -132,6 +132,11 @@ class TestBlock(unittest.TestCase):
         # ~230W/m² in july in Stuttgart
         self.assertAlmostEqual(july[0], 230, places=-1)
 
+    def test_moonae(self):
+        moon_stuttgart = insel.block('MOONAE', 2021, 2, 18, 23, 33, parameters=[48.77, -9.18, 23], outputs=4)
+        self.assertAlmostEqual(moon_stuttgart[0], 279, places=0)
+        self.assertAlmostEqual(moon_stuttgart[1], 13, places=0)
+
     def test_do(self):
         self.assertEqual(len(insel.block('do', parameters=[1, 10, 1])), 10)
 
