@@ -4,8 +4,6 @@ import math
 import logging
 logging.basicConfig(level=logging.ERROR)
 
-# TODO: DELAYS 50 inputs
-
 
 class TestBlock(unittest.TestCase):
 
@@ -28,6 +26,8 @@ class TestBlock(unittest.TestCase):
         self.assertEqual(len(results), 3,
                          'Gain should return N outputs for N inputs')
         self.assertEqual(repr(results), '[6.0, 15.0, 21.0]')
+        self.assertEqual(
+            len(insel.block('gain', *list(range(50)), parameters=[5], outputs=50)), 50, '50 inputs should be enough for GAIN')
 
     def test_att(self):
         self.assertAlmostEqual(insel.block('att',
