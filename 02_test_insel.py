@@ -4,7 +4,7 @@ import math
 import logging
 logging.basicConfig(level=logging.ERROR)
 
-# TODO: ROOT GAIN ATT OFFSET DELAYS 50 inputs
+# TODO: DELAYS 50 inputs
 
 
 class TestBlock(unittest.TestCase):
@@ -27,6 +27,42 @@ class TestBlock(unittest.TestCase):
                               'Gain should return N outputs for N inputs')
         self.assertEqual(len(results), 3,
                          'Gain should return N outputs for N inputs')
+        self.assertEqual(repr(results), '[6.0, 15.0, 21.0]')
+
+    def test_att(self):
+        self.assertAlmostEqual(insel.block('att',
+                                           3, parameters=[2]), 1.5, places=8)
+        # Division by 0
+        self.assertRaises(Exception, insel.block, 'att', 1, parameters=[0])
+        # Multiple inputs
+        results = insel.block('att', 9, 3, 6, 7.5, parameters=[3], outputs=4)
+        self.assertEqual(repr(results), '[3.0, 1.0, 2.0, 2.5]')
+
+    def test_offset(self):
+        self.assertAlmostEqual(insel.block('offset',
+                                           3, parameters=[-2]), 1.0, places=8)
+        # Multiple inputs
+        results = insel.block('offset', 9, 3, 6, -10.5,
+                              parameters=[3], outputs=4)
+        self.assertEqual(repr(results), '[12.0, 6.0, 9.0, -7.5]')
+
+    def test_root(self):
+        self.assertAlmostEqual(insel.block('root', 2,
+                                           parameters=[2]), 1.4142135, places=6)
+        self.assertEqual(repr(insel.block('root', 9, 16, 25, parameters=[2], outputs=3)),
+                         '[3.0, 4.0, 5.0]')
+
+    def test_mtm(self):
+        december = insel.block('mtm', 12, parameters=['Strasbourg'], outputs=9)
+        # 1.5° in december in Strasbourg
+        self.assertAlmostEqual(december[2], 1.5, places=1)
+        # ~28W/m² in december in Strasbourg
+        self.assertAlmostEqual(december[0], 28, places=0)
+        july = insel.block('mtm', 7, parameters=['Stuttgart'], outputs=9)
+        # 19° in july in Stuttgart
+        self.assertAlmostEqual(july[2], 19, places=0)
+        # ~230W/m² in july in Stuttgart
+        self.assertAlmostEqual(july[0], 230, places=-1)
 
     def test_do(self):
         self.assertEqual(len(insel.block('do', parameters=[1, 10, 1])), 10)
