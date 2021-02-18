@@ -88,7 +88,8 @@ class Model(object):
             os.remove(self.insel_file.name)
             return self.extract(floats)
         else:
-            raise Exception("Problem with INSEL\n%s\n%s\n%s\n" % ('#' * 30, raw.decode(), '#' * 30))
+            raise Exception("Problem with INSEL\n%s\n%s\n%s\n" %
+                            ('#' * 30, raw.decode(), '#' * 30))
 
     def parse_line(self, line):
         match = Insel.warning.search(line)
@@ -122,11 +123,12 @@ class Model(object):
 
 
 class OneBlockModel(Model):
-    #TODO: Add outputs=1
+    # TODO: Add outputs=1
     def __init__(self, name='', inputs=[], parameters=[]):
         super(OneBlockModel, self).__init__()
         self.name = name
-        self.parameters = ["'%s'" % p if isinstance(p, str) else str(p) for p in parameters]
+        self.parameters = ["'%s'" % p if isinstance(
+            p, str) else str(p) for p in parameters]
         self.inputs = inputs
 
     def content(self):
@@ -178,7 +180,8 @@ class Template(Model):
         var_name, index, default = string.groups()
         var_name = var_name.strip()
         if var_name in ['longitude', 'timezone']:
-            logging.warning("WARNING : Make sure to use INSEL convention for {0}. Rename to insel_{0} to remove warning".format(var_name))
+            logging.warning(
+                "WARNING : Make sure to use INSEL convention for {0}. Rename to insel_{0} to remove warning".format(var_name))
         if var_name in self.parameters:
             if index:
                 return str(self.parameters[var_name][int(index)])
