@@ -1,8 +1,11 @@
+# coding=utf8
 import insel
 import unittest
 import math
 import logging
 logging.basicConfig(level=logging.ERROR)
+
+# Block ANINT, INT, FRAC
 
 
 class TestBlock(unittest.TestCase):
@@ -53,6 +56,52 @@ class TestBlock(unittest.TestCase):
                                            parameters=[2]), 1.4142135, places=6)
         self.assertEqual(repr(insel.block('root', 9, 16, 25, parameters=[2], outputs=3)),
                          '[3.0, 4.0, 5.0]')
+
+    def test_sqrt(self):
+        self.assertAlmostEqual(insel.block('sqrt', 2), 1.4142135, places=6)
+        self.assertEqual(repr(insel.block('sqrt', 9, 16, 25, outputs=3)),
+                         '[3.0, 4.0, 5.0]')
+
+    def test_abs(self):
+        self.assertAlmostEqual(insel.block('abs', 1.23), 1.23, places=6)
+        self.assertAlmostEqual(insel.block('abs', -1.23), 1.23, places=6)
+        self.assertEqual(repr(insel.block('abs', -9, 16, -25, outputs=3)),
+                         '[9.0, 16.0, 25.0]')
+
+    def test_exp(self):
+        self.assertAlmostEqual(insel.block('exp', 1.0), 2.71828, places=5)
+        self.assertAlmostEqual(insel.block('exp', 0.0), 1.0, places=6)
+        self.assertAlmostEqual(insel.block('exp', -1.0), 1 / 2.71828, places=6)
+        self.assertAlmostEqual(insel.block('exp', 20), math.exp(20), places=-2)
+        self.assertEqual(' '.join(['%.2f' % x for x in
+                                   insel.block('exp', -3.5, -2.0, 1.4, 2.6, 4.7, outputs=5)]),
+                         '0.03 0.14 4.06 13.46 109.95')
+
+    def test_nop(self):
+        self.assertAlmostEqual(insel.block('nop', 1.0), 1.0, places=5)
+        self.assertAlmostEqual(insel.block('nop', 0.0), 0.0, places=6)
+        self.assertAlmostEqual(insel.block('nop', -1.0), -1.0, places=6)
+        self.assertAlmostEqual(insel.block('nop', 20), 20, places=5)
+        self.assertEqual(' '.join(['%.2f' % x for x in
+                                   insel.block('nop', -3.5, -2.0, 1.4, 2.6, 4.7, outputs=5)]),
+                         '-3.50 -2.00 1.40 2.60 4.70')
+
+    def test_chs(self):
+        self.assertAlmostEqual(insel.block('chs', 1.0), -1.0, places=5)
+        self.assertAlmostEqual(insel.block('chs', 1.23), -1.23, places=5)
+        self.assertAlmostEqual(insel.block('chs', -234.56), 234.56, places=5)
+        self.assertEqual(' '.join(['%.2f' % x for x in
+                                   insel.block('chs', 3.5, 2.0, -1.4, -2.6, -4.7, outputs=5)]),
+                         '-3.50 -2.00 1.40 2.60 4.70')
+
+    def test_int(self):
+        self.assertAlmostEqual(insel.block('int', 10.0), 10.0, places=5)
+        self.assertAlmostEqual(insel.block('int', 1.23), 1.0, places=5)
+        self.assertAlmostEqual(insel.block('int', 1.67), 1.0, places=5)
+        self.assertAlmostEqual(insel.block('int', -1.3), -1.0, places=5)
+        self.assertAlmostEqual(insel.block('int', -1.7), -1.0, places=5)
+        self.assertEqual(repr(insel.block('int', -9.7, 16.2, -25.7, outputs=3)),
+                         '[-9.0, 16.0, -25.0]')
 
     def test_mtm(self):
         december = insel.block('mtm', 12, parameters=['Strasbourg'], outputs=9)
