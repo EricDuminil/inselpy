@@ -14,6 +14,8 @@ else:
     from configparser import ConfigParser
 
 # Used to switch back to old dir
+
+
 @contextmanager
 def cwd(path):
     oldpwd = os.getcwd()
@@ -23,8 +25,9 @@ def cwd(path):
     finally:
         os.chdir(oldpwd)
 
-class Insel(object):
 
+class Insel(object):
+    @staticmethod
     def get_config():
         system = platform.system().lower()
 
@@ -56,7 +59,7 @@ class Insel(object):
 
         return config
 
-    config = get_config()
+    config = get_config.__func__()
     dirname = config['dirname']
     command = config['command']
     extension = ".insel"
