@@ -29,8 +29,8 @@ class Insel(object):
         system = platform.system().lower()
 
         default_configs = {
-            'linux': {'dirname': "/usr/local/INSEL/resources/", 'command': './insel'},
-            'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.2', 'resources'), 'command': 'insel.exe'},
+            'linux': {'dirname': "/usr/local/insel/resources/", 'command': 'insel'},
+            'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.3', 'resources'), 'command': 'insel.exe'},
             'darwin': {'dirname': "/Users/Shared", 'command': 'insel'}
         }
 
@@ -119,7 +119,7 @@ class Model(object):
 
 
 class OneBlockModel(Model):
-
+    #TODO: Add outputs=1
     def __init__(self, name='', inputs=[], parameters=[]):
         super(OneBlockModel, self).__init__()
         self.name = name
