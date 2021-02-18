@@ -144,13 +144,8 @@ class TestTemplate(unittest.TestCase):
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
         self.assertAlmostEqual(insel.template('a_times_b', a=4), 12, places=6)
-        self.assertAlmostEqual(
-            insel.template(
-                'a_times_b',
-                a=4,
-                b=5),
-            20,
-            places=6)
+        self.assertAlmostEqual(insel.template('a_times_b', a=4, b=5),
+                               20, places=6)
 
 
 if __name__ == '__main__':
