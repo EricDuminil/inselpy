@@ -123,17 +123,21 @@ class Model(object):
 
 
 class OneBlockModel(Model):
-    # TODO: Add outputs=1
-    def __init__(self, name='', inputs=[], parameters=[]):
+    def __init__(self, name='', inputs=[], parameters=[], outputs=1):
         super(OneBlockModel, self).__init__()
         self.name = name
-        self.parameters = ["'%s'" % p if isinstance(
-            p, str) else str(p) for p in parameters]
+        self.parameters = ["'%s'" % p if isinstance(p, str)
+                           else str(p) for p in parameters]
         self.inputs = inputs
+        self.n_in = len(inputs)
+        self.n_out = outputs
 
     def content(self):
         lines = []
         input_ids = []
+        block_id = self.n_in + 1
+        screen_id = self.n_in + 2
+
         for i, arg in enumerate(self.inputs, 1):
             input_ids.append("%s.1" % i)
             lines.append("s %d CONST" % i)
@@ -142,21 +146,13 @@ class OneBlockModel(Model):
 
         lines.append(
             "s %d %s %s" %
-            (len(
-                self.inputs) +
-                1,
-                self.name.upper(),
-                " ".join(input_ids)))
+            (block_id, self.name.upper(), " ".join(input_ids)))
         lines.append(
             "p %d %s" %
-            (len(
-                self.inputs) +
-                1,
-                " ".join(
-                self.parameters)))
+            (block_id, " ".join(self.parameters)))
 
-        lines.append("s %d SCREEN %d.1" %
-                     (len(self.inputs) + 2, len(self.inputs) + 1))
+        lines.append(("s %d SCREEN " % screen_id) +
+                     ' '.join("%d.%d" % (block_id, i + 1) for i in range(self.n_out)))
         return "\n".join(lines)
 
 
