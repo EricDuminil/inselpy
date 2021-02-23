@@ -5,6 +5,10 @@ import math
 import logging
 logging.basicConfig(level=logging.ERROR)
 
+STUTTGART = [48.77, -9.18, 23]
+# Add list compares:
+# https://stackoverflow.com/a/8312110/6419007
+
 
 class TestBlock(unittest.TestCase):
 
@@ -133,9 +137,22 @@ class TestBlock(unittest.TestCase):
         self.assertAlmostEqual(july[0], 230, places=-1)
 
     def test_moonae(self):
-        moon_stuttgart = insel.block('MOONAE', 2021, 2, 18, 23, 33, parameters=[48.77, -9.18, 23], outputs=4)
+        # Tested with Stellarium
+        moon_stuttgart = insel.block(
+            'MOONAE', 2021, 2, 18, 23, 33, parameters=STUTTGART, outputs=4)
         self.assertAlmostEqual(moon_stuttgart[0], 279, places=0)
         self.assertAlmostEqual(moon_stuttgart[1], 13, places=0)
+        moon_stuttgart = insel.block(
+            'MOONAE', 2021, 2, 23, 5, 7, 30, parameters=STUTTGART, outputs=4)
+        self.assertAlmostEqual(moon_stuttgart[0], 308.5, places=0)
+        self.assertAlmostEqual(moon_stuttgart[1], 0, places=0)
+        # Tested with http://www.stjarnhimlen.se/comp/tutorial.html#9
+        moon_sweden = insel.block('MOONAE', 1990, 4, 19, 2, parameters=[
+                                  60, -15, 0], outputs=4)
+        self.assertAlmostEqual(moon_sweden[2], -19.9, places=0)
+        # FIXME: Weird. Is this the right block???
+        self.assertAlmostEqual(moon_sweden[3], 310, places=0)
+        # TODO: Add moon phase
 
     def test_do(self):
         self.assertEqual(len(insel.block('do', parameters=[1, 10, 1])), 10)
