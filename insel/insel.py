@@ -5,8 +5,10 @@ import re
 import platform
 import logging
 from contextlib import contextmanager
-
 import sys
+
+# logging.basicConfig(level=logging.WARNING)
+
 
 if sys.version_info < (3, 0):
     from ConfigParser import SafeConfigParser as ConfigParser
@@ -66,7 +68,7 @@ class Insel(object):
     normal_run = re.compile(
         'Running insel [\d\w \.]+ \.\.\.\s+([^\*]*)Normal end of run',
         re.I | re.DOTALL)
-    warning = re.compile('^[EFW]\d+')
+    warning = re.compile('^[EFW]\d{5}.*?$', re.M)
 
 
 class Model(object):
@@ -75,8 +77,11 @@ class Model(object):
         self.warnings = []
 
     def run(self):
-        raw = self.raw_results()
-        match = Insel.normal_run.search(raw.decode())
+        raw = self.raw_results().decode()
+        for problem in Insel.warning.findall(raw):
+            logging.warning('INSEL : %s', problem)
+            self.warnings.append(problem)
+        match = Insel.normal_run.search(raw)
         if match:
             output = match.group(1)
             floats = []
@@ -89,14 +94,10 @@ class Model(object):
             return self.extract(floats)
         else:
             raise Exception("Problem with INSEL\n%s\n%s\n%s\n" %
-                            ('#' * 30, raw.decode(), '#' * 30))
+                            ('#' * 30, raw, '#' * 30))
 
     def parse_line(self, line):
-        match = Insel.warning.search(line)
-        if match:
-            logging.warning('INSEL : %s', line)
-            self.warnings.append(line)
-        else:
+        if not Insel.warning.search(line):
             return self.extract([float(x) for x in line.split() if x])
 
     def extract(self, array):
@@ -144,12 +145,10 @@ class OneBlockModel(Model):
             lines.append("p %d" % i)
             lines.append("\t%r" % arg)
 
-        lines.append(
-            "s %d %s %s" %
-            (block_id, self.name.upper(), " ".join(input_ids)))
-        lines.append(
-            "p %d %s" %
-            (block_id, " ".join(self.parameters)))
+        lines.append("s %d %s %s" %
+                (block_id, self.name.upper(), " ".join(input_ids)))
+        if self.parameters:
+            lines.append("p %d %s" % (block_id, " ".join(self.parameters)))
 
         lines.append(("s %d SCREEN " % screen_id) +
                      ' '.join("%d.%d" % (block_id, i + 1) for i in range(self.n_out)))
