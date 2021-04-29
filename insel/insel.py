@@ -34,6 +34,7 @@ class Insel(object):
         system = platform.system().lower()
 
         default_configs = {
+            #'linux': {'dirname': "/usr/local/INSEL/resources/", 'command': 'insel'}, # INSEL 8.2
             'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
             'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.3', 'resources'), 'command': 'insel.exe'},
             'darwin': {'dirname': "/Users/Shared", 'command': 'insel'}
