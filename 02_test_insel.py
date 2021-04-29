@@ -10,6 +10,8 @@ STUTTGART = [48.77, -9.18, 23]
 
 class TestBlock(unittest.TestCase):
     def compareLists(self, list1, list2, places=8):
+        self.assertIsInstance(list1, list)
+        self.assertIsInstance(list2, list)
         self.assertEqual(len(list1), len(list2),
                          "Both lists should have the same length.")
         for a, b in zip(list1, list2):
@@ -183,6 +185,10 @@ class TestTemplate(unittest.TestCase):
         self.assertAlmostEqual(insel.template('a_times_b', a=4, b=5),
                                20, places=6)
 
+    def test_sunpower_isc(self):
+        spr_isc = insel.template('i_sc', pv_id='008823', temperature=25, irradiance=1000)
+        self.assertIsInstance(spr_isc, float)
+        self.assertAlmostEqual(spr_isc, 5.87, places=2)
 
 if __name__ == '__main__':
     unittest.main()
