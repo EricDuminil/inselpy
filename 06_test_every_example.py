@@ -24,7 +24,7 @@ class TestExamples(unittest.TestCase):
             with open(dummy_gnuplot_path, 'w') as out:
                 out.write('set terminal unknown')
 
-            for vseit_path in list(examples.glob('**/*.vseit'))[:15]:
+            for vseit_path in examples.glob('**/*.vseit'):
                 tmp_vseit_path = tmp_dir / vseit_path.name
                 print(vseit_path.name)
                 with self.subTest(msg=vseit_path.name):
