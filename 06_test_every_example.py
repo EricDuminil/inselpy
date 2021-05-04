@@ -7,9 +7,9 @@ import re
 
 examples = Path('/usr/local/insel/examples/')
 
-warning = re.compile('^[EFW]\d{5}.*?$', re.M)
+warning = re.compile(r'^[EFW]\d{5}.*?$', re.M)
 normal_run = re.compile(
-    'Running insel [\d\w \.]+ \.\.\.\s+([^\*]*)Normal end of run',
+    r'Running insel [\d\w \.]+ \.\.\.\s+([^\*]*)Normal end of run',
     re.I | re.DOTALL)
 
 def replace_gnuplot(line, new_gnu):
@@ -35,13 +35,14 @@ class TestExamples(unittest.TestCase):
                     try:
                         warnings = []
                         result = check_output(["insel", tmp_vseit_path],
-                                              cwd=tmp_dir,
+                                              cwd=vseit_path.parent,
                                               timeout=10).decode()
                         for problem in warning.findall(result):
                             print('  ', problem)
                             warnings.append(problem)
-                        self.assertTrue(len(warnings) == 0,
-                                        f"Errors/Warnings were found during execution of {vseit_path}")
+                        if len(warnings) > 0:
+                            self.fail(f"Errors/Warnings were found.\n" +
+                                      result)
                     except TimeoutExpired:
                         self.fail(f"Timeout for {vseit_path}")
 
