@@ -12,7 +12,7 @@ examples = Path('/usr/local/insel/examples/')
 
 warning = re.compile(r'^[EFW]\d{5}.*?$', re.M)
 
-input_filename = re.compile(r"'([\w+_\\\/\.]+\.(dat|prn))'")
+input_filename = re.compile(r"'([\w+_\\\/\.]+\.(dat|prn|gpl))'")
 
 normal_run = re.compile(
     r'Running insel [\d\w \.]+ \.\.\.\s+([^\*]*)Normal end of run',
@@ -53,6 +53,7 @@ class TestExamples(unittest.TestCase):
                     if len(warnings) > 0:
                         self.fail("Errors/Warnings were found.\n" + result)
                 except TimeoutExpired:
+                    print('  Timeout!')
                     self.fail(f"Timeout for {vseit_path}")
 
 
