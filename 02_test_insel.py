@@ -5,7 +5,8 @@ import math
 import logging
 logging.basicConfig(level=logging.ERROR)
 
-STUTTGART = [48.77, -9.18, 23]
+# INSEL 8.3 convention
+STUTTGART = [48.77, 9.18, 1]
 
 
 class TestBlock(unittest.TestCase):
@@ -130,12 +131,12 @@ class TestBlock(unittest.TestCase):
                          '0.5 0.0 -0.4 -0.6 -0.7')
 
     def test_mtm(self):
-        december = insel.block('mtm', 12, parameters=['Strasbourg'], outputs=9)
+        december = insel.block('mtm2', 12, parameters=['Strasbourg'], outputs=9)
         # 1.5° in december in Strasbourg
         self.assertAlmostEqual(december[2], 1.5, places=1)
         # ~28W/m² in december in Strasbourg
         self.assertAlmostEqual(december[0], 28, places=0)
-        july = insel.block('mtm', 7, parameters=['Stuttgart'], outputs=9)
+        july = insel.block('mtm2', 7, parameters=['Stuttgart'], outputs=9)
         # 19° in july in Stuttgart
         self.assertAlmostEqual(july[2], 19, places=0)
         # ~230W/m² in july in Stuttgart
@@ -143,28 +144,28 @@ class TestBlock(unittest.TestCase):
 
     def test_moonae(self):
         # Tested with Stellarium
-        moon_stuttgart = insel.block('MOONAE',
+        moon_stuttgart = insel.block('MOONAE2',
                                      2021, 2, 18, 23, 33,
                                      parameters=STUTTGART, outputs=2)
         self.compareLists(moon_stuttgart, [279, 13], places=0)
-        moon_stuttgart = insel.block('MOONAE',
+        moon_stuttgart = insel.block('MOONAE2',
                                      2021, 2, 23, 5, 7, 30,
                                      parameters=STUTTGART, outputs=2)
         self.compareLists(moon_stuttgart, [308.5, 0], places=0)
         # Tested with http://www.stjarnhimlen.se/comp/tutorial.html#9
-        moon_sweden = insel.block('MOONAE',
+        moon_sweden = insel.block('MOONAE2',
                                   1990, 4, 19, 2,
-                                  parameters=[60, -15, 22], outputs=5)
+                                  parameters=[60, 15, 2], outputs=5)
         self.compareLists(moon_sweden,
                           [101 + 46.0 / 60, -16 - 11.0 / 60, -19.9, 272.3 - 0.5, 100], places=0)
 
-        moon_stuttgart = insel.block('MOONAE',
+        moon_stuttgart = insel.block('MOONAE2',
                                      2021, 5, 26, 13, 13,
                                      parameters=STUTTGART, outputs=5)
         self.assertTrue(moon_stuttgart[4] < 2.0,
                         "26.05.2021 should be a full moon.")
 
-        moon_stuttgart = insel.block('MOONAE',
+        moon_stuttgart = insel.block('MOONAE2',
                                      2021, 6, 10, 12, 0,
                                      parameters=STUTTGART, outputs=5)
         self.assertTrue(moon_stuttgart[4] > 178,
