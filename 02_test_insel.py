@@ -142,6 +142,19 @@ class TestBlock(unittest.TestCase):
         # ~230W/m² in july in Stuttgart
         self.assertAlmostEqual(july[0], 230, places=-1)
 
+
+    def test_mtmlalo(self):
+        m = insel.OneBlockModel('MTMLALO', inputs=[5], parameters=STUTTGART)
+        m.run()
+        self.assertEqual(len(m.warnings), 1, "A warning should be shown")
+        self.assertTrue("'48.77° N, 9.18° W' seems to be in the ocean" in m.warnings[0])
+
+        m = insel.OneBlockModel('MTMLALO2', inputs=[6], parameters=STUTTGART)
+        r = m.run()
+        self.assertEqual(m.warnings, [], 'No problem with correct convention')
+        # ~225W/m² in june in Stuttgart
+        self.assertAlmostEqual(r, 225, places=0)
+
     def test_moonae(self):
         # Tested with Stellarium
         moon_stuttgart = insel.block('MOONAE2',
