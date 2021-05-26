@@ -199,6 +199,16 @@ class TestTemplate(unittest.TestCase):
         self.assertAlmostEqual(insel.template('a_times_b', a=4, b=5),
                                20, places=6)
 
+
+    def test_non_ascii_template(self):
+        utf8_template = insel.Template('a_times_b_utf8', a=2, b=2)
+        utf8_template.timeout = 5
+        self.assertAlmostEqual(utf8_template.run(), 4, places=6)
+
+        iso_template = insel.Template('a_times_b_iso8859', a=4, b=4)
+        iso_template.timeout = 5
+        self.assertAlmostEqual(iso_template.run(), 16, places=6)
+
     def test_sunpower_isc(self):
         spr_isc = insel.template('i_sc', pv_id='008823', temperature=25, irradiance=1000)
         self.assertIsInstance(spr_isc, float)

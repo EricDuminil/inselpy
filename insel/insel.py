@@ -76,6 +76,7 @@ class Model(object):
 
     def __init__(self):
         self.warnings = []
+        self.timeout = None
 
     def run(self):
         raw = self.raw_results().decode()
@@ -113,7 +114,7 @@ class Model(object):
             f.write(self.content())
             f.close()
             return subprocess.check_output(
-                [Insel.command, f.name], shell=False)
+                [Insel.command, f.name], shell=False, timeout=self.timeout)
 
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
