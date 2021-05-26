@@ -1,0 +1,11 @@
+% Calculates a*b
+s 1 MUL  3.1 2.1
+s 2 CONST
+p 2
+           $a || 3$ % [°]
+s 3 CONST
+p 3
+           $b || 3$ % [1/°]
+s 4 SCREEN  1.1
+p 4
+    '*'
