@@ -147,7 +147,7 @@ class TestBlock(unittest.TestCase):
         m = insel.OneBlockModel('MTMLALO', inputs=[5], parameters=STUTTGART)
         m.run()
         self.assertEqual(len(m.warnings), 1, "A warning should be shown")
-        self.assertTrue("'48.77° N, 9.18° W' seems to be in the ocean" in m.warnings[0])
+        self.assertTrue("Block 00000: '48.77° N, 9.18° W' seems to be in the ocean" in m.warnings[0])
 
         m = insel.OneBlockModel('MTMLALO2', inputs=[6], parameters=STUTTGART)
         r = m.run()
