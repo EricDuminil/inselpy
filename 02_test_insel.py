@@ -26,6 +26,17 @@ class TestBlock(unittest.TestCase):
         self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4, 5), 11, places=8)
 
+    def test_diff(self):
+        self.assertAlmostEqual(insel.block('diff', 4, 1), 3, places=8)
+        self.assertAlmostEqual(insel.block('diff', 1, 4), -3, places=8)
+        self.assertAlmostEqual(insel.block('diff', 1000, 1), 999, places=8)
+        self.assertAlmostEqual(insel.block('diff', 500, 123), 377, places=8)
+
+        # Not exactly 2 inputs:
+        self.assertRaises(Exception, insel.block, 'diff')
+        self.assertRaises(Exception, insel.block, 'diff', 1)
+        self.assertRaises(Exception, insel.block, 'diff', 1, 2, 3)
+
     def test_gain(self):
         self.assertAlmostEqual(insel.block('gain',
                                            3, parameters=[2]), 6, places=8)
