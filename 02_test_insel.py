@@ -207,7 +207,13 @@ class TestBlock(unittest.TestCase):
                                     old_longitude=-11.08,
                                     old_timezone=23
                                     )
+        v2_results = insel.template('nurnberg_v2',
+                                    latitude=49.5,
+                                    longitude=11.08,
+                                    timezone=+1
+                                    )
         self.compareLists(v1_results, [3865, 3645], places=-1)
+        self.compareLists(v2_results, v1_results, places=-1)
 
 class TestTemplate(unittest.TestCase):
 
