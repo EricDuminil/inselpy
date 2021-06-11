@@ -201,6 +201,8 @@ class TestBlock(unittest.TestCase):
     def test_warning_is_fine(self):
         self.assertAlmostEqual(insel.block('acos', 1.5), 0)
 
+    def test_updated_coordinates(self):
+        self.compareLists(insel.template('nurnberg_v1'), [3865, 3645], places=-1)
 
 class TestTemplate(unittest.TestCase):
 
@@ -209,6 +211,7 @@ class TestTemplate(unittest.TestCase):
         self.assertAlmostEqual(insel.template('a_times_b', a=4), 12, places=6)
         self.assertAlmostEqual(insel.template('a_times_b', a=4, b=5),
                                20, places=6)
+
 
 
     def test_non_ascii_template(self):
