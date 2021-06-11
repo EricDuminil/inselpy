@@ -8,8 +8,7 @@ logging.basicConfig(level=logging.ERROR)
 # INSEL 8.3 convention
 STUTTGART = [48.77, 9.18, 1]
 
-
-class TestBlock(unittest.TestCase):
+class CustomAssertions(unittest.TestCase):
     def compareLists(self, list1, list2, places=8):
         self.assertIsInstance(list1, list)
         self.assertIsInstance(list2, list)
@@ -17,6 +16,8 @@ class TestBlock(unittest.TestCase):
                          "Both lists should have the same length.")
         for a, b in zip(list1, list2):
             self.assertAlmostEqual(a, b, places=places)
+
+class TestBlock(CustomAssertions):
 
     def test_pi(self):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
@@ -201,6 +202,7 @@ class TestBlock(unittest.TestCase):
     def test_warning_is_fine(self):
         self.assertAlmostEqual(insel.block('acos', 1.5), 0)
 
+class TestTemplate(CustomAssertions):
     def test_updated_coordinates(self):
         v1_results = insel.template('nurnberg_v1',
                                     latitude=49.5,
@@ -214,8 +216,6 @@ class TestBlock(unittest.TestCase):
                                     )
         self.compareLists(v1_results, [3865, 3645], places=-1)
         self.compareLists(v2_results, v1_results, places=-1)
-
-class TestTemplate(unittest.TestCase):
 
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
