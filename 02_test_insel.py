@@ -202,7 +202,12 @@ class TestBlock(unittest.TestCase):
         self.assertAlmostEqual(insel.block('acos', 1.5), 0)
 
     def test_updated_coordinates(self):
-        self.compareLists(insel.template('nurnberg_v1'), [3865, 3645], places=-1)
+        v1_results = insel.template('nurnberg_v1',
+                                    latitude=49.5,
+                                    old_longitude=-11.08,
+                                    old_timezone=23
+                                    )
+        self.compareLists(v1_results, [3865, 3645], places=-1)
 
 class TestTemplate(unittest.TestCase):
 
