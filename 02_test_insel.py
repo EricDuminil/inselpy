@@ -215,7 +215,7 @@ class TestTemplate(CustomAssertions):
                                     timezone=+1
                                     )
         self.compareLists(v1_results, [3865, 3645], places=-1)
-        self.compareLists(v2_results, v1_results, places=-1)
+        self.compareLists(v2_results, v1_results, places=3)
 
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
