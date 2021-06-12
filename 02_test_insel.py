@@ -73,12 +73,12 @@ class TestBlock(CustomAssertions):
 
     def test_root(self):
         self.assertAlmostEqual(insel.block('root', 2,
-                                           parameters=[2]), 1.4142135, places=6)
+                                           parameters=[2]), 2**0.5, places=6)
         self.assertEqual(repr(insel.block('root', 9, 16, 25, parameters=[2], outputs=3)),
                          '[3.0, 4.0, 5.0]')
 
     def test_sqrt(self):
-        self.assertAlmostEqual(insel.block('sqrt', 2), 1.4142135, places=6)
+        self.assertAlmostEqual(insel.block('sqrt', 2), 2**0.5, places=6)
         self.assertEqual(repr(insel.block('sqrt', 9, 16, 25, outputs=3)),
                          '[3.0, 4.0, 5.0]')
 
