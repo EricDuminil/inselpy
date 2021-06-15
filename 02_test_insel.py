@@ -207,8 +207,13 @@ class TestBlock(CustomAssertions):
 
 class TestTemplate(CustomAssertions):
     def test_aligned_screen_block(self):
-        # Numbers are too close to each other
-        insel.template('expg')
+        # Numbers should not be too close to each other
+        matrix = insel.template('expg')
+        for x, row in zip(range(-14, 19), matrix):
+            x = x / 2
+            self.assertAlmostEqual(x, row[0], places=6)
+            self.assertAlmostEqual(r1 := 10**x, row[1], delta=r1/1e6)
+            self.assertAlmostEqual(r2 := -10**(-x), row[2], delta=-r2/1e6)
 
     def test_updated_coordinates(self):
         v1_results = insel.template('nurnberg_v1',
