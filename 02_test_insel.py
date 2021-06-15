@@ -206,6 +206,10 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('acos', 1.5), 0)
 
 class TestTemplate(CustomAssertions):
+    def test_aligned_screen_block(self):
+        # Numbers are too close to each other
+        insel.template('expg')
+
     def test_updated_coordinates(self):
         v1_results = insel.template('nurnberg_v1',
                                     latitude=49.5,
