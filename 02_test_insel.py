@@ -1,8 +1,8 @@
 # coding=utf8
-import insel
 import unittest
 import math
 import logging
+import insel
 logging.basicConfig(level=logging.ERROR)
 
 # INSEL 8.3 convention
@@ -204,6 +204,13 @@ class TestBlock(CustomAssertions):
 
     def test_warning_is_fine(self):
         self.assertAlmostEqual(insel.block('acos', 1.5), 0)
+
+    def test_nan(self):
+        self.assertTrue(math.isnan(insel.block('nan')))
+
+    def test_infinity(self):
+        self.assertTrue(math.isinf(insel.block('infinity')))
+        self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
 
 class TestTemplate(CustomAssertions):
     def test_aligned_screen_block(self):
