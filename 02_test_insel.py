@@ -261,13 +261,31 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(spr_isc, 5.87, places=2)
 
     def test_write_block(self):
+        self.run_write_block()
+        self.run_write_block(overwrite=0)
+        self.run_write_block(overwrite=1)
+        self.run_write_block(overwrite=2)
+
+        self.run_write_block(overwrite=0, fnq=0)
+        self.run_write_block(overwrite=0, fnq=1)
+
+        self.run_write_block(overwrite=0, fnq=0, separator=0)
+        self.run_write_block(overwrite=0, fnq=0, separator=1)
+        self.run_write_block(overwrite=0, fnq=0, separator=2)
+
+    def run_write_block(self, **write_params):
+        separator = [None, ',', ';'][write_params.get('separator', 0)]
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / 'test.dat'
             self.assertFalse(dat_file.exists())
-            model = insel.Template('write_params_0', dat_file=dat_file)
+            model = insel.Template('write_params', dat_file=dat_file, **write_params)
             model.run()
             self.assertEqual(model.warnings, [])
             self.assertTrue(dat_file.exists(), "File should have been written")
+            with open(dat_file) as out:
+                content = out.readlines()
+                written = [float(line.split(separator)[0]) for line in content]
+                self.compareLists(written, list(range(1, 11)), places=5)
 
 if __name__ == '__main__':
     unittest.main()
