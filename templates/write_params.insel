@@ -5,8 +5,9 @@ p 1
                     1
 b 3 WRITE  1.1
 p 3
-    $overwrite||$ % Overwrite mode : (Error as default)
-    $fnq      ||$ % Useless FNQ parameter : (No as default)
-    $separator||$ % Separator : (Blank as default)
-    '$dat_file$'
-    '$fortran_format||*$'
+    $overwrite||$         % Overwrite mode : (Error as default)
+    $fnq      ||$         % Useless FNQ parameter : (No as default)
+    $separator||$         % Separator : (Blank as default)
+    '$dat_file$'          % Filename (NOT OPTIONAL)
+    '$fortran_format||*$' % FORTRAN Format (NOT OPTIONAL)
+    $header||$            % Header    : ('Blank as default')
