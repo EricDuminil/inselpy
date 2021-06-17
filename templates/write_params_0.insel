@@ -1,0 +1,20 @@
+b 1 DO
+p 1
+                    1
+                   10
+                    1
+b 2 CONST
+p 2
+                 2011
+b 3 WRITE  2.1 1.1
+p 3
+                    1
+                    0
+    '$dat_file$'
+    '*'
+b 4 WRITE  2.1 1.1
+p 4
+                    1
+                    1
+    '/tmp/#FNQ_pass_%4Y.dat'
+    '(F10.1)'

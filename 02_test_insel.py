@@ -3,6 +3,8 @@ import unittest
 import math
 import logging
 import insel
+import tempfile
+from pathlib import Path
 logging.basicConfig(level=logging.ERROR)
 
 # INSEL 8.3 convention
@@ -257,6 +259,15 @@ class TestTemplate(CustomAssertions):
         spr_isc = insel.template('i_sc', pv_id='008823', temperature=25, irradiance=1000)
         self.assertIsInstance(spr_isc, float)
         self.assertAlmostEqual(spr_isc, 5.87, places=2)
+
+    def test_write_block(self):
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            dat_file = Path(tmpdirname) / 'test.dat'
+            self.assertFalse(dat_file.exists())
+            model = insel.Template('write_params_0', dat_file=dat_file)
+            model.run()
+            self.assertEqual(model.warnings, [])
+            self.assertTrue(dat_file.exists(), "File should have been written")
 
 if __name__ == '__main__':
     unittest.main()
