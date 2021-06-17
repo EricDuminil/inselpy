@@ -184,7 +184,7 @@ class Template(Model):
                 return str(self.parameters[var_name][int(index)])
             else:
                 return str(self.parameters[var_name])
-        elif default:
+        elif default is not None:
             return default
         else:
             raise Exception(
