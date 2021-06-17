@@ -10,4 +10,4 @@ p 3
     $separator||$         % Separator : (Blank as default)
     '$dat_file$'          % Filename (NOT OPTIONAL)
     '$fortran_format||*$' % FORTRAN Format (NOT OPTIONAL)
-    $header||$            % Header    : ('Blank as default')
+    '$header||$'          % Header    : (Blank as default)

@@ -275,6 +275,8 @@ class TestTemplate(CustomAssertions):
         self.run_write_block(overwrite=0, fnq=0, separator=1)
         self.run_write_block(overwrite=0, fnq=0, separator=2)
 
+        self.run_write_block(header='#Some header here')
+
     def run_write_block(self, **write_params):
         separator = [None, ',', ';'][write_params.get('separator', 0)]
         with tempfile.TemporaryDirectory() as tmpdirname:
@@ -285,6 +287,8 @@ class TestTemplate(CustomAssertions):
             self.assertEqual(model.warnings, [])
             self.assertTrue(dat_file.exists(), "File should have been written")
             with open(dat_file) as out:
+                if write_params.get('header'):
+                    next(out)
                 content = out.readlines()
                 written = [float(line.split(separator)[0]) for line in content]
                 self.compareLists(written, list(range(1, 11)), places=5)
