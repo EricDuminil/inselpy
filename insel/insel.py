@@ -159,7 +159,7 @@ class OneBlockModel(Model):
 
 class Template(Model):
     dirname = os.path.join(os.path.dirname(__file__), '../templates')
-    pattern = re.compile('\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w \.]*))?\$')
+    pattern = re.compile('\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
     def __init__(self, name='', **parameters):
         super(Template, self).__init__()

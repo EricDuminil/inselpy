@@ -266,6 +266,8 @@ class TestTemplate(CustomAssertions):
         self.run_write_block(overwrite=1)
         self.run_write_block(overwrite=2)
 
+        self.run_write_block(fortran_format='(F10.5)')
+
         self.run_write_block(overwrite=0, fnq=0)
         self.run_write_block(overwrite=0, fnq=1)
 

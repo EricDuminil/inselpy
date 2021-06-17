@@ -9,4 +9,4 @@ p 3
     $fnq      ||$ % Useless FNQ parameter : (No as default)
     $separator||$ % Separator : (Blank as default)
     '$dat_file$'
-    '*'
+    '$fortran_format||*$'
