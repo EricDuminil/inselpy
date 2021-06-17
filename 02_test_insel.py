@@ -201,7 +201,7 @@ class TestBlock(CustomAssertions):
     def test_do(self):
         self.assertEqual(len(insel.block('do', parameters=[1, 10, 1])), 10)
         many_points = insel.block('do', parameters=[-10, 10, 0.1])
-        self.compareLists(many_points, [x / 10.0 for x in range(-100, 101)], 
+        self.compareLists(many_points, [x / 10.0 for x in range(-100, 101)],
                           places=5)
 
     def test_warning_is_fine(self):
