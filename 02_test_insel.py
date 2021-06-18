@@ -162,6 +162,7 @@ class TestBlock(CustomAssertions):
         m.run()
         self.assertTrue(len(m.warnings) >= 1, "A warning should be shown")
         self.assertTrue("Block 00002: '48.77° N, 9.18° W' seems to be in the ocean" in str(m.warnings))
+        self.assertTrue("MTMLALO is deprecated" in str(m.warnings))
 
         m = insel.OneBlockModel('MTMLALO2', inputs=[6], parameters=STUTTGART)
         r = m.run()
