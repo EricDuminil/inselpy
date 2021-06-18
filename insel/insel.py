@@ -201,7 +201,7 @@ class Template(Model):
         return defaults
 
     def content(self):
-        with open(self.template_filename()) as template:
+        with open(self.template_filename(), encoding='utf-8', errors='replace') as template:
             content = template.read()
             content = re.sub(Template.pattern, self.replace, content)
             return content
