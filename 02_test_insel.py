@@ -267,7 +267,8 @@ class TestTemplate(CustomAssertions):
         self.run_write_block(overwrite=1)
         self.run_write_block(overwrite=2)
 
-        self.run_write_block(basename='Ñüößç&txt.täxt€')
+        self.run_write_block(basename='Ñüößç&txt.täxt€',
+                             header='#ßeäöütµ§%&²³@°')
 
         self.run_write_block(fortran_format='(F10.5)')
 
