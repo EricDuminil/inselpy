@@ -267,6 +267,8 @@ class TestTemplate(CustomAssertions):
         self.run_write_block(overwrite=1)
         self.run_write_block(overwrite=2)
 
+        self.run_write_block(basename='Ñüößç&txt.täxt€')
+
         self.run_write_block(fortran_format='(F10.5)')
 
         self.run_write_block(overwrite=0, fnq=0)
@@ -278,10 +280,10 @@ class TestTemplate(CustomAssertions):
 
         self.run_write_block(header='#Some header here')
 
-    def run_write_block(self, **write_params):
+    def run_write_block(self, basename='test.dat', **write_params):
         separator = [None, ',', ';'][write_params.get('separator', 0)]
         with tempfile.TemporaryDirectory() as tmpdirname:
-            dat_file = Path(tmpdirname) / 'test.dat'
+            dat_file = Path(tmpdirname) / basename
             self.assertFalse(dat_file.exists())
             model = insel.Template('write_params', dat_file=dat_file, **write_params)
             model.run()
@@ -295,4 +297,5 @@ class TestTemplate(CustomAssertions):
                 self.compareLists(written, list(range(1, 11)), places=5)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(exit=False)
+    print(f'Total INSEL calls : {insel.insel.Insel.calls}')

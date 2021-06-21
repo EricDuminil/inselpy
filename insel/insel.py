@@ -29,6 +29,8 @@ def cwd(path):
 
 
 class Insel(object):
+    calls = 0
+
     @staticmethod
     def get_config():
         system = platform.system().lower()
@@ -113,6 +115,7 @@ class Model(object):
             f = self.insel_file = self.tempfile()
             f.write(self.content())
             f.close()
+            Insel.calls += 1
             return subprocess.check_output(
                 [Insel.command, f.name], shell=False, timeout=self.timeout)
 
