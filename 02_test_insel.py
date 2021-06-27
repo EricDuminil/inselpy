@@ -11,9 +11,10 @@ logging.basicConfig(level=logging.ERROR)
 STUTTGART = [48.77, 9.18, 1]
 
 class CustomAssertions(unittest.TestCase):
-    def compareLists(self, list1, list2, places=8):
+    def compareLists(self, list1, expected, places=8):
         self.assertIsInstance(list1, list)
-        self.assertIsInstance(list2, list)
+        self.assertTrue(hasattr(expected,'__iter__'))
+        list2 = list(expected)
         self.assertEqual(len(list1), len(list2),
                          "Both lists should have the same length.")
         for a, b in zip(list1, list2):
@@ -31,15 +32,22 @@ class TestBlock(CustomAssertions):
 
     def test_if(self):
         self.assertAlmostEqual(insel.block('if', 3.14, 1), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('if', 3.14, 0), 0.0, places=6) #  Weird, actually. It should be nothing.
+        #  Weird, actually. It should be empty. Seems to require a DO block
+        self.assertAlmostEqual(insel.block('if', 3.14, 0), 0.0, places=6)
+
+    def test_filter(self):
+        self.assertAlmostEqual(insel.block('filter', 3.14, 1), 3.14, places=6)
+        self.assertTrue(math.isnan(insel.block('filter', 3.14, 0)))
 
     def test_ifpos(self):
         self.assertAlmostEqual(insel.block('ifpos', 3.14), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('ifpos', -3.14), 0.0, places=6) #  Weird, actually. It should be nothing.
+        #  Weird, actually. It should be empty. Seems to require a DO block
+        self.assertAlmostEqual(insel.block('ifpos', -3.14), 0.0, places=6)
 
     def test_ifneg(self):
         self.assertAlmostEqual(insel.block('ifneg', -3.14), -3.14, places=6)
-        self.assertAlmostEqual(insel.block('ifneg', 3.14), 0.0, places=6) #  Weird, actually. It should be nothing.
+        #  Weird, actually. It should be empty. Seems to require a DO block
+        self.assertAlmostEqual(insel.block('ifneg', 3.14), 0.0, places=6)
 
     def test_diff(self):
         self.assertAlmostEqual(insel.block('diff', 4, 1), 3, places=8)
@@ -228,14 +236,12 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
 
 class TestTemplate(CustomAssertions):
+    def test_empty_if(self):
+        self.assertEqual(insel.template('empty_if'), [])
+
     def test_filter(self):
-        # Numbers should not be too close to each other
-        matrix = insel.template('expg')
-        for x, row in zip(range(-14, 19), matrix):
-            x = x / 2
-            self.assertAlmostEqual(x, row[0], places=6)
-            self.assertAlmostEqual(r1 := 10**x, row[1], delta=r1/1e6)
-            self.assertAlmostEqual(r2 := -10**(-x), row[2], delta=-r2/1e6)
+        evens_and_nans = insel.template('remove_odds')
+        self.compareLists(evens_and_nans[::2], range(-10, 12, 2))
 
     def test_aligned_screen_block(self):
         # Numbers should not be too close to each other
