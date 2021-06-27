@@ -242,6 +242,8 @@ class TestTemplate(CustomAssertions):
     def test_filter(self):
         evens_and_nans = insel.template('remove_odds')
         self.compareLists(evens_and_nans[::2], range(-10, 12, 2))
+        for odd in evens_and_nans[1::2]:
+            self.assertTrue(math.isnan(odd))
 
     def test_aligned_screen_block(self):
         # Numbers should not be too close to each other
