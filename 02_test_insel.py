@@ -72,7 +72,7 @@ class TestBlock(CustomAssertions):
                          'Gain should return N outputs for N inputs')
         self.assertEqual(repr(results), '[6.0, 15.0, 21.0]')
         self.assertEqual(
-            len(insel.block('gain', *list(range(10)),
+            len(insel.block('gain', *range(10),
                             parameters=[5], outputs=10)),
             10, '10 inputs should be enough for GAIN')
 
@@ -324,7 +324,7 @@ class TestTemplate(CustomAssertions):
                     next(out)
                 content = out.readlines()
                 written = [float(line.split(separator)[0]) for line in content]
-                self.compareLists(written, list(range(1, 11)), places=5)
+                self.compareLists(written, range(1, 11), places=5)
 
 if __name__ == '__main__':
     unittest.main(exit=False)
