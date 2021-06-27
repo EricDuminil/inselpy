@@ -29,6 +29,18 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4, 5), 11, places=8)
 
+    def test_if(self):
+        self.assertAlmostEqual(insel.block('if', 3.14, 1), 3.14, places=6)
+        self.assertAlmostEqual(insel.block('if', 3.14, 0), 0.0, places=6) #  Weird, actually. It should be nothing.
+
+    def test_ifpos(self):
+        self.assertAlmostEqual(insel.block('ifpos', 3.14), 3.14, places=6)
+        self.assertAlmostEqual(insel.block('ifpos', -3.14), 0.0, places=6) #  Weird, actually. It should be nothing.
+
+    def test_ifneg(self):
+        self.assertAlmostEqual(insel.block('ifneg', -3.14), -3.14, places=6)
+        self.assertAlmostEqual(insel.block('ifneg', 3.14), 0.0, places=6) #  Weird, actually. It should be nothing.
+
     def test_diff(self):
         self.assertAlmostEqual(insel.block('diff', 4, 1), 3, places=8)
         self.assertAlmostEqual(insel.block('diff', 1, 4), -3, places=8)
@@ -216,6 +228,15 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
 
 class TestTemplate(CustomAssertions):
+    def test_filter(self):
+        # Numbers should not be too close to each other
+        matrix = insel.template('expg')
+        for x, row in zip(range(-14, 19), matrix):
+            x = x / 2
+            self.assertAlmostEqual(x, row[0], places=6)
+            self.assertAlmostEqual(r1 := 10**x, row[1], delta=r1/1e6)
+            self.assertAlmostEqual(r2 := -10**(-x), row[2], delta=-r2/1e6)
+
     def test_aligned_screen_block(self):
         # Numbers should not be too close to each other
         matrix = insel.template('expg')
