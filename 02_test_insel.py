@@ -85,6 +85,14 @@ class TestBlock(CustomAssertions):
         results = insel.block('att', 9, 3, 6, 7.5, parameters=[3], outputs=4)
         self.assertEqual(repr(results), '[3.0, 1.0, 2.0, 2.5]')
 
+    def test_div(self):
+        self.assertAlmostEqual(insel.block('div',
+                                           3, 2), 1.5, places=8)
+        # Division by 0
+        m = insel.OneBlockModel('div', inputs=[2, 0])
+        m.run()
+        self.assertTrue(len(m.warnings) >= 1, "A warning should be shown")
+
     def test_offset(self):
         self.assertAlmostEqual(insel.block('offset',
                                            3, parameters=[-2]), 1.0, places=8)
