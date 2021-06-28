@@ -14,6 +14,9 @@ class CustomAssertions(unittest.TestCase):
     def assertNaN(self, x):
         self.assertTrue(math.isnan(x), f'{x} should be NaN')
 
+    def assertInf(self, x):
+        self.assertTrue(math.isinf(x), f'{x} should be Infinity')
+
     def compareLists(self, list1, expected, places=8):
         self.assertIsInstance(list1, list)
         self.assertTrue(hasattr(expected,'__iter__'))
@@ -32,6 +35,7 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4, 5), 11, places=8)
         self.assertNaN(insel.block('sum', 2, float('nan')))
+        self.assertInf(insel.block('sum', 2, float('inf')))
 
     def test_if(self):
         self.assertAlmostEqual(insel.block('if', 3.14, 1), 3.14, places=6)
@@ -58,6 +62,9 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('diff', 1, 4), -3, places=8)
         self.assertAlmostEqual(insel.block('diff', 1000, 1), 999, places=8)
         self.assertAlmostEqual(insel.block('diff', 500, 123), 377, places=8)
+
+        self.assertNaN(insel.block('diff', 2, float('nan')))
+        self.assertInf(insel.block('diff', 2, float('inf')))
 
         # Not exactly 2 inputs:
         self.assertRaises(Exception, insel.block, 'diff')
