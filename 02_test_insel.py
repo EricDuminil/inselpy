@@ -42,10 +42,12 @@ class TestBlock(CustomAssertions):
         #  Weird, actually. It should be empty. Seems to require a DO block
         self.assertAlmostEqual(insel.block('if', 3.14, 0), 0.0, places=6)
         self.assertNaN(insel.block('if', float('nan'), 1))
+        self.assertAlmostEqual(insel.block('if', 3.14, float('nan')), 0.0, places=6)
 
     def test_filter(self):
         self.assertAlmostEqual(insel.block('filter', 3.14, 1), 3.14, places=6)
         self.assertNaN(insel.block('filter', 3.14, 0))
+        self.assertNaN(insel.block('filter', 3.14, float('nan')))
 
     def test_ifpos(self):
         self.assertAlmostEqual(insel.block('ifpos', 3.14), 3.14, places=6)
