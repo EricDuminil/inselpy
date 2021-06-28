@@ -2,6 +2,7 @@ import os
 import subprocess
 import tempfile
 import re
+import math
 import platform
 import logging
 from contextlib import contextmanager
@@ -146,9 +147,14 @@ class OneBlockModel(Model):
 
         for i, arg in enumerate(self.inputs, 1):
             input_ids.append("%s.1" % i)
-            lines.append("s %d CONST" % i)
-            lines.append("p %d" % i)
-            lines.append("\t%r" % arg)
+            if math.isnan(arg):
+                lines.append("s %d NAN" % i)
+            elif math.isinf(arg):
+                lines.append("s %d INFINITY" % i)
+            else:
+                lines.append("s %d CONST" % i)
+                lines.append("p %d" % i)
+                lines.append("\t%r" % arg)
 
         lines.append("s %d %s %s" %
                 (block_id, self.name.upper(), " ".join(input_ids)))
@@ -157,6 +163,7 @@ class OneBlockModel(Model):
 
         lines.append(("s %d SCREEN " % screen_id) +
                      ' '.join("%d.%d" % (block_id, i + 1) for i in range(self.n_out)))
+
         return "\n".join(lines)
 
 

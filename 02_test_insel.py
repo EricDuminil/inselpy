@@ -11,6 +11,9 @@ logging.basicConfig(level=logging.ERROR)
 STUTTGART = [48.77, 9.18, 1]
 
 class CustomAssertions(unittest.TestCase):
+    def assertNaN(self, x):
+        self.assertTrue(math.isnan(x), f'{x} should be NaN')
+
     def compareLists(self, list1, expected, places=8):
         self.assertIsInstance(list1, list)
         self.assertTrue(hasattr(expected,'__iter__'))
@@ -21,7 +24,6 @@ class CustomAssertions(unittest.TestCase):
             self.assertAlmostEqual(a, b, places=places)
 
 class TestBlock(CustomAssertions):
-
     def test_pi(self):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
 
@@ -29,15 +31,17 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('sum', 2), 2, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4, 5), 11, places=8)
+        self.assertNaN(insel.block('sum', 2, float('nan')))
 
     def test_if(self):
         self.assertAlmostEqual(insel.block('if', 3.14, 1), 3.14, places=6)
         #  Weird, actually. It should be empty. Seems to require a DO block
         self.assertAlmostEqual(insel.block('if', 3.14, 0), 0.0, places=6)
+        self.assertNaN(insel.block('if', float('nan'), 1))
 
     def test_filter(self):
         self.assertAlmostEqual(insel.block('filter', 3.14, 1), 3.14, places=6)
-        self.assertTrue(math.isnan(insel.block('filter', 3.14, 0)))
+        self.assertNaN(insel.block('filter', 3.14, 0))
 
     def test_ifpos(self):
         self.assertAlmostEqual(insel.block('ifpos', 3.14), 3.14, places=6)
@@ -237,7 +241,7 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('acos', 1.5), 0)
 
     def test_nan(self):
-        self.assertTrue(math.isnan(insel.block('nan')))
+        self.assertNaN(insel.block('nan'))
 
     def test_infinity(self):
         self.assertTrue(math.isinf(insel.block('infinity')))
@@ -251,7 +255,7 @@ class TestTemplate(CustomAssertions):
         odds_as_nans = insel.template('odds_as_nans')
         self.compareLists(odds_as_nans[::2], range(-10, 12, 2))
         for odd in odds_as_nans[1::2]:
-            self.assertTrue(math.isnan(odd))
+            self.assertNaN(odd)
 
     def test_if(self):
         only_evens = insel.template('remove_odds')
