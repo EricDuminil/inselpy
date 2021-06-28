@@ -45,6 +45,8 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('if', 3.14, float('inf')), 3.14, places=6)
         #  Weird, actually. It should be empty. Seems to require a DO block
         self.assertAlmostEqual(insel.block('if', 3.14, 0), 0.0, places=6)
+        self.assertAlmostEqual(insel.block('if', 3.14, 0.4), 0.0, places=6)
+        self.assertAlmostEqual(insel.block('if', 3.14, -0.4), 0.0, places=6)
         self.assertNaN(insel.block('if', float('nan'), 1))
         self.assertAlmostEqual(insel.block('if', 3.14, float('nan')), 0.0, places=6)
 
@@ -55,6 +57,8 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('filter', 3.14, -0.5), 3.14, places=6)
         self.assertAlmostEqual(insel.block('filter', 3.14, float('inf')), 3.14, places=6)
         self.assertNaN(insel.block('filter', 3.14, 0))
+        self.assertNaN(insel.block('filter', 3.14, 0.4))
+        self.assertNaN(insel.block('filter', 3.14, -0.4))
         self.assertNaN(insel.block('filter', 3.14, float('nan')))
 
     def test_ifpos(self):
