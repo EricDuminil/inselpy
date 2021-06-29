@@ -50,16 +50,16 @@ class TestBlock(CustomAssertions):
         self.assertNaN(insel.block('if', float('nan'), 1))
         self.assertAlmostEqual(insel.block('if', 3.14, float('nan')), 0.0, places=6)
 
-    def test_filter(self):
-        self.assertAlmostEqual(insel.block('filter', 3.14, 1), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('filter', 3.14, 2), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('filter', 3.14, 0.5), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('filter', 3.14, -0.5), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('filter', 3.14, float('inf')), 3.14, places=6)
-        self.assertNaN(insel.block('filter', 3.14, 0))
-        self.assertNaN(insel.block('filter', 3.14, 0.4))
-        self.assertNaN(insel.block('filter', 3.14, -0.4))
-        self.assertNaN(insel.block('filter', 3.14, float('nan')))
+    def test_ifelsenan(self):
+        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, 1), 3.14, places=6)
+        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, 2), 3.14, places=6)
+        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, 0.5), 3.14, places=6)
+        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, -0.5), 3.14, places=6)
+        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, float('inf')), 3.14, places=6)
+        self.assertNaN(insel.block('ifelsenan', 3.14, 0))
+        self.assertNaN(insel.block('ifelsenan', 3.14, 0.4))
+        self.assertNaN(insel.block('ifelsenan', 3.14, -0.4))
+        self.assertNaN(insel.block('ifelsenan', 3.14, float('nan')))
 
     def test_ifpos(self):
         self.assertAlmostEqual(insel.block('ifpos', 3.14), 3.14, places=6)
@@ -272,7 +272,7 @@ class TestTemplate(CustomAssertions):
     def test_empty_if(self):
         self.assertEqual(insel.template('empty_if'), [])
 
-    def test_filter(self):
+    def test_ifelsenan(self):
         odds_as_nans = insel.template('odds_as_nans')
         self.compareLists(odds_as_nans[::2], range(-10, 12, 2))
         for odd in odds_as_nans[1::2]:
