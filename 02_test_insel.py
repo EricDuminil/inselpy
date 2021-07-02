@@ -282,6 +282,10 @@ class TestTemplate(CustomAssertions):
         only_evens = insel.template('remove_odds')
         self.compareLists(only_evens, range(-10, 12, 2))
 
+    def test_gengt_consistency(self):
+        deviation = insel.template('gengt_comparison')
+        self.assertAlmostEqual(deviation, 0, places=6)
+
     def test_aligned_screen_block(self):
         # Numbers should not be too close to each other
         matrix = insel.template('expg')

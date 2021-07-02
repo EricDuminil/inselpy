@@ -202,7 +202,10 @@ class Template(Model):
                 (var_name, self.name))
 
     def add_defaults_to(self, parameters):
-        defaults = {'bp_folder': os.path.join(Insel.dirname, "data", "bp")}
+        defaults = {
+                'bp_folder': os.path.join(Insel.dirname, "data", "bp"),
+                'template_folder': Template.dirname
+                }
         if 'longitude' in parameters:
             defaults['insel_longitude'] = -parameters['longitude']
         if 'timezone' in parameters:

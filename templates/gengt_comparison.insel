@@ -41,7 +41,7 @@ b 9 READ
 p 9
                     1
                     0
-    '$template_folder$/gengt_comparisons.dat'
+    '$template_folder$/gengt_comparison.dat'
     '*'
 b 10 SUM  3.2 7.1
 b 11 DOY  5.1 5.2 5.3
