@@ -15,6 +15,9 @@ from configparser import ConfigParser
 
 #NOTE: Expects insel command in path, not sure if it's a good idea
 
+class InselError(Exception):
+    pass
+
 class Insel(object):
     calls = 0
 
@@ -84,8 +87,8 @@ class Model(object):
                         floats.append(values)
             return self.extract(floats)
         else:
-            raise Exception("Problem with INSEL\n%s\n%s\n%s\n" %
-                            ('#' * 30, raw, '#' * 30))
+            raise InselError("Problem with INSEL\n%s\n%s\n%s\n" %
+                             ('#' * 30, raw, '#' * 30))
 
     def parse_line(self, line):
         if not Insel.warning.search(line):
@@ -128,7 +131,7 @@ class TemporaryModel(Model):
             os.remove(self.path)
 
     def content(self):
-        raise Exception("Implement %s.content() !" % self.__class__.__name__)
+        raise NotImplementedError("Implement %s.content() !" % self.__class__.__name__)
 
 class OneBlockModel(TemporaryModel):
     def __init__(self, name='', inputs=[], parameters=[], outputs=1):
@@ -182,7 +185,7 @@ class Template(TemporaryModel):
         if os.path.exists(f):
             return f
         else:
-            raise Exception("No template in %s" % f)
+            raise FileNotFoundError("No template in %s" % f)
 
     def replace(self, string):
         var_name, index, default = string.groups()
@@ -198,7 +201,7 @@ class Template(TemporaryModel):
         elif default is not None:
             return default
         else:
-            raise Exception(
+            raise AttributeError(
                 "UndefinedValue for '%s' in %s.insel template" %
                 (var_name, self.name))
 
