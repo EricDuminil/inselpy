@@ -128,6 +128,14 @@ class Model(object):
     def content(self):
         raise Exception("Implement %s.content() !" % self.__class__.__name__)
 
+class ExistingModel(Model):
+    def __init__(self, path):
+        super(ExistingModel, self).__init__()
+        self.path = path
+
+    def raw_results(self):
+        Insel.calls += 1
+        return subprocess.check_output([Insel.command, self.path], shell=False)
 
 class OneBlockModel(Model):
     def __init__(self, name='', inputs=[], parameters=[], outputs=1):

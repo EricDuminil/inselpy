@@ -369,6 +369,11 @@ class TestTemplate(CustomAssertions):
                 written = [float(line.split(separator)[0]) for line in content]
                 self.compareLists(written, range(1, 11), places=5)
 
+class TestExistingModel(CustomAssertions):
+    def test_one_to_ten(self):
+        insel.run('templates/one_to_ten.insel')
+
+
 if __name__ == '__main__':
     unittest.main(exit=False)
     print(f'Total INSEL calls : {insel.insel.Insel.calls}')

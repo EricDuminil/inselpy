@@ -1,6 +1,4 @@
-from .insel import OneBlockModel
-from .insel import Template
-
+from .insel import OneBlockModel, Template, ExistingModel
 
 def block(name, *args, **kwargs):
     parameters = kwargs.get('parameters', [])
@@ -10,3 +8,7 @@ def block(name, *args, **kwargs):
 
 def template(name, **parameters):
     return Template(name, **parameters).run()
+
+
+def run(path):
+    return ExistingModel(path).run()
