@@ -10,7 +10,6 @@ from configparser import ConfigParser
 
 # logging.basicConfig(level=logging.WARNING)
 #TODO: Move to separate classes?
-#TODO: Drop python2 support?
 #TODO: Test with INSEL 8.3 on Windows
 
 #NOTE: Expects insel command in path, not sure if it's a good idea
@@ -124,8 +123,8 @@ class TemporaryModel(Model):
     def raw_results(self):
         try:
             with self.tempfile() as temp_model:
-                temp_model.write(self.content())
                 self.path = temp_model.name
+                temp_model.write(self.content())
             return super().raw_results()
         finally:
             os.remove(self.path)
