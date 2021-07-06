@@ -2,10 +2,25 @@
 import unittest
 import math
 import logging
-import insel
 import tempfile
+import os
 from pathlib import Path
+import contextlib
+import insel
+from insel.insel import InselError # What is the correct way?
 logging.basicConfig(level=logging.ERROR)
+
+SCRIPT_DIR = Path(__file__).parent.resolve()
+
+@contextlib.contextmanager
+def cwd(path):
+    """Changes working directory and returns to previous on exit."""
+    prev_cwd = Path.cwd()
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(prev_cwd)
 
 #TODO: Add tests for relative paths. relative insel models, relative text files
 
@@ -83,9 +98,9 @@ class TestBlock(CustomAssertions):
         self.assertInf(insel.block('diff', 2, float('inf')))
 
         # Not exactly 2 inputs:
-        self.assertRaises(Exception, insel.block, 'diff')
-        self.assertRaises(Exception, insel.block, 'diff', 1)
-        self.assertRaises(Exception, insel.block, 'diff', 1, 2, 3)
+        self.assertRaises(InselError, insel.block, 'diff')
+        self.assertRaises(InselError, insel.block, 'diff', 1)
+        self.assertRaises(InselError, insel.block, 'diff', 1, 2, 3)
 
     def test_gain(self):
         self.assertAlmostEqual(insel.block('gain',
@@ -107,7 +122,7 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('att',
                                            3, parameters=[2]), 1.5, places=8)
         # Division by 0
-        self.assertRaises(Exception, insel.block, 'att', 1, parameters=[0])
+        self.assertRaises(InselError, insel.block, 'att', 1, parameters=[0])
         # Multiple inputs
         results = insel.block('att', 9, 3, 6, 7.5, parameters=[3], outputs=4)
         self.assertEqual(repr(results), '[3.0, 1.0, 2.0, 2.5]')
@@ -317,8 +332,6 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(insel.template('a_times_b', a=4, b=5),
                                20, places=6)
 
-
-
     def test_non_ascii_template(self):
         utf8_template = insel.Template('a_times_b_utf8', a=2, b=2)
         utf8_template.timeout = 5
@@ -329,6 +342,7 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(iso_template.run(), 16, places=6)
 
     def test_sunpower_isc(self):
+        self.assertRaises(AttributeError, insel.template, 'i_sc') # Missing attributes
         spr_isc = insel.template('i_sc', pv_id='008823', temperature=25, irradiance=1000)
         self.assertIsInstance(spr_isc, float)
         self.assertAlmostEqual(spr_isc, 5.87, places=2)
@@ -373,7 +387,31 @@ class TestExistingModel(CustomAssertions):
     def test_one_to_ten(self):
         self.compareLists(insel.run('templates/one_to_ten.insel'), range(1, 11))
 
+    def test_nonexisting_model(self):
+        self.assertRaises(InselError, insel.run, 'templates/not_here.insel')
+        self.assertRaises(InselError, insel.run, 'not_here/model.insel')
+
+    def test_read_relative_file_when_in_correct_folder(self):
+        with cwd(SCRIPT_DIR / 'templates'):
+            deviation = insel.run('read_relative_file.insel')
+            self.assertAlmostEqual(deviation, 0, places=6)
+
+    def test_cannot_read_relative_file_when_in_wrong_folder(self):
+        with cwd(SCRIPT_DIR):
+            with self.assertRaises(InselError) as cm:
+                insel.run('templates/read_relative_file.insel')
+            ex = cm.exception
+            print(str(ex))
+            self.assertTrue('Cannot open file' in str(ex))
+            self.assertTrue('1 error, 0 warnings' in str(ex))
+
+    def test_can_read_relative_file_with_absolute_path(self):
+        with cwd(Path.home()):
+            deviation = insel.run((SCRIPT_DIR / 'templates' / 'read_relative_file.insel').resolve())
+            self.assertAlmostEqual(deviation, 0, places=6)
+
 
 if __name__ == '__main__':
-    unittest.main(exit=False)
-    print(f'Total INSEL calls : {insel.insel.Insel.calls}')
+    with cwd(SCRIPT_DIR):
+        unittest.main(exit=False)
+        print(f'Total INSEL calls : {insel.insel.Insel.calls}')
