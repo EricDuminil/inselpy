@@ -9,6 +9,9 @@ from contextlib import contextmanager
 import sys
 
 # logging.basicConfig(level=logging.WARNING)
+#TODO: Move to separate classes?
+#TODO: Drop python2 support?
+#TODO: Test with INSEL 8.3 on Windows
 
 
 if sys.version_info < (3, 0):
@@ -16,11 +19,10 @@ if sys.version_info < (3, 0):
 else:
     from configparser import ConfigParser
 
-# Used to switch back to old dir
-
 
 @contextmanager
 def cwd(path):
+    "Change directory, execute and come back to original dir"
     oldpwd = os.getcwd()
     os.chdir(path)
     try:
@@ -137,7 +139,7 @@ class ExistingModel(Model):
         Insel.calls += 1
         return subprocess.check_output([Insel.command, self.path], shell=False)
 
-class OneBlockModel(Model):
+class OneBlockModel(TemporaryModel):
     def __init__(self, name='', inputs=[], parameters=[], outputs=1):
         super(OneBlockModel, self).__init__()
         self.name = name
@@ -175,7 +177,7 @@ class OneBlockModel(Model):
         return "\n".join(lines)
 
 
-class Template(Model):
+class Template(TemporaryModel):
     dirname = os.path.join(os.path.dirname(__file__), '../templates')
     pattern = re.compile('\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
