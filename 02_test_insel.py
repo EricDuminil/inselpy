@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.ERROR)
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
 
+
 @contextlib.contextmanager
 def cwd(path):
     """Changes working directory and returns to previous on exit."""
@@ -22,7 +23,6 @@ def cwd(path):
     finally:
         os.chdir(prev_cwd)
 
-#TODO: Add tests for relative paths. relative insel models, relative text files
 
 # INSEL 8.3 convention
 STUTTGART = [48.77, 9.18, 1]
@@ -401,7 +401,6 @@ class TestExistingModel(CustomAssertions):
             with self.assertRaises(InselError) as cm:
                 insel.run('templates/read_relative_file.insel')
             ex = cm.exception
-            print(str(ex))
             self.assertTrue('Cannot open file' in str(ex))
             self.assertTrue('1 error, 0 warnings' in str(ex))
 
