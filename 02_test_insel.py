@@ -7,6 +7,8 @@ import tempfile
 from pathlib import Path
 logging.basicConfig(level=logging.ERROR)
 
+#TODO: Add tests for relative paths. relative insel models, relative text files
+
 # INSEL 8.3 convention
 STUTTGART = [48.77, 9.18, 1]
 
