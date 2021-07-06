@@ -5,31 +5,15 @@ import re
 import math
 import platform
 import logging
-from contextlib import contextmanager
 import sys
+from configparser import ConfigParser
 
 # logging.basicConfig(level=logging.WARNING)
 #TODO: Move to separate classes?
 #TODO: Drop python2 support?
 #TODO: Test with INSEL 8.3 on Windows
 
-
-if sys.version_info < (3, 0):
-    from ConfigParser import SafeConfigParser as ConfigParser
-else:
-    from configparser import ConfigParser
-
-
-@contextmanager
-def cwd(path):
-    "Change directory, execute and come back to original dir"
-    oldpwd = os.getcwd()
-    os.chdir(path)
-    try:
-        yield
-    finally:
-        os.chdir(oldpwd)
-
+#NOTE: Expects insel command in path, not sure if it's a good idea
 
 class Insel(object):
     calls = 0
@@ -114,21 +98,13 @@ class Model(object):
             return array
 
     def raw_results(self):
-        with cwd(Insel.dirname):
-            f = self.insel_file = self.tempfile()
-            f.write(self.content())
-            f.close()
-            Insel.calls += 1
-            return subprocess.check_output(
-                [Insel.command, f.name], shell=False, timeout=self.timeout)
+        f = self.insel_file = self.tempfile()
+        f.write(self.content())
+        f.close()
+        Insel.calls += 1
+        return subprocess.check_output(
+            [Insel.command, f.name], shell=False, timeout=self.timeout)
 
-    def tempfile(self):
-        return tempfile.NamedTemporaryFile(
-            mode='w+', suffix=Insel.extension, prefix='python_%s_' % self.name,
-            delete=False)
-
-    def content(self):
-        raise Exception("Implement %s.content() !" % self.__class__.__name__)
 
 class ExistingModel(Model):
     def __init__(self, path):
@@ -138,6 +114,15 @@ class ExistingModel(Model):
     def raw_results(self):
         Insel.calls += 1
         return subprocess.check_output([Insel.command, self.path], shell=False)
+
+class TemporaryModel(Model):
+    def tempfile(self):
+        return tempfile.NamedTemporaryFile(
+            mode='w+', suffix=Insel.extension, prefix='python_%s_' % self.name,
+            delete=False)
+
+    def content(self):
+        raise Exception("Implement %s.content() !" % self.__class__.__name__)
 
 class OneBlockModel(TemporaryModel):
     def __init__(self, name='', inputs=[], parameters=[], outputs=1):
