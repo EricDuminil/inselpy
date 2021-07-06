@@ -371,7 +371,7 @@ class TestTemplate(CustomAssertions):
 
 class TestExistingModel(CustomAssertions):
     def test_one_to_ten(self):
-        insel.run('templates/one_to_ten.insel')
+        self.compareLists(insel.run('templates/one_to_ten.insel'), range(1, 11))
 
 
 if __name__ == '__main__':
