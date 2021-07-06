@@ -66,6 +66,7 @@ class Model(object):
     def __init__(self):
         self.warnings = []
         self.timeout = None
+        self.path = None
 
     def run(self):
         raw = self.raw_results().decode()
@@ -81,7 +82,6 @@ class Model(object):
                     values = self.parse_line(line)
                     if values is not None:
                         floats.append(values)
-            os.remove(self.insel_file.name)
             return self.extract(floats)
         else:
             raise Exception("Problem with INSEL\n%s\n%s\n%s\n" %
@@ -98,17 +98,14 @@ class Model(object):
             return array
 
     def raw_results(self):
-        f = self.insel_file = self.tempfile()
-        f.write(self.content())
-        f.close()
         Insel.calls += 1
         return subprocess.check_output(
-            [Insel.command, f.name], shell=False, timeout=self.timeout)
+            [Insel.command, self.path], shell=False, timeout=self.timeout)
 
 
 class ExistingModel(Model):
     def __init__(self, path):
-        super(ExistingModel, self).__init__()
+        super().__init__()
         self.path = path
 
     def raw_results(self):
@@ -121,12 +118,21 @@ class TemporaryModel(Model):
             mode='w+', suffix=Insel.extension, prefix='python_%s_' % self.name,
             delete=False)
 
+    def raw_results(self):
+        try:
+            with self.tempfile() as temp_model:
+                temp_model.write(self.content())
+                self.path = temp_model.name
+            return super().raw_results()
+        finally:
+            os.remove(self.path)
+
     def content(self):
         raise Exception("Implement %s.content() !" % self.__class__.__name__)
 
 class OneBlockModel(TemporaryModel):
     def __init__(self, name='', inputs=[], parameters=[], outputs=1):
-        super(OneBlockModel, self).__init__()
+        super().__init__()
         self.name = name
         self.parameters = ["'%s'" % p if isinstance(p, str)
                            else str(p) for p in parameters]
@@ -167,7 +173,7 @@ class Template(TemporaryModel):
     pattern = re.compile('\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
     def __init__(self, name='', **parameters):
-        super(Template, self).__init__()
+        super().__init__()
         self.name = name
         self.parameters = self.add_defaults_to(parameters)
 
