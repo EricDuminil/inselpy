@@ -5,29 +5,17 @@ import re
 import math
 import platform
 import logging
-from contextlib import contextmanager
 import sys
+from configparser import ConfigParser
 
 # logging.basicConfig(level=logging.WARNING)
+#TODO: Move to separate classes?
+#TODO: Test with INSEL 8.3 on Windows
 
+#NOTE: Expects insel command in path, not sure if it's a good idea
 
-if sys.version_info < (3, 0):
-    from ConfigParser import SafeConfigParser as ConfigParser
-else:
-    from configparser import ConfigParser
-
-# Used to switch back to old dir
-
-
-@contextmanager
-def cwd(path):
-    oldpwd = os.getcwd()
-    os.chdir(path)
-    try:
-        yield
-    finally:
-        os.chdir(oldpwd)
-
+class InselError(Exception):
+    pass
 
 class Insel(object):
     calls = 0
@@ -80,6 +68,7 @@ class Model(object):
     def __init__(self):
         self.warnings = []
         self.timeout = None
+        self.path = None
 
     def run(self):
         raw = self.raw_results().decode()
@@ -95,11 +84,10 @@ class Model(object):
                     values = self.parse_line(line)
                     if values is not None:
                         floats.append(values)
-            os.remove(self.insel_file.name)
             return self.extract(floats)
         else:
-            raise Exception("Problem with INSEL\n%s\n%s\n%s\n" %
-                            ('#' * 30, raw, '#' * 30))
+            raise InselError("Problem with INSEL\n%s\n%s\n%s\n" %
+                             ('#' * 30, raw, '#' * 30))
 
     def parse_line(self, line):
         if not Insel.warning.search(line):
@@ -112,26 +100,41 @@ class Model(object):
             return array
 
     def raw_results(self):
-        with cwd(Insel.dirname):
-            f = self.insel_file = self.tempfile()
-            f.write(self.content())
-            f.close()
-            Insel.calls += 1
-            return subprocess.check_output(
-                [Insel.command, f.name], shell=False, timeout=self.timeout)
+        Insel.calls += 1
+        return subprocess.check_output(
+            [Insel.command, self.path], shell=False, timeout=self.timeout)
 
+
+class ExistingModel(Model):
+    def __init__(self, path):
+        super().__init__()
+        self.path = path
+
+    def raw_results(self):
+        Insel.calls += 1
+        return subprocess.check_output([Insel.command, self.path], shell=False)
+
+class TemporaryModel(Model):
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
             mode='w+', suffix=Insel.extension, prefix='python_%s_' % self.name,
             delete=False)
 
+    def raw_results(self):
+        try:
+            with self.tempfile() as temp_model:
+                self.path = temp_model.name
+                temp_model.write(self.content())
+            return super().raw_results()
+        finally:
+            os.remove(self.path)
+
     def content(self):
-        raise Exception("Implement %s.content() !" % self.__class__.__name__)
+        raise NotImplementedError("Implement %s.content() !" % self.__class__.__name__)
 
-
-class OneBlockModel(Model):
+class OneBlockModel(TemporaryModel):
     def __init__(self, name='', inputs=[], parameters=[], outputs=1):
-        super(OneBlockModel, self).__init__()
+        super().__init__()
         self.name = name
         self.parameters = ["'%s'" % p if isinstance(p, str)
                            else str(p) for p in parameters]
@@ -167,12 +170,12 @@ class OneBlockModel(Model):
         return "\n".join(lines)
 
 
-class Template(Model):
+class Template(TemporaryModel):
     dirname = os.path.join(os.path.dirname(__file__), '../templates')
     pattern = re.compile('\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
     def __init__(self, name='', **parameters):
-        super(Template, self).__init__()
+        super().__init__()
         self.name = name
         self.parameters = self.add_defaults_to(parameters)
 
@@ -181,7 +184,7 @@ class Template(Model):
         if os.path.exists(f):
             return f
         else:
-            raise Exception("No template in %s" % f)
+            raise FileNotFoundError("No template in %s" % f)
 
     def replace(self, string):
         var_name, index, default = string.groups()
@@ -197,7 +200,7 @@ class Template(Model):
         elif default is not None:
             return default
         else:
-            raise Exception(
+            raise AttributeError(
                 "UndefinedValue for '%s' in %s.insel template" %
                 (var_name, self.name))
 
