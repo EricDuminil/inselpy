@@ -191,9 +191,6 @@ class Template(TemporaryModel):
     def replace(self, string):
         var_name, index, default = string.groups()
         var_name = var_name.strip()
-        if var_name in ['longitude', 'timezone']:
-            logging.warning(
-                "WARNING : Make sure to use INSEL convention for {0}. Rename to insel_{0} to remove warning".format(var_name))
         if var_name in self.parameters:
             if index:
                 return str(self.parameters[var_name][int(index)])
@@ -211,10 +208,6 @@ class Template(TemporaryModel):
                 'bp_folder': os.path.join(Insel.dirname, "data", "bp"),
                 'template_folder': Template.dirname
                 }
-        if 'longitude' in parameters:
-            defaults['insel_longitude'] = -parameters['longitude']
-        if 'timezone' in parameters:
-            defaults['insel_timezone'] = (24 - parameters['timezone']) % 24
         defaults.update(parameters)
         return defaults
 

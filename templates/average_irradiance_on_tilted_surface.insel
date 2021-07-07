@@ -59,33 +59,33 @@ p 6
 	12
 	$irradiance_profile[11]$
 
-s 7	GENG 6.1 5.1 5.2 5.3 5.4
+s 7	GENG2 6.1 5.1 5.2 5.3 5.4
 p 7
-	 $ latitude        $ 
-	 $ insel_longitude $ 
-	 $ insel_timezone  $ 
+	 $ latitude  $ 
+	 $ longitude $ 
+	 $ timezone  $ 
 	1
 	0
 	0.300000012
 	0.171000004
 	4712
 
-s 8	GOH 5.1 5.2 5.3 5.4
+s 8	GOH2 5.1 5.2 5.3 5.4
 p 8
-	 $ latitude        $ 
-	 $ insel_longitude $ 
-	 $ insel_timezone  $ 
+	 $ latitude  $ 
+	 $ longitude $ 
+	 $ timezone  $ 
 
 s 9	G2GDH 7.1 8.1
 p 9
 	0
 
-s 10	GH2GT 7.1 9.1 1.1 2.1 3.1 5.1 5.2 5.3 5.4 4.1 4.1 4.1
+s 10	GH2GT2 7.1 9.1 1.1 2.1 3.1 5.1 5.2 5.3 5.4 4.1 4.1 4.1
 p 10
 	4
-	 $ latitude        $ 
-	 $ insel_longitude $ 
-	 $ insel_timezone  $ 
+	 $ latitude  $ 
+	 $ longitude $ 
+	 $ timezone  $ 
 
 s 11	AVE 10.1
 
