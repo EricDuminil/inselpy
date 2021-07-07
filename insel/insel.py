@@ -63,6 +63,7 @@ class Insel(object):
     warning = re.compile(r'^[EFW]\d{5}.*?$', re.M)
 
 
+# NOTE: Abstract class
 class Model(object):
 
     def __init__(self):
@@ -114,6 +115,7 @@ class ExistingModel(Model):
         Insel.calls += 1
         return subprocess.check_output([Insel.command, self.path], shell=False)
 
+# NOTE: Abstract class
 class TemporaryModel(Model):
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
