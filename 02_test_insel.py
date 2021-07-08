@@ -404,7 +404,8 @@ class TestExistingModel(CustomAssertions):
                 insel.run('templates/read_relative_file.insel')
             ex = cm.exception
             self.assertTrue('Cannot open file' in str(ex))
-            self.assertTrue('1 error, 0 warnings' in str(ex))
+            self.assertTrue('1 error' in str(ex))
+            self.assertTrue('0 warning' in str(ex))
 
     def test_can_read_relative_file_with_absolute_path(self):
         with cwd(Path.home()):
