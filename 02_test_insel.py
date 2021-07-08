@@ -309,8 +309,10 @@ class TestTemplate(CustomAssertions):
         for x, row in zip(range(-14, 19), matrix):
             x = x / 2
             self.assertAlmostEqual(x, row[0], places=6)
-            self.assertAlmostEqual(r1 := 10**x, row[1], delta=r1/1e6)
-            self.assertAlmostEqual(r2 := -10**(-x), row[2], delta=-r2/1e6)
+            r1 = 10**x
+            r2 = -10**(-x)
+            self.assertAlmostEqual(r1, row[1], delta=r1/1e6)
+            self.assertAlmostEqual(r2, row[2], delta=-r2/1e6)
 
     def test_updated_coordinates(self):
         v1_results = insel.template('nurnberg_v1',
