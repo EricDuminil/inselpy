@@ -36,10 +36,10 @@ p 5
                     1
     'h'
 b 6 AVEC  11.1 12.1
-b 7 CHS  9.1
+b 7 CHS  9.2
 b 9 READ
 p 9
-                    1
+                    2
                     0
     '$template_folder$/gengt_comparison.dat'
     '*'
