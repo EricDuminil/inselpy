@@ -1,26 +1,12 @@
 % Originally exported and saved from INSEL 8.2
 % in order to make sure that GENGT outputs the same results when run
 % multiple times from the GUI. Could help during refactoring.
-% The output should be 0
-b 1 MTM2  5.2
+% The output should be 0, 0
+b 1 MTM2  2.2
 p 1
     'Berlin'
-b 2 AVE  12.1
-b 3 GENGT2  1.1 1.3 1.4 1.5 1.7 1.8 5.1 5.2 5.3 5.4
-p 3
-                52.47
-                 13.3
-                    1
-                    1
-                    0
-                  0.3
-                0.171
-                 1002
-                  0.1
-                 2000
-b 4 HOY  5.1 5.2 5.3 5.4
-b 5 CLOCK
-p 5
+b 2 CLOCK
+p 2
                  2010
                     1
                     1
@@ -35,18 +21,37 @@ p 5
                     0
                     1
     'h'
-b 6 AVEC  11.1 12.1
-b 7 CHS  9.2
-b 9 READ
-p 9
+b 3 DOY  2.1 2.2 2.3
+b 4 AVE  11.1 11.2
+b 6 GAIN  13.1
+p 6
+                  365
+b 7 AVEC  14.1 11.1 11.2
+b 8 DIFF  10.1 12.1
+b 9 DIFF  10.2 12.2
+b 10 GENGT2  1.1 1.3 1.4 1.5 1.7 1.8 2.1 2.2 2.3 2.4
+p 10
+                52.47
+                 13.3
+                    1
+                    1
+                    0
+                  0.3
+                0.171
+                 1002
+                  0.1
+                 2000
+b 11 ABS  8.1 9.1
+b 12 READ
+p 12
                     2
                     0
     './gengt_comparison.dat'
     '*'
-b 10 SUM  3.2 7.1
-b 11 DOY  5.1 5.2 5.3
-b 12 ABS  10.1
-b 13 SCREEN  2.1
+b 13 OFFSET  2.1
 p 13
+                -2010
+b 14 SUM  6.1 3.1
+b 15 SCREEN  4.1 4.2
+p 15
     '*'
-

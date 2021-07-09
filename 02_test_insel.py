@@ -396,7 +396,7 @@ class TestExistingModel(CustomAssertions):
     def test_read_relative_file_when_in_correct_folder(self):
         with cwd(SCRIPT_DIR / 'templates'):
             deviation = insel.run('read_relative_file.insel')
-            self.assertAlmostEqual(deviation, 0, places=6)
+            self.compareLists(deviation, [0, 0])
 
     def test_cannot_read_relative_file_when_in_wrong_folder(self):
         with cwd(SCRIPT_DIR):
@@ -410,7 +410,7 @@ class TestExistingModel(CustomAssertions):
     def test_can_read_relative_file_with_absolute_path(self):
         with cwd(Path.home()):
             deviation = insel.run((SCRIPT_DIR / 'templates' / 'read_relative_file.insel').resolve())
-            self.assertAlmostEqual(deviation, 0, places=6)
+            self.compareLists(deviation, [0, 0])
 
 
 if __name__ == '__main__':
