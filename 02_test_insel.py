@@ -301,7 +301,7 @@ class TestTemplate(CustomAssertions):
 
     def test_gengt_consistency(self):
         deviation = insel.template('gengt_comparison')
-        self.assertAlmostEqual(deviation, 0, places=6)
+        self.compareLists(deviation, [0, 0])
 
     def test_aligned_screen_block(self):
         # Numbers should not be too close to each other
