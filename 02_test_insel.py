@@ -306,10 +306,10 @@ class TestTemplate(CustomAssertions):
     def test_gengt_averages(self):
         irradiance_deviation, temperature_deviation =\
                 insel.template('gengt_monthly_averages')
-        self.assertTrue(abs(irradiance_deviation) < 5,
-                        "Irradiance shouldnt vary by more than 5 W/m²")
-        self.assertTrue(abs(temperature_deviation) < 0.1,
-                        "Temperature shouldnt vary by more than 0.1K")
+        self.assertAlmostEqual(irradiance_deviation, 0, delta=5,
+                               msg="Irradiance shouldnt vary by more than 5 W/m²")
+        self.assertAlmostEqual(temperature_deviation, 0, delta=0.1,
+                               msg="Temperature shouldnt vary by more than 0.1K")
 
     def test_aligned_screen_block(self):
         # Numbers should not be too close to each other
