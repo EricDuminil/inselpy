@@ -420,6 +420,14 @@ class TestExistingModel(CustomAssertions):
             deviation = insel.run((SCRIPT_DIR / 'templates' / 'read_relative_file.insel').resolve())
             self.compareLists(deviation, [0, 0])
 
+class TestUserBlocks(CustomAssertions):
+    def test_ubstorage(self):
+        insel.block('ubstorage', 1, 2, parameters=[10, 0, 1, 1, 0, 100, 0, 1, 0])
+
+    def test_ubisonland(self):
+        self.assertAlmostEqual(insel.block('ubisonland', 48.77, 9.18), 1)
+        self.assertAlmostEqual(insel.block('ubisonland', 48.77, -9.18), 0)
+
 
 if __name__ == '__main__':
     with cwd(SCRIPT_DIR):
