@@ -428,6 +428,8 @@ class TestUserBlocks(CustomAssertions):
         self.assertAlmostEqual(insel.block('ubisonland', 48.77, 9.18), 1)
         self.assertAlmostEqual(insel.block('ubisonland', 48.77, -9.18), 0)
 
+    #TODO: Test UBCHP
+
 
 if __name__ == '__main__':
     with cwd(SCRIPT_DIR):
