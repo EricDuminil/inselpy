@@ -58,7 +58,7 @@ class Insel(object):
     command = config['command']
     extension = ".insel"
     normal_run = re.compile(
-        r'Running insel [\d\w \.]+ \.\.\.\s+([^\*]*)Normal end of run',
+        r'Running insel [\d\w \.\-]+ \.\.\.\s+([^\*]*)Normal end of run',
         re.I | re.DOTALL)
     warning = re.compile(r'^[EFW]\d{5}.*?$', re.M)
 
