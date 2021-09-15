@@ -27,22 +27,19 @@ class Insel(object):
         default_configs = {
             #'linux': {'dirname': "/usr/local/INSEL/resources/", 'command': 'insel'}, # INSEL 8.2
             'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
-            'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.3', 'resources'), 'command': 'insel.exe'},
+            'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.3'), 'command': 'insel.exe'},
             'darwin': {'dirname': "/Users/Shared", 'command': 'insel'}
         }
 
         if system == 'windows':
             ini_filename = os.path.join(
                 os.getenv('ALLUSERSPROFILE'), 'INSEL', 'inselroot.ini')
+            subfolder = ''
         else:
             ini_filename = "/Users/Shared/insel/inselroot.ini"
+            subfolder = 'Contents'
 
         config = default_configs[system]
-
-        if system == 'mac':
-            subfolder = 'Contents'
-        else:
-            subfolder = 'resources'
 
         if os.path.exists(ini_filename):
             ini_file = ConfigParser()
