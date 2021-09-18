@@ -50,9 +50,9 @@ class TestBlock(CustomAssertions):
         insel_b = subprocess.check_output([Insel.command, '-b'], shell=False).decode()
         blocks = Counter(insel_b.split('\n\n')[-1].split())
         self.assertTrue(len(blocks) > 300, "There should be many blocks")
-        for block, count in blocks.most_common():
-            if count > 1:
-                self.fail(f"{block} is defined {count} times.")
+        duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
+        if duplicates:
+            self.fail("Some blocks are defined multiples times : " + ','.join(f"{b} ({c} times)" for (b,c) in duplicates))
 
 
     def test_pi(self):
