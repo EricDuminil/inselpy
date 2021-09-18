@@ -52,7 +52,8 @@ class TestBlock(CustomAssertions):
         self.assertTrue(len(blocks) > 300, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
         if duplicates:
-            self.fail("Some blocks are defined multiples times : " + ','.join(f"{b} ({c} times)" for (b,c) in duplicates))
+            self.fail("Some blocks are defined multiples times : " +
+                    ','.join(f"{b} ({c} times)" for (b,c) in duplicates))
 
 
     def test_pi(self):
