@@ -6,8 +6,10 @@ import tempfile
 import os
 from pathlib import Path
 import contextlib
+import subprocess
 import insel
-from insel.insel import InselError # What is the correct way?
+from insel.insel import Insel, InselError
+from collections import Counter
 logging.basicConfig(level=logging.ERROR)
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
@@ -44,6 +46,15 @@ class CustomAssertions(unittest.TestCase):
             self.assertAlmostEqual(a, b, places=places)
 
 class TestBlock(CustomAssertions):
+    def test_blocks_are_unique(self):
+        insel_b = subprocess.check_output([Insel.command, '-b'], shell=False).decode()
+        blocks = Counter(insel_b.split('\n\n')[-1].split())
+        self.assertTrue(len(blocks) > 300, "There should be many blocks")
+        for block, count in blocks.most_common():
+            if count > 1:
+                self.fail(f"{block} is defined {count} times.")
+
+
     def test_pi(self):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
 
@@ -440,4 +451,4 @@ class TestUserBlocks(CustomAssertions):
 if __name__ == '__main__':
     with cwd(SCRIPT_DIR):
         unittest.main(exit=False)
-        print(f'Total INSEL calls : {insel.insel.Insel.calls}')
+        print(f'Total INSEL calls : {Insel.calls}')
