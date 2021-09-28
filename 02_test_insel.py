@@ -370,10 +370,26 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(iso_template.run(), 16, places=6)
 
     def test_sunpower_isc(self):
-        self.assertRaises(AttributeError, insel.template, 'i_sc') # Missing attributes
-        spr_isc = insel.template('i_sc', pv_id='008823', temperature=25, irradiance=1000)
+        self.assertRaises(AttributeError, insel.template, 'i_sc') # Missing pv_id. STC by default
+        spr_isc = insel.template('i_sc', pv_id='008823')
         self.assertIsInstance(spr_isc, float)
         self.assertAlmostEqual(spr_isc, 5.87, places=2)
+
+        self.assertAlmostEqual(insel.template('i_sc', pv_id='003305'),
+                               5.96, places=2)
+        #NOTE: This spec fails because of a too low "Temperature coeff of short-circuit current" in .bp files
+        # .982E-7 in this example, instead of ~0.2E-3
+        self.assertAlmostEqual(insel.template('i_sc', pv_id='003305', temperature=70),
+                               5.96+(70-25)*3.5e-3, places=2)
+
+    def test_sunpower_uoc(self):
+        self.assertRaises(AttributeError, insel.template, 'u_oc') # Missing pv_id. STC by default
+        self.assertAlmostEqual(insel.template('u_oc', pv_id='003305'),
+                               64.2, places=2)
+        #NOTE: Actually not sure about this calculation. Were do the bp values come from???
+        temp = 70
+        self.assertAlmostEqual(insel.template('u_oc', pv_id='003305', temperature=temp),
+                               64.2+(temp-25)*(-0.1766), places=2)
 
     def test_write_block(self):
         self.run_write_block()
