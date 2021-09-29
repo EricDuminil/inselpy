@@ -396,7 +396,7 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(insel.template('mpp', pv_id='003305'),
                                305, places=0)
         temp = 70
-        #TODO: Check with PVSYST. Is this the correct formula?
+        #TODO: Check with PVSYST or PVLIB. Is this the correct formula?
         #NOTE: -0.38%/K P_mpp, according to SPR 305 manual (https://www.pocosolar.com/wp-content/themes/twentyfifteen/pdfs/Sunpower%20Solar%20Panels/sunpower_305wht_spec_sheet.pdf)
         self.assertAlmostEqual(insel.template('mpp', pv_id='003305', temperature=temp),
                                305 * (1 - 0.38 / 100)**(temp - 25), places=0)
