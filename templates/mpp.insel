@@ -1,0 +1,25 @@
+s 1	CONST
+p 1
+	$irradiance||1000$
+
+s 2	CONST
+p 2
+	$temperature||25$
+
+s 6	SCREEN 5.2
+p 6
+	'(6F12.5)'
+
+s 3	TOL 5.1
+
+s 4	$current||PVI$ 3.1 1.1 2.1
+p 4
+	0
+	i '$bp_folder$/pv$pv_id$.bp'
+
+s 5	MPP 4.1
+p 5
+	0
+	100
+	0.01
+

@@ -391,6 +391,16 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(insel.template('u_oc', pv_id='003305', temperature=temp),
                                64.2+(temp-25)*(-0.1766), places=2)
 
+    def test_sunpower_mpp(self):
+        self.assertRaises(AttributeError, insel.template, 'mpp') # Missing pv_id. STC by default
+        self.assertAlmostEqual(insel.template('mpp', pv_id='003305'),
+                               305, places=0)
+        temp = 70
+        #TODO: Check with PVSYST
+        #NOTE: -0.38%/K P_mpp, according to SPR 305 manual (https://www.pocosolar.com/wp-content/themes/twentyfifteen/pdfs/Sunpower%20Solar%20Panels/sunpower_305wht_spec_sheet.pdf)
+        self.assertAlmostEqual(insel.template('mpp', pv_id='003305', temperature=temp),
+                               305 * (1 - 0.38 / 100)**(temp - 25), places=0)
+
     def test_write_block(self):
         self.run_write_block()
         self.run_write_block(overwrite=0)
