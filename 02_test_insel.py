@@ -4,6 +4,7 @@ import math
 import logging
 import tempfile
 import os
+import platform
 from pathlib import Path
 import contextlib
 import subprocess
@@ -25,6 +26,8 @@ def cwd(path):
     finally:
         os.chdir(prev_cwd)
 
+
+IS_WINDOWS = platform.system().lower() == 'windows'
 
 # INSEL 8.3 convention
 STUTTGART = [48.77, 9.18, 1]
@@ -319,7 +322,9 @@ class TestTemplate(CustomAssertions):
 
     def test_gengt_consistency(self):
         deviation = insel.template('gengt_comparison')
-        self.compareLists(deviation, [0, 0])
+        #NOTE: Original tests were written on Linux.
+        # On Windows, pseudo random values are very slightly different, so the allowed deviation is a bit higher, but still not problematic at all for temperature or irradiance.
+        self.compareLists(deviation, [0, 0], places=4 if IS_WINDOWS else 8)
 
     def test_gengt_averages(self):
         irradiance_deviation, temperature_deviation =\
@@ -448,17 +453,17 @@ class TestExistingModel(CustomAssertions):
     def test_read_relative_file_when_in_correct_folder(self):
         with cwd(SCRIPT_DIR / 'templates'):
             deviation = insel.run('read_relative_file.insel')
-            self.compareLists(deviation, [0, 0])
+            self.compareLists(deviation, [0, 0], places=4 if IS_WINDOWS else 8)
 
     def test_read_relative_file_when_in_another_folder(self):
         with cwd(SCRIPT_DIR):
             deviation = insel.run('templates/read_relative_file.insel')
-            self.compareLists(deviation, [0, 0])
+            self.compareLists(deviation, [0, 0], places=4 if IS_WINDOWS else 8)
 
     def test_can_read_relative_file_with_absolute_path(self):
         with cwd(Path.home()):
             deviation = insel.run((SCRIPT_DIR / 'templates' / 'read_relative_file.insel').resolve())
-            self.compareLists(deviation, [0, 0])
+            self.compareLists(deviation, [0, 0], places=4 if IS_WINDOWS else 8)
 
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
