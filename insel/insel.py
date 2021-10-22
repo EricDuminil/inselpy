@@ -5,8 +5,6 @@ import re
 import math
 import platform
 import logging
-import sys
-from configparser import ConfigParser
 import shutil
 
 # logging.basicConfig(level=logging.WARNING)
@@ -23,30 +21,12 @@ class Insel(object):
         system = platform.system().lower()
 
         default_configs = {
-            #'linux': {'dirname': "/usr/local/INSEL/resources/", 'command': 'insel'}, # INSEL 8.2
             'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
             'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.3'), 'command': 'insel.exe'},
             'darwin': {'dirname': "/Users/Shared", 'command': 'insel'} # NOTE: not sure about the dirname
         }
 
-        if system == 'windows':
-            ini_filename = os.path.join(
-                os.getenv('ALLUSERSPROFILE'), 'INSEL', 'inselroot.ini')
-            subfolder = ''
-        else:
-            ini_filename = "/Users/Shared/insel/inselroot.ini"
-            subfolder = 'Contents'
-
-        config = default_configs[system]
-
-        if os.path.exists(ini_filename):
-            ini_file = ConfigParser()
-            ini_file.read(ini_filename)
-            insel_root = ini_file.get('InstallDir', 'INSELROOT')
-            if insel_root:
-                config['dirname'] = os.path.join(insel_root, subfolder)
-
-        return config
+        return default_configs[system]
 
     config = get_config.__func__()
     dirname = config['dirname']
