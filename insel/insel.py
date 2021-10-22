@@ -7,6 +7,7 @@ import platform
 import logging
 import sys
 from configparser import ConfigParser
+import shutil
 
 # logging.basicConfig(level=logging.WARNING)
 #TODO: Move to separate files, one per class?
@@ -25,7 +26,7 @@ class Insel(object):
             #'linux': {'dirname': "/usr/local/INSEL/resources/", 'command': 'insel'}, # INSEL 8.2
             'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
             'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.3'), 'command': 'insel.exe'},
-            'darwin': {'dirname': "/Users/Shared", 'command': 'insel'}
+            'darwin': {'dirname': "/Users/Shared", 'command': 'insel'} # NOTE: not sure about the dirname
         }
 
         if system == 'windows':
@@ -50,6 +51,9 @@ class Insel(object):
     config = get_config.__func__()
     dirname = config['dirname']
     command = config['command']
+    if shutil.which(command) is None:
+        # If insel is not in PATH, use absolute path.
+        command = os.path.join(dirname, command)
     extension = ".insel"
     normal_run = re.compile(
         r'Running insel [\d\w \.\-]+ \.\.\.\s+([^\*]*)Normal end of run',
