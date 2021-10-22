@@ -10,9 +10,6 @@ from configparser import ConfigParser
 
 # logging.basicConfig(level=logging.WARNING)
 #TODO: Move to separate classes?
-#TODO: Test with INSEL 8.3 on Windows
-
-#NOTE: Expects insel command in path, not sure if it's a good idea
 
 class InselError(Exception):
     pass
