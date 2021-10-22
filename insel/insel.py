@@ -9,7 +9,7 @@ import sys
 from configparser import ConfigParser
 
 # logging.basicConfig(level=logging.WARNING)
-#TODO: Move to separate classes?
+#TODO: Move to separate files, one per class?
 
 class InselError(Exception):
     pass
