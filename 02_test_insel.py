@@ -176,7 +176,8 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('exp', 1.0), 2.71828, places=5)
         self.assertAlmostEqual(insel.block('exp', 0.0), 1.0, places=6)
         self.assertAlmostEqual(insel.block('exp', -1.0), 1 / 2.71828, places=6)
-        self.assertAlmostEqual(insel.block('exp', 20), math.exp(20), places=-2)
+        for x in [-50, -20, 20, 50, 80]:
+            self.assertAlmostEqual(insel.block('exp', x) / math.exp(x), 1, places=6)
         self.assertEqual(' '.join(['%.2f' % x for x in
                                    insel.block('exp', -3.5, -2.0, 1.4, 2.6, 4.7, outputs=5)]),
                          '0.03 0.14 4.06 13.46 109.95')
