@@ -22,7 +22,7 @@ class Insel(object):
 
         default_configs = {
             'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
-            'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'INSEL 8.3'), 'command': 'insel.exe'},
+            'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'insel'), 'command': 'insel.exe'},
             'darwin': {'dirname': "/Users/Shared", 'command': 'insel'} # NOTE: not sure about the dirname
         }
 
