@@ -439,6 +439,13 @@ class TestTemplate(CustomAssertions):
                 written = [float(line.split(separator)[0]) for line in content]
                 self.compareLists(written, range(1, 11), places=5)
 
+    def test_simple_file(self):
+        fourfivesix = insel.template('read_simple_file', ext='dat')
+        self.compareLists(fourfivesix, [4, 5, 6])
+        #READ block completely skips CSV files :-/
+        fourfivesix = insel.template('read_simple_file', ext='csv')
+        self.compareLists(fourfivesix, [4, 5, 6])
+
 class TestExistingModel(CustomAssertions):
     def test_one_to_ten(self):
         self.compareLists(insel.run('templates/one_to_ten.insel'), range(1, 11))

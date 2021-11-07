@@ -1,0 +1,15 @@
+b 1 DO
+p 1
+                    1
+                    3
+                    1
+b 2 READ
+p 2
+                    3
+                    0
+    '$template_folder$/123.$ext$'
+    '*'
+b 3 AVE  2.1 2.2 2.3
+b 4 SCREEN  3.1 3.2 3.3
+p 4
+    '*'
