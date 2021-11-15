@@ -184,6 +184,7 @@ class Template(TemporaryModel):
     def add_defaults_to(self, parameters):
         defaults = {
                 'bp_folder': os.path.join(Insel.dirname, "data", "bp"),
+                'data_folder': os.path.join(Template.dirname, "..", "data"),
                 'template_folder': Template.dirname
                 }
         defaults.update(parameters)

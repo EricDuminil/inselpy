@@ -46,7 +46,7 @@ b 12 READ
 p 12
                     2
                     0
-    './gengt_comparison.dat'
+    '../data/gengt_comparison.dat'
     '*'
 b 13 OFFSET  2.1
 p 13

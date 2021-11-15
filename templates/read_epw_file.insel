@@ -1,0 +1,15 @@
+b 1 DO
+p 1
+                    1
+                 8760
+                    1
+b 2 READ
+p 2
+                   34
+                    8
+    '$data_folder$/DEU_Stuttgart.107380_IWEC.epw'
+    '*'
+b 3 AVE  2.6
+b 4 SCREEN  3.1
+p 4
+    '*'
