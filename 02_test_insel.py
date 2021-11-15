@@ -444,13 +444,16 @@ class TestTemplate(CustomAssertions):
         self.compareLists(fourfivesix, [4, 5, 6])
 
     def test_read_csv_like_as_normal_file(self):
-        #READ block completely skips CSV files :-/
+        #READ block used to completely skip CSV files :-/
         fourfivesix = insel.template('read_simple_file', ext='csv')
         self.compareLists(fourfivesix, [4, 5, 6])
 
     def test_read_epw_file(self):
-        stuttgart_epw_average_temp = insel.template('read_epw_file')
+        stuttgart_epw_average_temp = insel.template('read_epw_file', ext='epw')
         self.assertAlmostEqual(stuttgart_epw_average_temp, 9.1, places=1)
+        nothing_to_read = insel.template('read_epw_file', ext='txt')
+        self.assertEqual(nothing_to_read, [])
+
 
 class TestExistingModel(CustomAssertions):
     def test_one_to_ten(self):

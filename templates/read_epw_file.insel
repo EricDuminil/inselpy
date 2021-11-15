@@ -7,7 +7,7 @@ b 2 READ
 p 2
                    34
                     8
-    '$data_folder$/DEU_Stuttgart.107380_IWEC.epw'
+    '$data_folder$/DEU_Stuttgart.107380_IWEC.$ext$'
     '*'
 b 3 AVE  2.6
 b 4 SCREEN  3.1
