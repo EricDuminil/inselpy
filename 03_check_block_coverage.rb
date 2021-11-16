@@ -39,15 +39,18 @@ require 'set'
 tested_blocks = Set.new(tested_blocks)
 blocks_in_examples = Set.new(blocks_in_examples)
 
-
-all_blocks.each do |block|
+color_blocks = all_blocks.map do |block|
   if tested_blocks.include? block
-    puts block.green
+    block.green
   elsif blocks_in_examples.include? block
-    puts block.blue
+    block.blue
   else
-    puts block.red
+    block.red
   end
 end
 
+max_size = color_blocks.map(&:size).max + 2
 
+color_blocks.each_slice(12).each do |bs|
+  puts bs.map{ |b| b.ljust(max_size, ' ')}.join
+end
