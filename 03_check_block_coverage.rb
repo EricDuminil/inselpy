@@ -50,7 +50,10 @@ color_blocks = all_blocks.map do |block|
 end
 
 max_size = color_blocks.map(&:size).max + 2
+COLUMNS = 12
+n = color_blocks.size
+h = (n / COLUMNS).ceil
 
-color_blocks.each_slice(12).each do |bs|
+color_blocks.each_slice(h).map{|l| l + [""] * (h - l.size)}.transpose.each do |bs|
   puts bs.map{ |b| b.ljust(max_size, ' ')}.join
 end
