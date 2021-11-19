@@ -33,6 +33,9 @@ class CustomAssertions(unittest.TestCase):
     def assertNaN(self, x):
         self.assertTrue(math.isnan(x), f'{x} should be NaN')
 
+    def assertNotNaN(self, x):
+        self.assertFalse(math.isnan(x), f'{x} should not be NaN')
+
     def assertInf(self, x):
         self.assertTrue(math.isinf(x), f'{x} should be Infinity')
 
@@ -287,6 +290,9 @@ class TestBlock(CustomAssertions):
                                      parameters=STUTTGART, outputs=5)
         self.assertTrue(moon_stuttgart[4] > 178,
                         "10.06.2021 should be a new moon.")
+
+        # It should work at the equator too:
+        self.assertNotNaN(insel.block('moonae2', 2021, 11, 19, 12, parameters = [0,0,0]))
 
     def test_sunae(self):
         for mode in range(3):
