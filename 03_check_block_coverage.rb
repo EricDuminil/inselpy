@@ -1,6 +1,7 @@
 # Quick and dirty script to check how many blocks are tested (green) or present in examples (blue)
 # TODO: Check Java classes too
 # TODO: Check Java Palette
+# TODO: Check Documentation too
 templates = Dir.glob("templates/*.insel")
 blocks_in_templates = templates.map{ |t|
   File.read(t).force_encoding("utf-8").encode("utf-8", invalid: :replace, replace: "?").scan(/^[bs]\s+\d+\s+(\w+)/i)
