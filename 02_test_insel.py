@@ -78,6 +78,14 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('or', 2, 2), 0)
         self.assertAlmostEqual(insel.block('or', 0.1, 1.1), 1)
 
+    def test_xor(self):
+        self.assertAlmostEqual(insel.block('xor', 1, 1), 0)
+        self.assertAlmostEqual(insel.block('xor', 0, 1), 1)
+        self.assertAlmostEqual(insel.block('xor', 1, 0), 1)
+        self.assertAlmostEqual(insel.block('xor', 0, 0), 0)
+        self.assertAlmostEqual(insel.block('xor', 2, 2), 0)
+        self.assertAlmostEqual(insel.block('xor', 0.1, 1.1), 1)
+
     def test_sum(self):
         self.assertAlmostEqual(insel.block('sum', 2), 2, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
