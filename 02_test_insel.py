@@ -62,6 +62,22 @@ class TestBlock(CustomAssertions):
     def test_pi(self):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
 
+    def test_and(self):
+        self.assertAlmostEqual(insel.block('and', 1, 1), 1)
+        self.assertAlmostEqual(insel.block('and', 0, 1), 0)
+        self.assertAlmostEqual(insel.block('and', 1, 0), 0)
+        self.assertAlmostEqual(insel.block('and', 0, 0), 0)
+        self.assertAlmostEqual(insel.block('and', 2, 2), 0)
+        self.assertAlmostEqual(insel.block('and', 0.9, 1.1), 1)
+
+    def test_or(self):
+        self.assertAlmostEqual(insel.block('or', 1, 1), 1)
+        self.assertAlmostEqual(insel.block('or', 0, 1), 1)
+        self.assertAlmostEqual(insel.block('or', 1, 0), 1)
+        self.assertAlmostEqual(insel.block('or', 0, 0), 0)
+        self.assertAlmostEqual(insel.block('or', 2, 2), 0)
+        self.assertAlmostEqual(insel.block('or', 0.1, 1.1), 1)
+
     def test_sum(self):
         self.assertAlmostEqual(insel.block('sum', 2), 2, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
