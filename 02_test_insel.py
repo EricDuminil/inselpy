@@ -14,6 +14,8 @@ logging.basicConfig(level=logging.ERROR)
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
 
+#TODO: CUMC / MAXXC / MINC / ..
+#TODO: parametric ...
 
 @contextlib.contextmanager
 def cwd(path):
