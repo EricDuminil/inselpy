@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- XML for representing entities of a VSEit Network with their attributes and relationships-->
+
+<vseit-network xmlns:xlink="http://www.w3.org/1999/xlink" client-class="eu.insel.vseit.InselVseit" client-class-version="9" first-id="0" entity-count="4">
+<entity id="_0" class="eu.insel.block.DO">
+<ref name="outPorts"><to>_2</to></ref>
+<attr name="blockName"><string>DO</string></attr>
+<attr name="blockFunction"><string>fb0013</string></attr>
+<attr name="userBlockNumber"><int>1</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>1</string></attr>
+<attr name="bp2"><string>10</string></attr>
+<attr name="bp3"><string>1</string></attr>
+</entity>
+<entity id="_1" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_2</to></ref>
+<ref name="portOf"><to>_3</to></ref>
+</entity>
+<entity id="_2" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_1</to></ref>
+<ref name="portOf"><to>_0</to></ref>
+</entity>
+<entity id="_3" class="eu.insel.block.SCREEN">
+<ref name="inPorts"><to>_1</to></ref>
+<attr name="blockName"><string>SCREEN</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>2</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="sp1"><string>*</string></attr>
+<attr name="sp2"><string>VeryLongStringStillItShouldBeWrittenOnASingleLineInInselModelOtherwiseItWouldBeBroken</string></attr>
+</entity>
+
+<!-- One or more layouts of the VSEit Network above -->
+<layout name="Default" show-name="false" routing-policy="de.vseit.network.routing.RoutingPolicyOrthogonal" background-color="none" auto-display-new="true">
+<geom node="_1"><layer>1</layer><x>312</x><y>55</y><w>2</w><h>6</h></geom>
+<geom node="_3"><layer>1</layer><x>315</x><y>45</y><w>34</w><h>34</h></geom>
+<geom node="_2"><layer>1</layer><x>215</x><y>55</y><w>2</w><h>6</h></geom>
+<geom node="_0"><layer>1</layer><x>180</x><y>45</y><w>34</w><h>34</h></geom>
+</layout>
+<insel-file><![CDATA[
+B 1 DO              
+P 1
+    1               % Initial value
+    10              % Final value
+    1               % Increment
+
+B 2 SCREEN          
+    1.1
+P 2
+    '*'             % Format
+    'VeryLongStringStillItShouldBeWrittenOnASingleLineInInselModelOtherwiseItWouldBeBroken' % Headline
+
+]]>
+</insel-file>
+</vseit-network>

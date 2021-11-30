@@ -521,6 +521,12 @@ class TestExistingModel(CustomAssertions):
             deviation = insel.run((SCRIPT_DIR / 'templates' / 'read_relative_file.insel').resolve())
             self.compareLists(deviation, [0, 0], places=4)
 
+    def test_string_parameter_in_vseit_should_not_be_cut(self):
+        for f in ['short_string.vseit', 'long_string.vseit']:
+            insel_model = subprocess.check_output([Insel.command, '-m', 'templates/' + f], shell=False).decode()
+            string_params = [p for p in insel_model.split() if p.count("'") == 2]
+            self.assertEqual(len(string_params), 2, f"2 string parameters should be found in {f}")
+
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
         insel.block('ubstorage', 1, 2, parameters=[10, 0, 1, 1, 0, 100, 0, 1, 0])
