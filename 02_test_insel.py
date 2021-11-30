@@ -527,6 +527,13 @@ class TestExistingModel(CustomAssertions):
             string_params = [p for p in insel_model.split() if p.count("'") == 2]
             self.assertEqual(len(string_params), 2, f"2 string parameters should be found in {f}")
 
+    def test_screen_header_should_be_displayed(self):
+        for f in ['short_string.vseit', 'long_string.vseit']:
+            out = subprocess.check_output([Insel.command, 'templates/' + f], shell=False).decode()
+            lines = out.splitlines()
+            header = next(line for line in lines if 'String' in line)
+            self.assertTrue(len(header) < 100, f"Header '{header}' shouldn't be too long")
+
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
         insel.block('ubstorage', 1, 2, parameters=[10, 0, 1, 1, 0, 100, 0, 1, 0])
