@@ -29,7 +29,7 @@ class Insel(object):
         return default_configs[system]
 
     config = get_config.__func__()
-    dirname = config['dirname']
+    dirname = os.environ.get('INSEL_HOME', config['dirname'])
     command = config['command']
     if shutil.which(command) is None:
         # If insel is not in PATH, use absolute path.
