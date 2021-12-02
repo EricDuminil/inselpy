@@ -88,6 +88,14 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('xor', 2, 2), 0)
         self.assertAlmostEqual(insel.block('xor', 0.1, 1.1), 1)
 
+    def test_inv(self):
+        self.assertAlmostEqual(insel.block('inv', 1), 0)
+        self.assertAlmostEqual(insel.block('inv', 0), 1)
+        self.assertAlmostEqual(insel.block('inv', 2), 1)
+        self.assertAlmostEqual(insel.block('inv', -1), 1)
+        self.assertAlmostEqual(insel.block('inv', math.nan), 1)
+        self.assertAlmostEqual(insel.block('inv', math.inf), 1)
+
     def test_sum(self):
         self.assertAlmostEqual(insel.block('sum', 2), 2, places=8)
         self.assertAlmostEqual(insel.block('sum', 2, 4), 6, places=8)
@@ -175,6 +183,48 @@ class TestBlock(CustomAssertions):
         m = insel.OneBlockModel('div', inputs=[2, 0])
         m.run()
         self.assertTrue(len(m.warnings) >= 1, "A warning should be shown")
+
+    def test_sine(self):
+        self.assertAlmostEqual(insel.block('sin', 0), 0)
+        self.assertAlmostEqual(insel.block('sin', 180), 0, places=6)
+        self.assertAlmostEqual(insel.block('sin', 45), 2**0.5/2, places=6)
+        self.assertAlmostEqual(insel.block('sin', 30), 0.5, places=6)
+        self.assertAlmostEqual(insel.block('sin', 60), 3**0.5/2, places=6)
+        self.assertAlmostEqual(insel.block('sin', 90), 1)
+        self.assertAlmostEqual(insel.block('sin', -90), -1)
+        self.assertAlmostEqual(insel.block('sin', math.pi, parameters=[1]), 0, places=6)
+        self.assertAlmostEqual(insel.block('sin', math.pi/2, parameters=[1]), 1, places=6)
+        self.assertAlmostEqual(insel.block('sin', math.pi/6, parameters=[1]), 0.5, places=6)
+        self.assertAlmostEqual(insel.block('sin', -math.pi/2, parameters=[1]), -1, places=6)
+
+    def test_cosine(self):
+        self.assertAlmostEqual(insel.block('cos', 0), 1)
+        self.assertAlmostEqual(insel.block('cos', 180), -1, places=6)
+        self.assertAlmostEqual(insel.block('cos', 45), 2**0.5/2, places=6)
+        self.assertAlmostEqual(insel.block('cos', 30), 3**0.5/2, places=6)
+        self.assertAlmostEqual(insel.block('cos', 60), 0.5, places=6)
+        self.assertAlmostEqual(insel.block('cos', 90), 0)
+        self.assertAlmostEqual(insel.block('cos', -90), 0)
+        self.assertAlmostEqual(insel.block('cos', math.pi, parameters=[1]), -1, places=6)
+        self.assertAlmostEqual(insel.block('cos', math.pi/2, parameters=[1]), 0, places=6)
+        self.assertAlmostEqual(insel.block('cos', math.pi/3, parameters=[1]), 0.5, places=6)
+        self.assertAlmostEqual(insel.block('cos', -math.pi/2, parameters=[1]), 0, places=6)
+
+    def test_atan2(self):
+        self.assertAlmostEqual(insel.block('atan2', 1, 1), 45)
+        self.assertAlmostEqual(insel.block('atan2', 0, 1), 0)
+        self.assertAlmostEqual(insel.block('atan2', 1, 0), 90)
+        self.assertAlmostEqual(insel.block('atan2', -1, -1), -135)
+        self.assertAlmostEqual(insel.block('atan2', 1, 1, parameters=[1]), math.pi / 4)
+        self.assertAlmostEqual(insel.block('atan2', 1, 0, parameters=[1]), math.pi / 2, places=6)
+        self.assertNaN(insel.block('atan2', math.nan, 1))
+        self.assertNaN(insel.block('atan2', 1, math.nan))
+
+    def test_atan(self):
+        self.assertAlmostEqual(insel.block('atan', 1), 45)
+        self.assertAlmostEqual(insel.block('atan', 0), 0)
+        self.assertAlmostEqual(insel.block('atan', math.inf), 90)
+        self.assertNaN(insel.block('atan', math.nan))
 
     def test_offset(self):
         self.assertAlmostEqual(insel.block('offset',
