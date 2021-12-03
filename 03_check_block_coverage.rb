@@ -2,6 +2,7 @@
 # TODO: Check Java classes too
 # TODO: Check Java Palette
 # TODO: Check Documentation too
+COLUMNS = 9
 templates = Dir.glob("templates/*.insel")
 blocks_in_templates = templates.map{ |t|
   File.read(t).force_encoding("utf-8").encode("utf-8", invalid: :replace, replace: "?").scan(/^[bs]\s+\d+\s+(\w+)/i)
@@ -52,8 +53,7 @@ color_blocks = all_blocks.map do |block|
   end
 end
 
-max_size = color_blocks.map(&:size).max + 2
-COLUMNS = 12
+max_size = color_blocks.map(&:size).max + 2 #TODO: calculate max_size by column
 n = color_blocks.size
 h = (n / COLUMNS).ceil
 
