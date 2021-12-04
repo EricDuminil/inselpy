@@ -371,6 +371,7 @@ class TestBlock(CustomAssertions):
         self.assertNotNaN(insel.block('moonae2', 2021, 11, 19, 12, parameters = [0,0,0]))
 
     def test_sunae(self):
+        #TODO: Add tests for tropics
         for mode in range(3):
             # Tested with Stellarium
             sun_stuttgart = insel.block('SUNAE2',
