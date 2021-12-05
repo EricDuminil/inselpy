@@ -371,14 +371,22 @@ class TestBlock(CustomAssertions):
         self.assertNotNaN(insel.block('moonae2', 2021, 11, 19, 12, parameters = [0,0,0]))
 
     def test_sunae(self):
-        #TODO: Add tests for tropics
         for mode in range(3):
             # Tested with Stellarium
             sun_stuttgart = insel.block('SUNAE2',
                                          2021, 11, 18, 12, 0,
                                          parameters=[mode]+STUTTGART, outputs=4)
             #NOTE: Precision is pretty bad (+-0.06°). Why?
+            #TODO: Check with detailed example from NREL
             self.compareLists(sun_stuttgart, [177+50/60, 21+52/60+14/3600,-19-17/60,(23+51/60)*15], places=0)
+
+    def test_sunae_in_the_tropics(self):
+        #SUNAE used to be broken in the tropics, and got azimuth in the wrong quadrant
+        sun_azimuth = insel.block('SUNAE2', 2021, 6, 21, 6, 0,
+                                  parameters=[0]+[20, 0, 0])
+        self.assertAlmostEqual(sun_azimuth, 67+42/60, places=1)
+
+
 
     def test_do(self):
         self.assertEqual(len(insel.block('do', parameters=[1, 10, 1])), 10)
