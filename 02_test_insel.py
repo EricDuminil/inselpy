@@ -377,6 +377,7 @@ class TestBlock(CustomAssertions):
                                          2021, 11, 18, 12, 0,
                                          parameters=[mode]+STUTTGART, outputs=4)
             #NOTE: Precision is pretty bad (+-0.06°). Why?
+            #NOTE: Compared to https://levelup.gitconnected.com/python-sun-position-for-solar-energy-and-research-7a4ead801777, Holland & Michalsky seem more precise than Spencer
             #TODO: Check with detailed example from NREL
             self.compareLists(sun_stuttgart, [177+50/60, 21+52/60+14/3600,-19-17/60,(23+51/60)*15], places=0)
 
