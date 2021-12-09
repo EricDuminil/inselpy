@@ -191,7 +191,8 @@ class Template(TemporaryModel):
         return defaults
 
     def content(self):
-        with open(self.template_filename(), encoding='utf-8', errors='replace') as template:
+        # Replace unknown chars with backslash + code, so that content can be fed to INSEL
+        with open(self.template_filename(), encoding='utf-8', errors='backslashreplace') as template:
             content = template.read()
             content = re.sub(Template.pattern, self.replace, content)
             return content
