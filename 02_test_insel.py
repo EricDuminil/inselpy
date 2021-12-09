@@ -513,6 +513,9 @@ class TestTemplate(CustomAssertions):
         self.run_write_block(basename='Ñüößç&txt.täxt€',
                              header='#ßeäöütµ§%&²³@°')
 
+        self.run_write_block(basename='with a space.txt')
+        self.run_write_block(basename='with_underscore.txt')
+
         self.run_write_block(fortran_format='(F10.5)')
 
         self.run_write_block(overwrite=0, fnq=0)
