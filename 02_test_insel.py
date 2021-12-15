@@ -15,6 +15,8 @@ logging.basicConfig(level=logging.ERROR)
 SCRIPT_DIR = Path(__file__).parent.resolve()
 
 #TODO: CUMC / MAXXC / MINC / ..
+#TODO: Moving average
+#TODO: Test with LC_ALL = DE
 #TODO: parametric ...
 
 @contextlib.contextmanager
