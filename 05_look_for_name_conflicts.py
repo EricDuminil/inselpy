@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# Try to list every symbol of every libInsel*.so, and look for name conflicts
+# Reason : TRANS was defined twice (inselBS and inselEM), which caused random SIGSEGV
+
 from glob import glob
 import subprocess
 from collections import defaultdict
