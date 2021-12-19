@@ -2,15 +2,18 @@
 
 # Try to list every symbol of every libInsel*.so, and look for name conflicts
 # Reason : TRANS was defined twice (inselBS and inselEM), which caused random SIGSEGV
+# NOTE: os0txt is defined twice : either for Java or console
 
 from glob import glob
 import subprocess
 from collections import defaultdict
 from pathlib import Path
+from insel.insel import Insel
+import os
 
 symbols = defaultdict(set)
 
-for lib in glob('/usr/local/insel/lib*.so'):
+for lib in glob(os.path.join(Insel.dirname, 'lib*.so')):
     out = subprocess.check_output(['nm', '-gDC', '-l', lib], shell=False)
     for line in out.decode().splitlines():
         line = line[19:]
