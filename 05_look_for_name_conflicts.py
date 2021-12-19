@@ -21,13 +21,14 @@ for lib in glob('/usr/local/insel/lib*.so'):
             source = f"{filename}:{linenumber}"
             symbols[name].add(source)
         else:
-            symbols[line].add('std')
-
+            pass
+            # NOTE: Should conflicts with std also be searched?
+            # symbols[line].add('std')
 
 for (symbol, defs) in sorted(symbols.items()):
-    if len(defs - 'std') > 1:
+    if len(defs) > 1:
         print(symbol)
-        for de in defs:
-            print("  " + de)
+        for definition in defs:
+            print("  " + definition)
 
 
