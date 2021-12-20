@@ -149,9 +149,9 @@ class TestBlock(CustomAssertions):
         self.assertInf(insel.block('diff', 2, float('inf')))
 
         # Not exactly 2 inputs:
-        self.assertRaises(InselError, insel.block, 'diff')
-        self.assertRaises(InselError, insel.block, 'diff', 1)
-        self.assertRaises(InselError, insel.block, 'diff', 1, 2, 3)
+        self.assertRaisesRegex(InselError, "Too few", insel.block, 'diff')
+        self.assertRaisesRegex(InselError, "Too few", insel.block, 'diff', 1)
+        self.assertRaisesRegex(InselError, "Too many", insel.block, 'diff', 1, 2, 3)
 
     def test_gain(self):
         self.assertAlmostEqual(insel.block('gain',
@@ -173,7 +173,7 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('att',
                                            3, parameters=[2]), 1.5, places=8)
         # Division by 0
-        self.assertRaises(InselError, insel.block, 'att', 1, parameters=[0])
+        self.assertRaisesRegex(InselError, "Zero .+ invalid", insel.block, 'att', 1, parameters=[0])
         # Multiple inputs
         results = insel.block('att', 9, 3, 6, 7.5, parameters=[3], outputs=4)
         self.assertEqual(repr(results), '[3.0, 1.0, 2.0, 2.5]')
@@ -475,7 +475,7 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(iso_template.run(), 16, places=6)
 
     def test_sunpower_isc(self):
-        self.assertRaises(AttributeError, insel.template, 'i_sc') # Missing pv_id. STC by default
+        self.assertRaisesRegex(AttributeError, "UndefinedValue", insel.template, 'i_sc') # Missing pv_id. STC by default
         spr_isc = insel.template('i_sc', pv_id='008823')
         self.assertIsInstance(spr_isc, float)
         self.assertAlmostEqual(spr_isc, 5.87, places=2)
@@ -568,8 +568,8 @@ class TestExistingModel(CustomAssertions):
         self.compareLists(insel.run('templates/one_to_ten.insel'), range(1, 11))
 
     def test_nonexisting_model(self):
-        self.assertRaises(InselError, insel.run, 'templates/not_here.insel')
-        self.assertRaises(InselError, insel.run, 'not_here/model.insel')
+        self.assertRaisesRegex(InselError, "File not found", insel.run, 'templates/not_here.insel')
+        self.assertRaisesRegex(InselError, "File not found", insel.run, 'not_here/model.insel')
 
     def test_merging_two_loops(self):
         self.assertRaisesRegex(InselError, "depends on not enclosed", insel.run, 'templates/merge_distinct_loops.insel')
