@@ -571,6 +571,9 @@ class TestExistingModel(CustomAssertions):
         self.assertRaises(InselError, insel.run, 'templates/not_here.insel')
         self.assertRaises(InselError, insel.run, 'not_here/model.insel')
 
+    def test_merging_two_loops(self):
+        self.assertRaisesRegex(InselError, "depends on not enclosed", insel.run, 'templates/merge_distinct_loops.insel')
+
     def test_read_relative_file_when_in_correct_folder(self):
         with cwd(SCRIPT_DIR / 'templates'):
             deviation = insel.run('read_relative_file.insel')
