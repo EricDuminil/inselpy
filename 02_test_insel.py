@@ -572,7 +572,7 @@ class TestExistingModel(CustomAssertions):
         self.assertRaisesRegex(InselError, "File not found", insel.run, 'not_here/model.insel')
 
     def test_merging_two_loops(self):
-        self.assertRaisesRegex(InselError, "Please try to merge blocks", insel.run, 'templates/merge_distinct_loops.insel')
+        self.assertRaisesRegex(InselError, "Please try to merge 2 & 3", insel.run, 'templates/merge_distinct_loops.insel')
 
     def test_read_relative_file_when_in_correct_folder(self):
         with cwd(SCRIPT_DIR / 'templates'):
