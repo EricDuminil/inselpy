@@ -17,7 +17,8 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 #TODO: CUMC / MAXXC / MINC / ..
 #TODO: Moving average
 #TODO: Test with LC_ALL = DE
-#TODO: parametric ...
+#TODO: parametric blocks
+#TODO: header with €
 
 @contextlib.contextmanager
 def cwd(path):
