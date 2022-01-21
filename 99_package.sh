@@ -5,9 +5,6 @@ version="${1:-$default_version}"
 
 to_package="01_insel_example.py
 02_test_insel.py
-insel
-insel/insel.py
-insel/__init__.py
 data
 data/123.csv
 data/123.dat
