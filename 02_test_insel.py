@@ -422,6 +422,13 @@ class TestTemplate(CustomAssertions):
         only_evens = insel.template('remove_odds')
         self.compareLists(only_evens, range(-10, 12, 2))
 
+    def test_mtm_averages(self):
+        # Those places used to have wrong averages
+        places = ['Cambridge', 'Inuvik', 'Milagro', 'Naesgard', 'Nurnberg', 'Planes de Montecrist']
+        for place in places:
+            self.assertTrue(insel.template('check_temperatures', location=place),
+                            f'Wrong temperatures for {place}')
+
     def test_gengt_consistency(self):
         deviation = insel.template('gengt_comparison')
         #NOTE: Depending on system, pseudo random values can vary very slightly. 1e-4 really isn't any problem for °C or W/m²
