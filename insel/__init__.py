@@ -12,3 +12,7 @@ def template(name, **parameters):
 
 def run(path):
     return ExistingModel(path).run()
+
+
+def raw_run(path):
+    return ExistingModel(path).raw_results().decode()
