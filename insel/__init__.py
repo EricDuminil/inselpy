@@ -14,5 +14,5 @@ def run(path):
     return ExistingModel(path).run()
 
 
-def raw_run(*parameters):
-    return ExistingModel(' '.join(parameters)).raw_results().decode()
+def raw_run(*params):
+    return ExistingModel(*params).raw_results().decode()

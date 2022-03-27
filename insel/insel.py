@@ -85,13 +85,14 @@ class Model(object):
 
 
 class ExistingModel(Model):
-    def __init__(self, path):
+    def __init__(self, *params):
         super().__init__()
-        self.path = path
+        self.params = list(params)
 
     def raw_results(self):
         Insel.calls += 1
-        return subprocess.check_output([Insel.command, self.path], shell=False)
+        return subprocess.check_output([Insel.command] + self.params,
+                                       shell=False)
 
 # NOTE: Abstract class
 class TemporaryModel(Model):
