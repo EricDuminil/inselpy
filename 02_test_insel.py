@@ -55,7 +55,7 @@ class CustomAssertions(unittest.TestCase):
 
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
-        insel_b = subprocess.check_output([Insel.command, '-b'], shell=False).decode()
+        insel_b = insel.raw_run('-b')
         blocks = Counter(insel_b.split('\n\n')[-1].split())
         self.assertTrue(len(blocks) > 300, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
@@ -605,7 +605,7 @@ class TestExistingModel(CustomAssertions):
 
     def test_screen_header_should_be_displayed(self):
         for f in ['short_string.vseit', 'long_string.vseit']:
-            out = subprocess.check_output([Insel.command, 'templates/' + f], shell=False).decode()
+            out = insel.raw_run('templates/' + f)
             lines = out.splitlines()
             header = next(line for line in lines if 'String' in line)
             self.assertTrue(len(header) < 100, f"Header '{header}' shouldn't be too long")
