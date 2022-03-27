@@ -6,7 +6,6 @@ import tempfile
 import os
 from pathlib import Path
 import contextlib
-import subprocess
 import insel
 from insel.insel import Insel, InselError
 from collections import Counter
@@ -599,7 +598,7 @@ class TestExistingModel(CustomAssertions):
 
     def test_string_parameter_in_vseit_should_not_be_cut(self):
         for f in ['short_string.vseit', 'long_string.vseit']:
-            insel_model = subprocess.check_output([Insel.command, '-m', 'templates/' + f], shell=False).decode()
+            insel_model = insel.raw_run('-m', 'templates/' + f)
             string_params = [p for p in insel_model.split() if p.count("'") == 2]
             self.assertEqual(len(string_params), 2, f"2 string parameters should be found in {f}")
 
@@ -609,6 +608,14 @@ class TestExistingModel(CustomAssertions):
             lines = out.splitlines()
             header = next(line for line in lines if 'String' in line)
             self.assertTrue(len(header) < 100, f"Header '{header}' shouldn't be too long")
+
+class TestInselFlags(unittest.TestCase):
+    def test_insel_v(self):
+        insel_v = insel.raw_run('-v')
+        for component in ['insel', 'inselHelp', 'libInselTools']:
+            self.assertTrue(component in insel_v,
+                            f"Component '{component}' should be described in insel -v")
+        #TODO: Check date
 
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
