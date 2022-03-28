@@ -615,14 +615,14 @@ class TestInselFlags(unittest.TestCase):
         for part in [r'This is INSEL \d\.\d\.\d', '(32|64) bit',
                      '-d', '-l', '-m', '-v', '-b']:
             self.assertRegex(insel_v, part,
-                            f"'{part}' should be described in insel -v")
+                            f"'{part}' should be printed out by 'insel'")
 
     def test_insel_v(self):
         insel_v = insel.raw_run('-v')
-        for component in ['\\binsel\\b', 'inselHelp', 'libInselTools', r'_20\d\d\d\d\d\d_']:
-            self.assertRegex(insel_v, component,
-                            f"Component '{component}' should be described in insel -v")
-        #TODO: Check date
+        for part in ['\\binsel\\b', 'inselHelp', 'libInselTools',
+                          '_20\d\d\d\d\d\d_', '\(20\d\d\-\d\d\-\d\d\)']:
+            self.assertRegex(insel_v, part,
+                            f"'{part}' should be printed out by 'insel -v'")
 
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
