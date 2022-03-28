@@ -619,7 +619,7 @@ class TestInselFlags(unittest.TestCase):
 
     def test_insel_v(self):
         insel_v = insel.raw_run('-v')
-        for part in ['\\binsel\\b', 'inselHelp', 'libInselTools',
+        for part in ['libInselEngine', 'inselHelp', 'libInselTools',
                           '_20\d\d\d\d\d\d_', '\(20\d\d\-\d\d\-\d\d\)']:
             self.assertRegex(insel_v, part,
                             f"'{part}' should be printed out by 'insel -v'")
