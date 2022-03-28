@@ -610,10 +610,17 @@ class TestExistingModel(CustomAssertions):
             self.assertTrue(len(header) < 100, f"Header '{header}' shouldn't be too long")
 
 class TestInselFlags(unittest.TestCase):
+    def test_insel(self):
+        insel_v = insel.raw_run()
+        for part in [r'This is INSEL \d\.\d\.\d', '(32|64) bit',
+                     '-d', '-l', '-m', '-v', '-b']:
+            self.assertRegex(insel_v, part,
+                            f"'{part}' should be described in insel -v")
+
     def test_insel_v(self):
         insel_v = insel.raw_run('-v')
-        for component in ['insel', 'inselHelp', 'libInselTools']:
-            self.assertTrue(component in insel_v,
+        for component in ['\\binsel\\b', 'inselHelp', 'libInselTools', r'_20\d\d\d\d\d\d_']:
+            self.assertRegex(insel_v, component,
                             f"Component '{component}' should be described in insel -v")
         #TODO: Check date
 
