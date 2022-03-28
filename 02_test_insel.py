@@ -624,6 +624,12 @@ class TestInselFlags(unittest.TestCase):
             self.assertRegex(insel_v, part,
                             f"'{part}' should be printed out by 'insel -v'")
 
+    def test_insel_l(self):
+        insel_l = insel.raw_run('-l', 'templates/one_to_ten.insel')
+        for part in ['1\s*DO\s*T', '2\s*SCREEN\s*S']:
+            self.assertRegex(insel_l, part,
+                            f"'{part}' should be printed out by 'insel -l'")
+
     def test_insel_d(self):
         insel_d = insel.raw_run('-d', 'templates/one_to_ten.insel')
         for part in ['Compiling', 'Constructor call', 'Destructor call', 'Standard call',
