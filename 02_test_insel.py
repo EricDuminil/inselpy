@@ -611,10 +611,10 @@ class TestExistingModel(CustomAssertions):
 
 class TestInselFlags(unittest.TestCase):
     def test_insel(self):
-        insel_v = insel.raw_run()
+        just_insel = insel.raw_run()
         for part in [r'This is INSEL \d\.\d\.\d', '(32|64) bit',
                      '-d', '-l', '-m', '-v', '-b']:
-            self.assertRegex(insel_v, part,
+            self.assertRegex(just_insel, part,
                             f"'{part}' should be printed out by 'insel'")
 
     def test_insel_v(self):
@@ -623,6 +623,13 @@ class TestInselFlags(unittest.TestCase):
                           '_20\d\d\d\d\d\d_', '\(20\d\d\-\d\d\-\d\d\)']:
             self.assertRegex(insel_v, part,
                             f"'{part}' should be printed out by 'insel -v'")
+
+    def test_insel_d(self):
+        insel_d = insel.raw_run('-d', 'templates/one_to_ten.insel')
+        for part in ['Compiling', 'Constructor call', 'Destructor call', 'Standard call',
+                     'block DO', 'block SCREEN']:
+            self.assertRegex(insel_d, part,
+                            f"'{part}' should be printed out by 'insel -d'")
 
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
