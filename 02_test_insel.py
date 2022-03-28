@@ -630,6 +630,16 @@ class TestInselFlags(unittest.TestCase):
             self.assertRegex(insel_l, part,
                             f"'{part}' should be printed out by 'insel -l'")
 
+    def test_insel_s(self):
+        insel_s = insel.raw_run('-s', 'templates/short_string.vseit')
+        self.assertRegex(insel_s, '0 errors, 0 warnings', "insel -s should check model")
+
+    def test_insel_m(self):
+        insel_m = insel.raw_run('-m', 'templates/short_string.vseit')
+        for part in ['b\s+1\s+DO', 'b\s+2\s+SCREEN', "'*'", "'ShortString'"]:
+            self.assertRegex(insel_m, part,
+                            f"'{part}' should be printed out by 'insel -l'")
+
     def test_insel_d(self):
         insel_d = insel.raw_run('-d', 'templates/one_to_ten.insel')
         for part in ['Compiling', 'Constructor call', 'Destructor call', 'Standard call',
