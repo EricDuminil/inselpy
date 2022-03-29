@@ -17,7 +17,6 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 #TODO: Moving average
 #TODO: Test with LC_ALL = DE
 #TODO: parametric blocks
-#TODO: header with €
 
 @contextlib.contextmanager
 def cwd(path):
@@ -602,12 +601,17 @@ class TestExistingModel(CustomAssertions):
             string_params = [p for p in insel_model.split() if p.count("'") == 2]
             self.assertEqual(len(string_params), 2, f"2 string parameters should be found in {f}")
 
-    def test_screen_header_should_be_displayed(self):
+    def test_screen_headline_should_be_displayed(self):
         for f in ['short_string.vseit', 'long_string.vseit']:
             out = insel.raw_run('templates/' + f)
             lines = out.splitlines()
-            header = next(line for line in lines if 'String' in line)
-            self.assertTrue(len(header) < 100, f"Header '{header}' shouldn't be too long")
+            headline = next(line for line in lines if 'String' in line)
+            self.assertTrue(len(headline) < 100,
+                            f"Headline '{headline}' shouldn't be too long")
+
+    def test_screen_utf8_header_should_be_displayed(self):
+        out = insel.raw_run('templates/utf_headline.insel')
+        self.assertTrue('T€st 12345' in out, "Headline should be allowed to be in UTF-8")
 
 class TestInselFlags(unittest.TestCase):
     def test_insel(self):

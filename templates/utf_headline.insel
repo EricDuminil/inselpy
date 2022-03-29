@@ -1,0 +1,13 @@
+
+B 1 DO              
+P 1
+    1               % Initial value
+    3               % Final value
+    1               % Increment
+
+B 2 SCREEN          
+    1.1
+P 2
+    '*'             % Format
+    'T€st 12345'    % Headline
+
