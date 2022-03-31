@@ -1,6 +1,7 @@
 from .insel import OneBlockModel, Template, ExistingModel
 
 #TODO: Add docstrings
+#TODO: Add gnuplot functions
 
 def block(name, *args, **kwargs):
     parameters = kwargs.get('parameters', [])

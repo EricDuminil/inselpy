@@ -17,6 +17,7 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 #TODO: Moving average
 #TODO: Test with LC_ALL = DE
 #TODO: parametric blocks
+#TODO: Add gnuplot tests
 
 @contextlib.contextmanager
 def cwd(path):
