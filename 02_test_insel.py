@@ -442,16 +442,33 @@ class TestTemplate(CustomAssertions):
                                msg="Temperature shouldnt vary by more than 0.1K")
 
     def test_aligned_screen_block(self):
-        # Numbers should not be too close to each other
-        #TODO: Check raw output : decimal points should be aligned
+        # Check that numbers displayed by SCREEN '*' are separated by at least one space
+        # and that the decimal separators are aligned one above the other
         matrix = insel.template('expg')
-        for x, row in zip(range(-14, 19), matrix):
+        for x, row in zip(range(-20, 20), matrix):
             x = x / 2
             self.assertAlmostEqual(x, row[0], places=6)
             r1 = 10**x
             r2 = -10**(-x)
             self.assertAlmostEqual(r1, row[1], delta=r1/1e6)
             self.assertAlmostEqual(r2, row[2], delta=-r2/1e6)
+
+        # Run again, this time checking the nicely formatted raw output.
+        aligned = insel.raw_run('templates/expg.insel')
+        output = [line for line in aligned.splitlines() if '    ' in line]
+        self.assertTrue(len(output) > 30, 'Many lines should be returned.')
+
+        dot_indices = set()
+        columns = 5
+
+        def indices(text, char):
+            return [i for i, ltr in enumerate(text) if ltr == char]
+
+        for line in output:
+            dot_indices.update(indices(line, '.'))
+
+        self.assertEqual(len(dot_indices), columns,
+                         f"There should be {columns} nicely aligned decimal points");
 
     def test_updated_coordinates(self):
         v1_results = insel.template('nurnberg_v1',
