@@ -443,6 +443,7 @@ class TestTemplate(CustomAssertions):
 
     def test_aligned_screen_block(self):
         # Numbers should not be too close to each other
+        #TODO: Check raw output : decimal points should be aligned
         matrix = insel.template('expg')
         for x, row in zip(range(-14, 19), matrix):
             x = x / 2
