@@ -225,7 +225,7 @@ class TestBlock(CustomAssertions):
     def test_atan(self):
         self.assertAlmostEqual(insel.block('atan', 1), 45)
         self.assertAlmostEqual(insel.block('atan', 0), 0)
-        self.assertAlmostEqual(insel.block('atan', math.inf), 90)
+        self.assertAlmostEqual(insel.block('atan', math.inf), 90, places=4)
         self.assertNaN(insel.block('atan', math.nan))
 
     def test_offset(self):
