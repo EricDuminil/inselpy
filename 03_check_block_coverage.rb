@@ -53,6 +53,13 @@ color_blocks = all_blocks.map do |block|
   end
 end
 
+############################################
+#  Display block names in compact columns  #
+############################################
+
+#NOTE: Another possibility would be:
+# ruby 03_check_block_coverage.rb | column
+
 n = color_blocks.size
 h = (n / COLUMNS).ceil
 
