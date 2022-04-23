@@ -7,11 +7,13 @@ import platform
 import logging
 import shutil
 
+
 # logging.basicConfig(level=logging.WARNING)
-#TODO: Move to separate files, one per class?
+# TODO: Move to separate files, one per class?
 
 class InselError(Exception):
     pass
+
 
 class Insel(object):
     calls = 0
@@ -94,6 +96,7 @@ class ExistingModel(Model):
         return subprocess.check_output([Insel.command] + self.params,
                                        shell=False)
 
+
 # NOTE: Abstract class
 class TemporaryModel(Model):
     def tempfile(self):
@@ -112,6 +115,7 @@ class TemporaryModel(Model):
 
     def content(self):
         raise NotImplementedError("Implement %s.content() !" % self.__class__.__name__)
+
 
 class OneBlockModel(TemporaryModel):
     def __init__(self, name='', inputs=[], parameters=[], outputs=1):
@@ -141,7 +145,7 @@ class OneBlockModel(TemporaryModel):
                 lines.append("\t%r" % arg)
 
         lines.append("s %d %s %s" %
-                (block_id, self.name.upper(), " ".join(input_ids)))
+                     (block_id, self.name.upper(), " ".join(input_ids)))
         if self.parameters:
             lines.append("p %d %s" % (block_id, " ".join(self.parameters)))
 
@@ -184,10 +188,10 @@ class Template(TemporaryModel):
 
     def add_defaults_to(self, parameters):
         defaults = {
-                'bp_folder': os.path.join(Insel.dirname, "data", "bp"),
-                'data_folder': os.path.join(Template.dirname, "..", "data"),
-                'template_folder': Template.dirname
-                }
+            'bp_folder': os.path.join(Insel.dirname, "data", "bp"),
+            'data_folder': os.path.join(Template.dirname, "..", "data"),
+            'template_folder': Template.dirname
+        }
         defaults.update(parameters)
         return defaults
 

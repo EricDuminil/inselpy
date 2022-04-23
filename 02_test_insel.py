@@ -9,15 +9,17 @@ import contextlib
 import insel
 from insel.insel import Insel, InselError
 from collections import Counter
+
 logging.basicConfig(level=logging.ERROR)
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
 
-#TODO: CUMC / MAXXC / MINC / ..
-#TODO: Moving average
-#TODO: Test with LC_ALL = DE
-#TODO: parametric blocks
-#TODO: Add gnuplot tests
+
+# TODO: CUMC / MAXXC / MINC / ..
+# TODO: Moving average
+# TODO: Test with LC_ALL = DE
+# TODO: parametric blocks
+# TODO: Add gnuplot tests
 
 @contextlib.contextmanager
 def cwd(path):
@@ -33,6 +35,7 @@ def cwd(path):
 # INSEL 8.3 convention
 STUTTGART = [48.77, 9.18, 1]
 
+
 class CustomAssertions(unittest.TestCase):
     def assertNaN(self, x):
         self.assertTrue(math.isnan(x), f'{x} should be NaN')
@@ -45,12 +48,13 @@ class CustomAssertions(unittest.TestCase):
 
     def compareLists(self, list1, expected, places=8):
         self.assertIsInstance(list1, list)
-        self.assertTrue(hasattr(expected,'__iter__'))
+        self.assertTrue(hasattr(expected, '__iter__'))
         list2 = list(expected)
         self.assertEqual(len(list1), len(list2),
                          "Both lists should have the same length.")
         for a, b in zip(list1, list2):
             self.assertAlmostEqual(a, b, places=places)
+
 
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
@@ -60,8 +64,7 @@ class TestBlock(CustomAssertions):
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
         if duplicates:
             self.fail("Some blocks are defined multiples times : " +
-                    ','.join(f"{b} ({c} times)" for (b,c) in duplicates))
-
+                      ','.join(f"{b} ({c} times)" for (b, c) in duplicates))
 
     def test_pi(self):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
@@ -189,28 +192,28 @@ class TestBlock(CustomAssertions):
     def test_sine(self):
         self.assertAlmostEqual(insel.block('sin', 0), 0)
         self.assertAlmostEqual(insel.block('sin', 180), 0, places=6)
-        self.assertAlmostEqual(insel.block('sin', 45), 2**0.5/2, places=6)
+        self.assertAlmostEqual(insel.block('sin', 45), 2 ** 0.5 / 2, places=6)
         self.assertAlmostEqual(insel.block('sin', 30), 0.5, places=6)
-        self.assertAlmostEqual(insel.block('sin', 60), 3**0.5/2, places=6)
+        self.assertAlmostEqual(insel.block('sin', 60), 3 ** 0.5 / 2, places=6)
         self.assertAlmostEqual(insel.block('sin', 90), 1)
         self.assertAlmostEqual(insel.block('sin', -90), -1)
         self.assertAlmostEqual(insel.block('sin', math.pi, parameters=[1]), 0, places=6)
-        self.assertAlmostEqual(insel.block('sin', math.pi/2, parameters=[1]), 1, places=6)
-        self.assertAlmostEqual(insel.block('sin', math.pi/6, parameters=[1]), 0.5, places=6)
-        self.assertAlmostEqual(insel.block('sin', -math.pi/2, parameters=[1]), -1, places=6)
+        self.assertAlmostEqual(insel.block('sin', math.pi / 2, parameters=[1]), 1, places=6)
+        self.assertAlmostEqual(insel.block('sin', math.pi / 6, parameters=[1]), 0.5, places=6)
+        self.assertAlmostEqual(insel.block('sin', -math.pi / 2, parameters=[1]), -1, places=6)
 
     def test_cosine(self):
         self.assertAlmostEqual(insel.block('cos', 0), 1)
         self.assertAlmostEqual(insel.block('cos', 180), -1, places=6)
-        self.assertAlmostEqual(insel.block('cos', 45), 2**0.5/2, places=6)
-        self.assertAlmostEqual(insel.block('cos', 30), 3**0.5/2, places=6)
+        self.assertAlmostEqual(insel.block('cos', 45), 2 ** 0.5 / 2, places=6)
+        self.assertAlmostEqual(insel.block('cos', 30), 3 ** 0.5 / 2, places=6)
         self.assertAlmostEqual(insel.block('cos', 60), 0.5, places=6)
         self.assertAlmostEqual(insel.block('cos', 90), 0)
         self.assertAlmostEqual(insel.block('cos', -90), 0)
         self.assertAlmostEqual(insel.block('cos', math.pi, parameters=[1]), -1, places=6)
-        self.assertAlmostEqual(insel.block('cos', math.pi/2, parameters=[1]), 0, places=6)
-        self.assertAlmostEqual(insel.block('cos', math.pi/3, parameters=[1]), 0.5, places=6)
-        self.assertAlmostEqual(insel.block('cos', -math.pi/2, parameters=[1]), 0, places=6)
+        self.assertAlmostEqual(insel.block('cos', math.pi / 2, parameters=[1]), 0, places=6)
+        self.assertAlmostEqual(insel.block('cos', math.pi / 3, parameters=[1]), 0.5, places=6)
+        self.assertAlmostEqual(insel.block('cos', -math.pi / 2, parameters=[1]), 0, places=6)
 
     def test_atan2(self):
         self.assertAlmostEqual(insel.block('atan2', 1, 1), 45)
@@ -238,12 +241,12 @@ class TestBlock(CustomAssertions):
 
     def test_root(self):
         self.assertAlmostEqual(insel.block('root', 2,
-                                           parameters=[2]), 2**0.5, places=6)
+                                           parameters=[2]), 2 ** 0.5, places=6)
         self.assertEqual(repr(insel.block('root', 9, 16, 25, parameters=[2], outputs=3)),
                          '[3.0, 4.0, 5.0]')
 
     def test_sqrt(self):
-        self.assertAlmostEqual(insel.block('sqrt', 2), 2**0.5, places=6)
+        self.assertAlmostEqual(insel.block('sqrt', 2), 2 ** 0.5, places=6)
         self.assertEqual(repr(insel.block('sqrt', 9, 16, 25, outputs=3)),
                          '[3.0, 4.0, 5.0]')
 
@@ -326,7 +329,6 @@ class TestBlock(CustomAssertions):
         # ~230W/m² in july in Stuttgart
         self.assertAlmostEqual(july[0], 230, places=-1)
 
-
     def test_mtmlalo(self):
         m = insel.OneBlockModel('MTMLALO', inputs=[5], parameters=STUTTGART)
         m.run()
@@ -370,26 +372,25 @@ class TestBlock(CustomAssertions):
                         "10.06.2021 should be a new moon.")
 
         # It should work at the equator too:
-        self.assertNotNaN(insel.block('moonae2', 2021, 11, 19, 12, parameters = [0,0,0]))
+        self.assertNotNaN(insel.block('moonae2', 2021, 11, 19, 12, parameters=[0, 0, 0]))
 
     def test_sunae(self):
         for mode in range(3):
             # Tested with Stellarium
             sun_stuttgart = insel.block('SUNAE2',
-                                         2021, 11, 18, 12, 0,
-                                         parameters=[mode]+STUTTGART, outputs=4)
-            #NOTE: Precision is pretty bad (+-0.06°). Why?
-            #NOTE: Compared to https://levelup.gitconnected.com/python-sun-position-for-solar-energy-and-research-7a4ead801777, Holland & Michalsky seem less inprecise than Spencer
-            #TODO: Check with detailed example from NREL
-            self.compareLists(sun_stuttgart, [177+50/60, 21+52/60+14/3600,-19-17/60,(23+51/60)*15], places=0)
+                                        2021, 11, 18, 12, 0,
+                                        parameters=[mode] + STUTTGART, outputs=4)
+            # NOTE: Precision is pretty bad (+-0.06°). Why?
+            # NOTE: Compared to https://levelup.gitconnected.com/python-sun-position-for-solar-energy-and-research-7a4ead801777, Holland & Michalsky seem less inprecise than Spencer
+            # TODO: Check with detailed example from NREL
+            self.compareLists(sun_stuttgart,
+                              [177 + 50 / 60, 21 + 52 / 60 + 14 / 3600, -19 - 17 / 60, (23 + 51 / 60) * 15], places=0)
 
     def test_sunae_in_the_tropics(self):
-        #SUNAE used to be broken in the tropics, and got azimuth in the wrong quadrant
+        # SUNAE used to be broken in the tropics, and got azimuth in the wrong quadrant
         sun_azimuth = insel.block('SUNAE2', 2021, 6, 21, 6, 0,
-                                  parameters=[0]+[20, 0, 0])
-        self.assertAlmostEqual(sun_azimuth, 67+42/60, places=1)
-
-
+                                  parameters=[0] + [20, 0, 0])
+        self.assertAlmostEqual(sun_azimuth, 67 + 42 / 60, places=1)
 
     def test_do(self):
         self.assertEqual(len(insel.block('do', parameters=[1, 10, 1])), 10)
@@ -406,6 +407,7 @@ class TestBlock(CustomAssertions):
     def test_infinity(self):
         self.assertTrue(math.isinf(insel.block('infinity')))
         self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
+
 
 class TestTemplate(CustomAssertions):
     def test_empty_if(self):
@@ -430,12 +432,12 @@ class TestTemplate(CustomAssertions):
 
     def test_gengt_consistency(self):
         deviation = insel.template('gengt_comparison')
-        #NOTE: Depending on system, pseudo random values can vary very slightly. 1e-4 really isn't any problem for °C or W/m²
+        # NOTE: Depending on system, pseudo random values can vary very slightly. 1e-4 really isn't any problem for °C or W/m²
         self.compareLists(deviation, [0, 0], places=4)
 
     def test_gengt_averages(self):
-        irradiance_deviation, temperature_deviation =\
-                insel.template('gengt_monthly_averages')
+        irradiance_deviation, temperature_deviation = \
+            insel.template('gengt_monthly_averages')
         self.assertAlmostEqual(irradiance_deviation, 0, delta=5,
                                msg="Irradiance shouldnt vary by more than 5 W/m²")
         self.assertAlmostEqual(temperature_deviation, 0, delta=0.1,
@@ -448,10 +450,10 @@ class TestTemplate(CustomAssertions):
         for x, row in zip(range(-20, 20), matrix):
             x = x / 2
             self.assertAlmostEqual(x, row[0], places=6)
-            r1 = 10**x
-            r2 = -10**(-x)
-            self.assertAlmostEqual(r1, row[1], delta=r1/1e6)
-            self.assertAlmostEqual(r2, row[2], delta=-r2/1e6)
+            r1 = 10 ** x
+            r2 = -10 ** (-x)
+            self.assertAlmostEqual(r1, row[1], delta=r1 / 1e6)
+            self.assertAlmostEqual(r2, row[2], delta=-r2 / 1e6)
 
         # Run again, this time checking the nicely formatted raw output.
         aligned = insel.raw_run('templates/expg.insel')
@@ -500,39 +502,40 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(iso_template.run(), 16, places=6)
 
     def test_sunpower_isc(self):
-        self.assertRaisesRegex(AttributeError, "UndefinedValue", insel.template, 'i_sc') # Missing pv_id. STC by default
+        self.assertRaisesRegex(AttributeError, "UndefinedValue", insel.template,
+                               'i_sc')  # Missing pv_id. STC by default
         spr_isc = insel.template('i_sc', pv_id='008823')
         self.assertIsInstance(spr_isc, float)
         self.assertAlmostEqual(spr_isc, 5.87, places=2)
 
         self.assertAlmostEqual(insel.template('i_sc', pv_id='003305'),
                                5.96, places=2)
-        #TODO: More research is needed :)
+        # TODO: More research is needed :)
         self.skipTest("""This spec fails, probably because of a too low
                 'Temperature coeff of short-circuit current' in .bp files
                  .982E-7 in this example, instead of ~0.2E-3""")
         self.assertAlmostEqual(insel.template('i_sc', pv_id='003305', temperature=70),
-                               5.96+(70-25)*3.5e-3, places=2)
+                               5.96 + (70 - 25) * 3.5e-3, places=2)
 
     def test_sunpower_uoc(self):
-        self.assertRaises(AttributeError, insel.template, 'u_oc') # Missing pv_id. STC by default
+        self.assertRaises(AttributeError, insel.template, 'u_oc')  # Missing pv_id. STC by default
         self.assertAlmostEqual(insel.template('u_oc', pv_id='003305'),
                                64.2, places=2)
         temp = 70
-        #TODO: More research is needed :)
+        # TODO: More research is needed :)
         self.skipTest("Not sure about this calculation.")
         self.assertAlmostEqual(insel.template('u_oc', pv_id='003305', temperature=temp),
-                               64.2+(temp-25)*(-0.1766), places=2)
+                               64.2 + (temp - 25) * (-0.1766), places=2)
 
     def test_sunpower_mpp(self):
-        self.assertRaises(AttributeError, insel.template, 'mpp') # Missing pv_id. STC by default
+        self.assertRaises(AttributeError, insel.template, 'mpp')  # Missing pv_id. STC by default
         self.assertAlmostEqual(insel.template('mpp', pv_id='003305'),
                                305, places=0)
         temp = 70
-        #TODO: Check with PVSYST or PVLIB. Is this the correct formula?
-        #NOTE: -0.38%/K P_mpp, according to SPR 305 manual (https://www.pocosolar.com/wp-content/themes/twentyfifteen/pdfs/Sunpower%20Solar%20Panels/sunpower_305wht_spec_sheet.pdf)
+        # TODO: Check with PVSYST or PVLIB. Is this the correct formula?
+        # NOTE: -0.38%/K P_mpp, according to SPR 305 manual (https://www.pocosolar.com/wp-content/themes/twentyfifteen/pdfs/Sunpower%20Solar%20Panels/sunpower_305wht_spec_sheet.pdf)
         self.assertAlmostEqual(insel.template('mpp', pv_id='003305', temperature=temp),
-                               305 * (1 - 0.38 / 100)**(temp - 25), places=0)
+                               305 * (1 - 0.38 / 100) ** (temp - 25), places=0)
 
     def test_write_block(self):
         self.run_write_block()
@@ -600,7 +603,8 @@ class TestExistingModel(CustomAssertions):
         self.assertRaisesRegex(InselError, "File not found", insel.run, 'not_here/model.insel')
 
     def test_merging_two_loops(self):
-        self.assertRaisesRegex(InselError, "Please try to merge 2 & 3", insel.run, 'templates/merge_distinct_loops.insel')
+        self.assertRaisesRegex(InselError, "Please try to merge 2 & 3", insel.run,
+                               'templates/merge_distinct_loops.insel')
 
     def test_read_relative_file_when_in_correct_folder(self):
         with cwd(SCRIPT_DIR / 'templates'):
@@ -635,13 +639,14 @@ class TestExistingModel(CustomAssertions):
         out = insel.raw_run('templates/utf_headline.insel')
         self.assertTrue('T€st 12345' in out, "Headline should be allowed to be in UTF-8")
 
+
 class TestInselFlags(unittest.TestCase):
     def test_insel(self):
         just_insel = insel.raw_run()
         for part in [r'This is INSEL \d\.\d\.\d', '(32|64) bit',
                      '-d', '-l', '-m', '-v', '-b']:
             self.assertRegex(just_insel, part,
-                            f"'{part}' should be printed out by 'insel'")
+                             f"'{part}' should be printed out by 'insel'")
 
     def test_insel_v(self):
         insel_v = insel.raw_run('-v')
@@ -656,7 +661,7 @@ class TestInselFlags(unittest.TestCase):
         insel_l = insel.raw_run('-l', 'templates/one_to_ten.insel')
         for part in ['1\s*DO\s*T', '2\s*SCREEN\s*S']:
             self.assertRegex(insel_l, part,
-                            f"'{part}' should be printed out by 'insel -l'")
+                             f"'{part}' should be printed out by 'insel -l'")
 
     def test_insel_s(self):
         insel_s = insel.raw_run('-s', 'templates/short_string.vseit')
@@ -666,14 +671,15 @@ class TestInselFlags(unittest.TestCase):
         insel_m = insel.raw_run('-m', 'templates/short_string.vseit')
         for part in ['b\s+1\s+DO', 'b\s+2\s+SCREEN', "'*'", "'ShortString'"]:
             self.assertRegex(insel_m, part,
-                            f"'{part}' should be printed out by 'insel -l'")
+                             f"'{part}' should be printed out by 'insel -l'")
 
     def test_insel_d(self):
         insel_d = insel.raw_run('-d', 'templates/one_to_ten.insel')
         for part in ['Compiling', 'Constructor call', 'Destructor call', 'Standard call',
                      'block DO', 'block SCREEN']:
             self.assertRegex(insel_d, part,
-                            f"'{part}' should be printed out by 'insel -d'")
+                             f"'{part}' should be printed out by 'insel -d'")
+
 
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
@@ -683,7 +689,7 @@ class TestUserBlocks(CustomAssertions):
         self.assertAlmostEqual(insel.block('ubisonland', 48.77, 9.18), 1)
         self.assertAlmostEqual(insel.block('ubisonland', 48.77, -9.18), 0)
 
-    #TODO: Test UBCHP
+    # TODO: Test UBCHP
 
 
 if __name__ == '__main__':
