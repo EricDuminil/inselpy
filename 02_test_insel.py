@@ -344,16 +344,6 @@ class TestBlock(CustomAssertions):
                                    insel.block('frac', 3.5, 2.0, -1.4, -2.6, -4.7, outputs=5)]),
                          '0.5 0.0 -0.4 -0.6 -0.7')
 
-    def test_avew(self):
-        self.assertAlmostEqual(insel.block(
-            'avew', 2, 4, parameters=[1, 1]), 3.0)
-        self.assertAlmostEqual(insel.block(
-            'avew', 2, 4, parameters=[0, 1]), 4.0)
-        self.assertAlmostEqual(insel.block(
-            'avew', 2, 4, parameters=[1, 0]), 2.0)
-        self.assertAlmostEqual(insel.block(
-            'avew', 2, 5, parameters=[1, 2]), 4.0)
-
     def test_mtm(self):
         december = insel.block('mtm2', 12, parameters=[
                                'Strasbourg'], outputs=9)

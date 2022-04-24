@@ -8,7 +8,7 @@ blocks_in_templates = templates.map{ |t|
   File.read(t).force_encoding("utf-8").encode("utf-8", invalid: :replace, replace: "?").scan(/^[bs]\s+\d+\s+(\w+)/i)
 }
 
-blocks_in_py = File.read('02_test_insel.py').scan(/insel\.block\(["'](\w+?)["']/)
+blocks_in_py = File.read('02_test_insel.py').scan(/insel\.block\(\s*["'](\w+?)["']/)
 
 other_tested_blocks = ['NOW', 'NOW0'] # Tested in loops
 
