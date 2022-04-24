@@ -451,6 +451,15 @@ class TestBlock(CustomAssertions):
             self.assertAlmostEqual(insel_now, python_now,
                                    delta=timedelta(seconds=5))
 
+    def test_julian(self):
+        """
+        Julian day number is used for many astronomical calculations.
+        """
+        self.assertAlmostEqual(1_721_424, insel.block('julian', 1, 1, 1))
+        self.assertAlmostEqual(2_451_545, insel.block('julian', 2000, 1, 1))
+        self.assertAlmostEqual(2_459_694, insel.block('julian', 2022, 4, 24))
+        self.assertAlmostEqual(2_488_069, insel.block('julian', 2099, 12, 31))
+
     def test_weighted_average(self):
         self.assertAlmostEqual(65, insel.block(
             'avew', 50, 80, parameters=[1, 1]))
