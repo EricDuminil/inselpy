@@ -76,7 +76,8 @@ class TestBlock(CustomAssertions):
         insel_b = insel.raw_run('-b')
         blocks = set(insel_b.split('\n\n')[-1].split())
         for deleted_block in ['TIMEMS', 'TIMEMS0']:
-            self.assertFalse(deleted_block in blocks, f'{deleted_block} should have been deleted.')
+            self.assertFalse(deleted_block in blocks,
+                             f'{deleted_block} should have been deleted.')
 
     def test_pi(self):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
@@ -459,6 +460,18 @@ class TestBlock(CustomAssertions):
 
             self.assertAlmostEqual(insel_now, python_now,
                                    delta=timedelta(seconds=5))
+
+    def test_weighted_average(self):
+        self.assertAlmostEqual(65, insel.block(
+            'avew', 50, 80, parameters=[1, 1]))
+        self.assertAlmostEqual(62, insel.block(
+            'avew', 80, 50, parameters=[4, 6]))
+        self.assertAlmostEqual(10, insel.block(
+            'avew', 0, 10, parameters=[0, 1]))
+        self.assertAlmostEqual(10, insel.block(
+            'avew', 10, 0, parameters=[1, 0]))
+        self.assertRaisesRegex(InselError, "Invalid parameter",
+                               insel.block, 'avew', 0, 1, parameters=[0, 0])
 
 
 class TestTemplate(CustomAssertions):
