@@ -114,20 +114,27 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('if', 3.14, 2), 3.14, places=6)
         self.assertAlmostEqual(insel.block('if', 3.14, 0.5), 3.14, places=6)
         self.assertAlmostEqual(insel.block('if', 3.14, -0.5), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('if', 3.14, float('inf')), 3.14, places=6)
+        self.assertAlmostEqual(insel.block(
+            'if', 3.14, float('inf')), 3.14, places=6)
         #  Weird, actually. It should be empty. Seems to require a DO block
         self.assertAlmostEqual(insel.block('if', 3.14, 0), 0.0, places=6)
         self.assertAlmostEqual(insel.block('if', 3.14, 0.4), 0.0, places=6)
         self.assertAlmostEqual(insel.block('if', 3.14, -0.4), 0.0, places=6)
         self.assertNaN(insel.block('if', float('nan'), 1))
-        self.assertAlmostEqual(insel.block('if', 3.14, float('nan')), 0.0, places=6)
+        self.assertAlmostEqual(insel.block(
+            'if', 3.14, float('nan')), 0.0, places=6)
 
     def test_ifelsenan(self):
-        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, 1), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, 2), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, 0.5), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, -0.5), 3.14, places=6)
-        self.assertAlmostEqual(insel.block('ifelsenan', 3.14, float('inf')), 3.14, places=6)
+        self.assertAlmostEqual(insel.block(
+            'ifelsenan', 3.14, 1), 3.14, places=6)
+        self.assertAlmostEqual(insel.block(
+            'ifelsenan', 3.14, 2), 3.14, places=6)
+        self.assertAlmostEqual(insel.block(
+            'ifelsenan', 3.14, 0.5), 3.14, places=6)
+        self.assertAlmostEqual(insel.block(
+            'ifelsenan', 3.14, -0.5), 3.14, places=6)
+        self.assertAlmostEqual(insel.block(
+            'ifelsenan', 3.14, float('inf')), 3.14, places=6)
         self.assertNaN(insel.block('ifelsenan', 3.14, 0))
         self.assertNaN(insel.block('ifelsenan', 3.14, 0.4))
         self.assertNaN(insel.block('ifelsenan', 3.14, -0.4))
@@ -155,7 +162,8 @@ class TestBlock(CustomAssertions):
         # Not exactly 2 inputs:
         self.assertRaisesRegex(InselError, "Too few", insel.block, 'diff')
         self.assertRaisesRegex(InselError, "Too few", insel.block, 'diff', 1)
-        self.assertRaisesRegex(InselError, "Too many", insel.block, 'diff', 1, 2, 3)
+        self.assertRaisesRegex(InselError, "Too many",
+                               insel.block, 'diff', 1, 2, 3)
 
     def test_gain(self):
         self.assertAlmostEqual(insel.block('gain',
@@ -177,7 +185,8 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('att',
                                            3, parameters=[2]), 1.5, places=8)
         # Division by 0
-        self.assertRaisesRegex(InselError, "Zero .+ invalid", insel.block, 'att', 1, parameters=[0])
+        self.assertRaisesRegex(InselError, "Zero .+ invalid",
+                               insel.block, 'att', 1, parameters=[0])
         # Multiple inputs
         results = insel.block('att', 9, 3, 6, 7.5, parameters=[3], outputs=4)
         self.assertEqual(repr(results), '[3.0, 1.0, 2.0, 2.5]')
@@ -198,10 +207,14 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('sin', 60), 3 ** 0.5 / 2, places=6)
         self.assertAlmostEqual(insel.block('sin', 90), 1)
         self.assertAlmostEqual(insel.block('sin', -90), -1)
-        self.assertAlmostEqual(insel.block('sin', math.pi, parameters=[1]), 0, places=6)
-        self.assertAlmostEqual(insel.block('sin', math.pi / 2, parameters=[1]), 1, places=6)
-        self.assertAlmostEqual(insel.block('sin', math.pi / 6, parameters=[1]), 0.5, places=6)
-        self.assertAlmostEqual(insel.block('sin', -math.pi / 2, parameters=[1]), -1, places=6)
+        self.assertAlmostEqual(insel.block(
+            'sin', math.pi, parameters=[1]), 0, places=6)
+        self.assertAlmostEqual(insel.block(
+            'sin', math.pi / 2, parameters=[1]), 1, places=6)
+        self.assertAlmostEqual(insel.block(
+            'sin', math.pi / 6, parameters=[1]), 0.5, places=6)
+        self.assertAlmostEqual(insel.block(
+            'sin', -math.pi / 2, parameters=[1]), -1, places=6)
 
     def test_cosine(self):
         self.assertAlmostEqual(insel.block('cos', 0), 1)
@@ -211,18 +224,24 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('cos', 60), 0.5, places=6)
         self.assertAlmostEqual(insel.block('cos', 90), 0)
         self.assertAlmostEqual(insel.block('cos', -90), 0)
-        self.assertAlmostEqual(insel.block('cos', math.pi, parameters=[1]), -1, places=6)
-        self.assertAlmostEqual(insel.block('cos', math.pi / 2, parameters=[1]), 0, places=6)
-        self.assertAlmostEqual(insel.block('cos', math.pi / 3, parameters=[1]), 0.5, places=6)
-        self.assertAlmostEqual(insel.block('cos', -math.pi / 2, parameters=[1]), 0, places=6)
+        self.assertAlmostEqual(insel.block(
+            'cos', math.pi, parameters=[1]), -1, places=6)
+        self.assertAlmostEqual(insel.block(
+            'cos', math.pi / 2, parameters=[1]), 0, places=6)
+        self.assertAlmostEqual(insel.block(
+            'cos', math.pi / 3, parameters=[1]), 0.5, places=6)
+        self.assertAlmostEqual(insel.block(
+            'cos', -math.pi / 2, parameters=[1]), 0, places=6)
 
     def test_atan2(self):
         self.assertAlmostEqual(insel.block('atan2', 1, 1), 45)
         self.assertAlmostEqual(insel.block('atan2', 0, 1), 0)
         self.assertAlmostEqual(insel.block('atan2', 1, 0), 90)
         self.assertAlmostEqual(insel.block('atan2', -1, -1), -135)
-        self.assertAlmostEqual(insel.block('atan2', 1, 1, parameters=[1]), math.pi / 4)
-        self.assertAlmostEqual(insel.block('atan2', 1, 0, parameters=[1]), math.pi / 2, places=6)
+        self.assertAlmostEqual(insel.block(
+            'atan2', 1, 1, parameters=[1]), math.pi / 4)
+        self.assertAlmostEqual(insel.block(
+            'atan2', 1, 0, parameters=[1]), math.pi / 2, places=6)
         self.assertNaN(insel.block('atan2', math.nan, 1))
         self.assertNaN(insel.block('atan2', 1, math.nan))
 
@@ -262,7 +281,8 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('exp', 0.0), 1.0, places=6)
         self.assertAlmostEqual(insel.block('exp', -1.0), 1 / 2.71828, places=6)
         for x in [-50, -20, 20, 50, 80]:
-            self.assertAlmostEqual(insel.block('exp', x) / math.exp(x), 1, places=6)
+            self.assertAlmostEqual(insel.block(
+                'exp', x) / math.exp(x), 1, places=6)
         self.assertEqual(' '.join(['%.2f' % x for x in
                                    insel.block('exp', -3.5, -2.0, 1.4, 2.6, 4.7, outputs=5)]),
                          '0.03 0.14 4.06 13.46 109.95')
@@ -313,13 +333,18 @@ class TestBlock(CustomAssertions):
                          '0.5 0.0 -0.4 -0.6 -0.7')
 
     def test_avew(self):
-        self.assertAlmostEqual(insel.block('avew', 2, 4, parameters=[1, 1]), 3.0)
-        self.assertAlmostEqual(insel.block('avew', 2, 4, parameters=[0, 1]), 4.0)
-        self.assertAlmostEqual(insel.block('avew', 2, 4, parameters=[1, 0]), 2.0)
-        self.assertAlmostEqual(insel.block('avew', 2, 5, parameters=[1, 2]), 4.0)
+        self.assertAlmostEqual(insel.block(
+            'avew', 2, 4, parameters=[1, 1]), 3.0)
+        self.assertAlmostEqual(insel.block(
+            'avew', 2, 4, parameters=[0, 1]), 4.0)
+        self.assertAlmostEqual(insel.block(
+            'avew', 2, 4, parameters=[1, 0]), 2.0)
+        self.assertAlmostEqual(insel.block(
+            'avew', 2, 5, parameters=[1, 2]), 4.0)
 
     def test_mtm(self):
-        december = insel.block('mtm2', 12, parameters=['Strasbourg'], outputs=9)
+        december = insel.block('mtm2', 12, parameters=[
+                               'Strasbourg'], outputs=9)
         # 1.5° in december in Strasbourg
         self.assertAlmostEqual(december[2], 1.5, places=1)
         # ~28W/m² in december in Strasbourg
@@ -334,7 +359,8 @@ class TestBlock(CustomAssertions):
         m = insel.OneBlockModel('MTMLALO', inputs=[5], parameters=STUTTGART)
         m.run()
         self.assertTrue(len(m.warnings) >= 1, "A warning should be shown")
-        self.assertTrue("Block 00002: '48.77° N, 9.18° W' seems to be in the ocean" in str(m.warnings))
+        self.assertTrue(
+            "Block 00002: '48.77° N, 9.18° W' seems to be in the ocean" in str(m.warnings))
         self.assertTrue("MTMLALO is deprecated" in str(m.warnings))
 
         m = insel.OneBlockModel('MTMLALO2', inputs=[6], parameters=STUTTGART)
@@ -373,7 +399,8 @@ class TestBlock(CustomAssertions):
                         "10.06.2021 should be a new moon.")
 
         # It should work at the equator too:
-        self.assertNotNaN(insel.block('moonae2', 2021, 11, 19, 12, parameters=[0, 0, 0]))
+        self.assertNotNaN(insel.block('moonae2', 2021, 11,
+                          19, 12, parameters=[0, 0, 0]))
 
     def test_sunae(self):
         for mode in range(3):
@@ -423,6 +450,7 @@ class TestBlock(CustomAssertions):
             self.assertAlmostEqual(insel_now, python_now,
                                    delta=timedelta(seconds=5))
 
+
 class TestTemplate(CustomAssertions):
     def test_empty_if(self):
         self.assertEqual(insel.template('empty_if'), [])
@@ -439,7 +467,8 @@ class TestTemplate(CustomAssertions):
 
     def test_mtm_averages(self):
         # Those places used to have wrong averages
-        places = ['Cambridge', 'Inuvik', 'Milagro', 'Naesgard', 'Nurnberg', 'Planes de Montecrist']
+        places = ['Cambridge', 'Inuvik', 'Milagro',
+                  'Naesgard', 'Nurnberg', 'Planes de Montecrist']
         for place in places:
             self.assertTrue(insel.template('check_temperatures', location=place),
                             f'Wrong temperatures for {place}')
@@ -484,7 +513,7 @@ class TestTemplate(CustomAssertions):
             dot_indices.update(indices(line, '.'))
 
         self.assertEqual(len(dot_indices), columns,
-                         f"There should be {columns} nicely aligned decimal points");
+                         f"There should be {columns} nicely aligned decimal points")
 
     def test_updated_coordinates(self):
         v1_results = insel.template('nurnberg_v1',
@@ -532,7 +561,8 @@ class TestTemplate(CustomAssertions):
                                5.96 + (70 - 25) * 3.5e-3, places=2)
 
     def test_sunpower_uoc(self):
-        self.assertRaises(AttributeError, insel.template, 'u_oc')  # Missing pv_id. STC by default
+        # Missing pv_id. STC by default
+        self.assertRaises(AttributeError, insel.template, 'u_oc')
         self.assertAlmostEqual(insel.template('u_oc', pv_id='003305'),
                                64.2, places=2)
         temp = 70
@@ -542,7 +572,8 @@ class TestTemplate(CustomAssertions):
                                64.2 + (temp - 25) * (-0.1766), places=2)
 
     def test_sunpower_mpp(self):
-        self.assertRaises(AttributeError, insel.template, 'mpp')  # Missing pv_id. STC by default
+        # Missing pv_id. STC by default
+        self.assertRaises(AttributeError, insel.template, 'mpp')
         self.assertAlmostEqual(insel.template('mpp', pv_id='003305'),
                                305, places=0)
         temp = 70
@@ -579,7 +610,8 @@ class TestTemplate(CustomAssertions):
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / basename
             self.assertFalse(dat_file.exists())
-            model = insel.Template('write_params', dat_file=dat_file, **write_params)
+            model = insel.Template(
+                'write_params', dat_file=dat_file, **write_params)
             model.run()
             self.assertEqual(model.warnings, [])
             self.assertTrue(dat_file.exists(), "File should have been written")
@@ -610,11 +642,14 @@ class TestTemplate(CustomAssertions):
 
 class TestExistingModel(CustomAssertions):
     def test_one_to_ten(self):
-        self.compareLists(insel.run('templates/one_to_ten.insel'), range(1, 11))
+        self.compareLists(
+            insel.run('templates/one_to_ten.insel'), range(1, 11))
 
     def test_nonexisting_model(self):
-        self.assertRaisesRegex(InselError, "File not found", insel.run, 'templates/not_here.insel')
-        self.assertRaisesRegex(InselError, "File not found", insel.run, 'not_here/model.insel')
+        self.assertRaisesRegex(InselError, "File not found",
+                               insel.run, 'templates/not_here.insel')
+        self.assertRaisesRegex(InselError, "File not found",
+                               insel.run, 'not_here/model.insel')
 
     def test_merging_two_loops(self):
         self.assertRaisesRegex(InselError, "Please try to merge 2 & 3", insel.run,
@@ -632,14 +667,17 @@ class TestExistingModel(CustomAssertions):
 
     def test_can_read_relative_file_with_absolute_path(self):
         with cwd(Path.home()):
-            deviation = insel.run((SCRIPT_DIR / 'templates' / 'read_relative_file.insel').resolve())
+            deviation = insel.run(
+                (SCRIPT_DIR / 'templates' / 'read_relative_file.insel').resolve())
             self.compareLists(deviation, [0, 0], places=4)
 
     def test_string_parameter_in_vseit_should_not_be_cut(self):
         for f in ['short_string.vseit', 'long_string.vseit']:
             insel_model = insel.raw_run('-m', 'templates/' + f)
-            string_params = [p for p in insel_model.split() if p.count("'") == 2]
-            self.assertEqual(len(string_params), 2, f"2 string parameters should be found in {f}")
+            string_params = [
+                p for p in insel_model.split() if p.count("'") == 2]
+            self.assertEqual(len(string_params), 2,
+                             f"2 string parameters should be found in {f}")
 
     def test_screen_headline_should_be_displayed(self):
         for f in ['short_string.vseit', 'long_string.vseit']:
@@ -651,7 +689,8 @@ class TestExistingModel(CustomAssertions):
 
     def test_screen_utf8_header_should_be_displayed(self):
         out = insel.raw_run('templates/utf_headline.insel')
-        self.assertTrue('T€st 12345' in out, "Headline should be allowed to be in UTF-8")
+        self.assertTrue('T€st 12345' in out,
+                        "Headline should be allowed to be in UTF-8")
 
 
 class TestInselFlags(unittest.TestCase):
@@ -679,7 +718,8 @@ class TestInselFlags(unittest.TestCase):
 
     def test_insel_s(self):
         insel_s = insel.raw_run('-s', 'templates/short_string.vseit')
-        self.assertRegex(insel_s, '0 errors, 0 warnings', "insel -s should check model")
+        self.assertRegex(insel_s, '0 errors, 0 warnings',
+                         "insel -s should check model")
 
     def test_insel_m(self):
         insel_m = insel.raw_run('-m', 'templates/short_string.vseit')
@@ -697,7 +737,8 @@ class TestInselFlags(unittest.TestCase):
 
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
-        insel.block('ubstorage', 1, 2, parameters=[10, 0, 1, 1, 0, 100, 0, 1, 0])
+        insel.block('ubstorage', 1, 2, parameters=[
+                    10, 0, 1, 1, 0, 100, 0, 1, 0])
 
     def test_ubisonland(self):
         self.assertAlmostEqual(insel.block('ubisonland', 48.77, 9.18), 1)
