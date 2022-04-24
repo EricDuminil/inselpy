@@ -67,6 +67,16 @@ class TestBlock(CustomAssertions):
             self.fail("Some blocks are defined multiples times : " +
                       ','.join(f"{b} ({c} times)" for (b, c) in duplicates))
 
+    def test_blocks_have_been_deleted(self):
+        """
+        Some blocks were just too confusing or broken,
+        and should not be available anymore.
+        """
+        insel_b = insel.raw_run('-b')
+        blocks = set(insel_b.split('\n\n')[-1].split())
+        for deleted_block in ['TIMEMS', 'TIMEMS0']:
+            self.assertFalse(deleted_block in blocks, f'{deleted_block} should have been deleted.')
+
     def test_pi(self):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
 
