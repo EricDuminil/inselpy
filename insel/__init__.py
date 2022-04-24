@@ -8,7 +8,6 @@ def block(name, *args, **kwargs):
     outputs = kwargs.get('outputs', 1)
     return OneBlockModel(name, inputs=args, outputs=outputs, parameters=parameters).run()
 
-
 def template(name, **parameters):
     return Template(name, **parameters).run()
 

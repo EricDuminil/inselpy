@@ -1,0 +1,28 @@
+
+B 1 CLOCK           
+P 1
+    2021            % Start year
+    1               % Start month
+    1               % Start day
+    0               % Start hour
+    0               % Start minute
+    0               % Start second
+    2022            % End year
+    1               % End month
+    1               % End day
+    0               % End hour
+    0               % End minute
+    0               % End second
+    1               % Increment
+    'h'             % Unit
+
+B 2 AVEC            
+    1.2
+    1.3
+
+B 3 SCREEN          
+    2.1
+    2.2
+P 3
+    '*'             % Format
+

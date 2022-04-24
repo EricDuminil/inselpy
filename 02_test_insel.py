@@ -17,8 +17,8 @@ logging.basicConfig(level=logging.ERROR)
 SCRIPT_DIR = Path(__file__).parent.resolve()
 
 
-# TODO: CUMC / MAXXC / MINC / ..
 # TODO: Moving average
+# TODO: X for Ymax
 # TODO: Test with LC_ALL = DE
 # TODO: parametric blocks
 # TODO: Add gnuplot tests
@@ -545,6 +545,27 @@ class TestTemplate(CustomAssertions):
             _, days = monthrange(2021, month)
             self.assertAlmostEqual(month, x)
             self.assertAlmostEqual(days * (days + 1) / 2 * 24, y)
+
+    def test_maxxc(self):
+        table = insel.template('maxxc')
+        for month, (x, y) in zip(range(1, 13), table):
+            _, days = monthrange(2021, month)
+            self.assertAlmostEqual(month, x)
+            self.assertAlmostEqual(days, y)
+
+    def test_minnc(self):
+        table = insel.template('minnc')
+        for month, (x, y) in zip(range(1, 13), table):
+            _, days = monthrange(2021, month)
+            self.assertAlmostEqual(month, x)
+            self.assertAlmostEqual(-days, y)
+
+    def test_avec(self):
+        table = insel.template('avec')
+        for month, (x, y) in zip(range(1, 13), table):
+            _, days = monthrange(2021, month)
+            self.assertAlmostEqual(month, x)
+            self.assertAlmostEqual((days + 1) / 2, y)
 
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)

@@ -155,6 +155,7 @@ class OneBlockModel(TemporaryModel):
         return "\n".join(lines)
 
 
+#TODO: Allow subfolders inside template folder
 class Template(TemporaryModel):
     dirname = os.path.join(os.path.dirname(__file__), '../templates')
     pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
