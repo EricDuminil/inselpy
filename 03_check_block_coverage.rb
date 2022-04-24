@@ -47,7 +47,11 @@ blocks_in_examples = Set.new(blocks_in_examples)
 
 color_blocks = all_blocks.map do |block|
   if tested_blocks.include? block
-    block.green
+    if blocks_in_examples.include?(block)
+      block.green
+    else
+      block.green + "!"
+    end
   elsif blocks_in_examples.include? block
     block.blue
   else
