@@ -410,14 +410,18 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
 
     def test_now(self):
-        year, month, day, hour, minute, second = insel.block('now', outputs=6)
-        microsecond = int((second % 1)*1e6)
-        insel_now = datetime(int(year), int(month), int(day),
-                             int(hour), int(minute), int(second), microsecond)
-        python_now = datetime.now()
+        # NOTE: NOW returns current time, NOW0 returns time at beginning of simulation
+        block_names = ['now', 'now0']
+        for now_block in block_names:
+            year, month, day, hour, minute, second = insel.block(
+                now_block, outputs=6)
+            microsecond = int((second % 1)*1e6)
+            insel_now = datetime(int(year), int(month), int(day),
+                                 int(hour), int(minute), int(second), microsecond)
+            python_now = datetime.now()
 
-        self.assertAlmostEqual(insel_now, python_now, delta=timedelta(seconds=5))
-
+            self.assertAlmostEqual(insel_now, python_now,
+                                   delta=timedelta(seconds=5))
 
 class TestTemplate(CustomAssertions):
     def test_empty_if(self):
