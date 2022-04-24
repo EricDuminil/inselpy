@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import contextlib
 import insel
+from datetime import datetime, timedelta
 from insel.insel import Insel, InselError
 from collections import Counter
 
@@ -407,6 +408,15 @@ class TestBlock(CustomAssertions):
     def test_infinity(self):
         self.assertTrue(math.isinf(insel.block('infinity')))
         self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
+
+    def test_now(self):
+        year, month, day, hour, minute, second = insel.block('now', outputs=6)
+        microsecond = int((second % 1)*1e6)
+        insel_now = datetime(int(year), int(month), int(day),
+                             int(hour), int(minute), int(second), microsecond)
+        python_now = datetime.now()
+
+        self.assertAlmostEqual(insel_now, python_now, delta=timedelta(seconds=5))
 
 
 class TestTemplate(CustomAssertions):
