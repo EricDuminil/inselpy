@@ -10,7 +10,9 @@ blocks_in_templates = templates.map{ |t|
 
 blocks_in_py = File.read('02_test_insel.py').scan(/insel\.block\(["'](\w+?)["']/)
 
-tested_blocks = (blocks_in_templates + blocks_in_py).flatten.uniq.sort.map(&:upcase)
+other_tested_blocks = ['NOW', 'NOW0'] # Tested in loops
+
+tested_blocks = (blocks_in_templates + blocks_in_py).flatten.uniq.sort.map(&:upcase) + other_tested_blocks
 
 all_blocks = `insel -b`.split("\n\n").last.split.sort
 
