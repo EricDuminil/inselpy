@@ -10,6 +10,7 @@ import insel
 from datetime import datetime, timedelta
 from insel.insel import Insel, InselError
 from collections import Counter
+from calendar import monthrange
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -537,6 +538,13 @@ class TestTemplate(CustomAssertions):
                                     )
         self.compareLists(v1_results, [3865, 3645], places=-1)
         self.compareLists(v2_results, v1_results, places=2)
+
+    def test_cumc(self):
+        table = insel.template('cumc')
+        for month, (x, y) in zip(range(1, 13), table):
+            _, days = monthrange(2021, month)
+            self.assertAlmostEqual(month, x)
+            self.assertAlmostEqual(days * (days + 1) / 2 * 24, y)
 
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
