@@ -438,8 +438,7 @@ class TestBlock(CustomAssertions):
 
     def test_now(self):
         # NOTE: NOW returns current time, NOW0 returns time at beginning of simulation
-        block_names = ['now', 'now0']
-        for now_block in block_names:
+        for now_block in ['NOW', 'NOW0']:
             year, month, day, hour, minute, second = insel.block(
                 now_block, outputs=6)
             microsecond = int((second % 1)*1e6)
