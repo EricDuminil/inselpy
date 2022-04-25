@@ -162,7 +162,6 @@ class OneBlockModel(TemporaryModel):
         return "\n".join(lines)
 
 
-#TODO: Allow absolute path
 class Template(TemporaryModel):
     dirname = Insel.script_directory.parent / 'templates'
     pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
@@ -174,6 +173,7 @@ class Template(TemporaryModel):
         self.parameters = self.add_defaults_to(parameters)
 
     def template_filename(self):
+        #NOTE: template_path can be absolute too, Template.dirname simply won't be used.
         f = Template.dirname / self.template_path
         if f.exists():
             return f

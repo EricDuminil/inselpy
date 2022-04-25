@@ -615,7 +615,8 @@ class TestTemplate(CustomAssertions):
         # NOTE: .insel can be included in template_name, but doesn't have to.
         self.assertAlmostEqual(insel.template(
             'a_times_b.insel', a=4), 12, places=6)
-        self.assertAlmostEqual(insel.template('a_times_b', a=4, b=5),
+        # NOTE: template path can also be absolute.
+        self.assertAlmostEqual(insel.template(SCRIPT_DIR / 'templates' / 'a_times_b.insel', a=4, b=5),
                                20, places=6)
 
     def test_non_ascii_template(self):
