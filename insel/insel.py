@@ -7,12 +7,19 @@ import platform
 import logging
 import shutil
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, List, Union, Optional
 
+# Models can return:
+#  1
+#  [1]
+#  [[1,2],[3,4]]
+#  [1,[2,3],4]
+Row = List[float]
+Table = List[Union[float, Row]]
+Parameter = Union[float, str]
 
 # logging.basicConfig(level=logging.WARNING)
 # TODO: Move to separate files, one per class?
-# TODO: Add type hints
 
 def get_config():
     system = platform.system().lower()
@@ -50,38 +57,46 @@ class Insel(object):
 class Model(object):
 
     def __init__(self):
-        self.warnings = []
-        self.timeout = None
+        self.warnings: List[str] = []
+        self.timeout: int = None
         self.path = None
 
-    def run(self):
-        raw = self.raw_results().decode()
+    def run(self) -> Union[float, Row, Table]:
+        raw: str = self.raw_results().decode()
+        problem: str
         for problem in Insel.warning.findall(raw):
             logging.warning('INSEL : %s', problem)
             self.warnings.append(problem)
         match = Insel.normal_run.search(raw)
         if match:
-            output = match.group(1)
-            floats = []
+            output: str = match.group(1)
+            table: Table = []
+            line: str
             for line in output.split("\n"):
                 if line:
-                    values = self.parse_line(line)
+                    values: Optional[Union[float, List[float]]] = self.parse_line(line)
                     if values is not None:
-                        floats.append(values)
-            return self.extract(floats)
+                        table.append(values)
+            return self.extract(table)
         else:
             raise InselError("Problem with INSEL\n%s\n%s\n%s\n" %
                              ('#' * 30, raw, '#' * 30))
 
-    def parse_line(self, line):
-        if not Insel.warning.search(line):
-            return self.extract([float(x) for x in line.split() if x])
-
-    def extract(self, array):
-        if len(array) == 1:
-            return array[0]
+    def parse_line(self, line: str) -> Optional[Union[Row, float]]:
+        if Insel.warning.search(line):
+            return None
         else:
-            return array
+            values: Row = [float(x) for x in line.split() if x]
+            if len(values) == 1:
+                return values[0]
+            else:
+                return values
+
+    def extract(self, table: Table) -> Union[float, Row, Table]:
+        if len(table) == 1:
+            return table[0]
+        else:
+            return table
 
     def raw_results(self) -> bytes:
         Insel.calls += 1
@@ -107,7 +122,7 @@ class TemporaryModel(Model):
             mode='w+', suffix=Insel.extension, prefix='python_%s_' % self.name,
             delete=False)
 
-    def raw_results(self):
+    def raw_results(self) -> bytes:
         try:
             with self.tempfile() as temp_model:
                 self.path = temp_model.name
@@ -116,13 +131,13 @@ class TemporaryModel(Model):
         finally:
             os.remove(self.path)
 
-    def content(self):
+    def content(self) -> str:
         raise NotImplementedError(
             "Implement %s.content() !" % self.__class__.__name__)
 
 
 class OneBlockModel(TemporaryModel):
-    def __init__(self, name='', inputs=[], parameters=[], outputs=1):
+    def __init__(self, name: str = '', inputs: List[float] = [], parameters : List[Parameter] = [], outputs: int = 1):
         super().__init__()
         self.name = name
         self.parameters = ["'%s'" % p if isinstance(p, str)
@@ -131,11 +146,11 @@ class OneBlockModel(TemporaryModel):
         self.n_in = len(inputs)
         self.n_out = outputs
 
-    def content(self):
-        lines = []
-        input_ids = []
-        block_id = self.n_in + 1
-        screen_id = self.n_in + 2
+    def content(self) -> str:
+        lines: List[str] = []
+        input_ids: List[str] = []
+        block_id: int = self.n_in + 1
+        screen_id: int = self.n_in + 2
 
         for i, arg in enumerate(self.inputs, 1):
             input_ids.append("%s.1" % i)
@@ -170,9 +185,9 @@ class Template(TemporaryModel):
 
     def __init__(self, template_path, **parameters):
         super().__init__()
-        self.template_path = Path(template_path).with_suffix('.insel')
-        self.name = self.template_path.stem
-        self.parameters = self.add_defaults_to(parameters)
+        self.template_path: Path = Path(template_path).with_suffix('.insel')
+        self.name: str = self.template_path.stem
+        self.parameters: Dict = self.add_defaults_to(parameters)
 
     def template_filename(self) -> Path:
         # NOTE: template_path can be absolute too, Template.dirname simply won't be used.
