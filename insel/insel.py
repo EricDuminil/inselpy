@@ -13,6 +13,18 @@ from pathlib import Path
 # TODO: Move to separate files, one per class?
 # TODO: Add type hints
 
+def get_config():
+    system = platform.system().lower()
+
+    default_configs = {
+        'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
+        'windows': {'dirname': Path(os.getenv('ProgramFiles', '')) / 'insel', 'command': 'insel.exe'},
+        'darwin': {'dirname': "/usr/local/insel/", 'command': 'insel'}
+    }
+
+    return default_configs[system]
+
+
 class InselError(Exception):
     pass
 
@@ -20,20 +32,7 @@ class InselError(Exception):
 class Insel(object):
     script_directory = Path(__file__).resolve().parent
     calls = 0
-
-    @staticmethod
-    def get_config():
-        system = platform.system().lower()
-
-        default_configs = {
-            'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
-            'windows': {'dirname': Path(os.getenv('ProgramFiles', '')) / 'insel', 'command': 'insel.exe'},
-            'darwin': {'dirname': "/usr/local/insel/", 'command': 'insel'}
-        }
-
-        return default_configs[system]
-
-    config = get_config.__func__()
+    config = get_config()
     dirname = Path(os.environ.get('INSEL_HOME', config['dirname']))
     command = config['command']
     if shutil.which(command) is None:
@@ -117,7 +116,8 @@ class TemporaryModel(Model):
             os.remove(self.path)
 
     def content(self):
-        raise NotImplementedError("Implement %s.content() !" % self.__class__.__name__)
+        raise NotImplementedError(
+            "Implement %s.content() !" % self.__class__.__name__)
 
 
 class OneBlockModel(TemporaryModel):
@@ -164,7 +164,8 @@ class OneBlockModel(TemporaryModel):
 
 class Template(TemporaryModel):
     dirname = Insel.script_directory.parent / 'templates'
-    pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
+    pattern = re.compile(
+        r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
     def __init__(self, template_path, **parameters):
         super().__init__()
@@ -173,7 +174,7 @@ class Template(TemporaryModel):
         self.parameters = self.add_defaults_to(parameters)
 
     def template_filename(self):
-        #NOTE: template_path can be absolute too, Template.dirname simply won't be used.
+        # NOTE: template_path can be absolute too, Template.dirname simply won't be used.
         f = Template.dirname / self.template_path
         if f.exists():
             return f
