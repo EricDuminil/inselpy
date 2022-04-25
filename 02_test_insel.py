@@ -18,6 +18,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 # TODO: X for Ymax
 # TODO: Test with LC_ALL = DE
+# TODO: Test weird_output
 # TODO: Add gnuplot tests
 
 
