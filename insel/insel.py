@@ -138,7 +138,11 @@ class OneBlockModel(TemporaryModel):
             if math.isnan(arg):
                 lines.append("s %d NAN" % i)
             elif math.isinf(arg):
-                lines.append("s %d INFINITY" % i)
+                if arg > 0:
+                    lines.append("s %d INFINITY" % i)
+                else:
+                    lines.append("s %d INFINITY" % (1000 + i))
+                    lines.append("s %d CHS %d" % (i, 1000 + i))
             else:
                 lines.append("s %d CONST" % i)
                 lines.append("p %d" % i)
