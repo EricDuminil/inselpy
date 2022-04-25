@@ -7,7 +7,7 @@ import platform
 import logging
 import shutil
 from pathlib import Path
-from typing import Dict, List, Union, Optional
+from typing import Dict, List, Union, Optional, Any
 
 # Models can return:
 #  1
@@ -38,10 +38,10 @@ class InselError(Exception):
 
 
 class Insel(object):
-    script_directory = Path(__file__).resolve().parent
-    calls = 0
+    script_directory: Path = Path(__file__).resolve().parent
+    calls: int = 0
     config = get_config()
-    dirname = Path(os.environ.get('INSEL_HOME', config['dirname']))
+    dirname: Path = Path(os.environ.get('INSEL_HOME', config['dirname']))
     command = config['command']
     if shutil.which(command) is None:
         # If insel is not in PATH, use absolute path.
@@ -56,10 +56,11 @@ class Insel(object):
 # NOTE: Abstract class
 class Model(object):
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.warnings: List[str] = []
-        self.timeout: int = None
-        self.path = None
+        self.timeout: Optional[int] = None
+        self.path: Path
+        self.name: str
 
     def run(self) -> Union[float, Row, Table]:
         raw: str = self.raw_results().decode()
@@ -140,11 +141,11 @@ class OneBlockModel(TemporaryModel):
     def __init__(self, name: str = '', inputs: List[float] = [], parameters : List[Parameter] = [], outputs: int = 1):
         super().__init__()
         self.name = name
-        self.parameters = ["'%s'" % p if isinstance(p, str)
+        self.parameters: List[str] = ["'%s'" % p if isinstance(p, str)
                            else str(p) for p in parameters]
-        self.inputs = inputs
-        self.n_in = len(inputs)
-        self.n_out = outputs
+        self.inputs: List[float] = inputs
+        self.n_in: int = len(inputs)
+        self.n_out: int = outputs
 
     def content(self) -> str:
         lines: List[str] = []
@@ -179,26 +180,28 @@ class OneBlockModel(TemporaryModel):
 
 
 class Template(TemporaryModel):
-    dirname = Insel.script_directory.parent / 'templates'
+    dirname: Path = Insel.script_directory.parent / 'templates'
     pattern = re.compile(
         r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
-    def __init__(self, template_path, **parameters):
+    def __init__(self, template_path, **parameters) -> None:
         super().__init__()
         self.template_path: Path = Path(template_path).with_suffix('.insel')
         self.name: str = self.template_path.stem
-        self.parameters: Dict = self.add_defaults_to(parameters)
+        self.parameters: Dict[str, Any] = self.add_defaults_to(parameters)
 
-    def template_filename(self) -> Path:
-        # NOTE: template_path can be absolute too, Template.dirname simply won't be used.
-        f = Template.dirname / self.template_path
-        if f.exists():
-            return f
+    def template_full_path(self) -> Path:
+        full_path: Path = Template.dirname / self.template_path
+        if full_path.exists():
+            return full_path
         else:
-            raise FileNotFoundError("No template in %s" % f)
+            raise FileNotFoundError("No template in %s" % full_path)
 
-    def replace(self, string) -> str:
-        var_name, index, default = string.groups()
+    def replace(self, match_object: re.Match[str]) -> str:
+        var_name: str
+        index: str
+        default: str
+        var_name, index, default = match_object.groups()
         var_name = var_name.strip()
         if var_name in self.parameters:
             if index:
@@ -223,7 +226,7 @@ class Template(TemporaryModel):
 
     def content(self) -> str:
         # Replace unknown chars with backslash + code, so that content can be fed to INSEL
-        with open(self.template_filename(), encoding='utf-8', errors='backslashreplace') as template:
+        with open(self.template_full_path(), encoding='utf-8', errors='backslashreplace') as template:
             content = template.read()
             content = re.sub(Template.pattern, self.replace, content)
             return content
