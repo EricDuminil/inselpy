@@ -514,17 +514,17 @@ class TestTemplate(CustomAssertions):
         places = ['Cambridge', 'Inuvik', 'Milagro',
                   'Naesgard', 'Nurnberg', 'Planes de Montecrist']
         for place in places:
-            self.assertTrue(insel.template('check_temperatures', location=place),
+            self.assertTrue(insel.template('weather/check_temperatures', location=place),
                             f'Wrong temperatures for {place}')
 
     def test_gengt_consistency(self):
-        deviation = insel.template('gengt_comparison')
+        deviation = insel.template('weather/gengt_comparison')
         # NOTE: Depending on system, pseudo random values can vary very slightly. 1e-4 really isn't any problem for °C or W/m²
         self.compareLists(deviation, [0, 0], places=4)
 
     def test_gengt_averages(self):
         irradiance_deviation, temperature_deviation = \
-            insel.template('gengt_monthly_averages')
+            insel.template('weather/gengt_monthly_averages')
         self.assertAlmostEqual(irradiance_deviation, 0, delta=5,
                                msg="Irradiance shouldnt vary by more than 5 W/m²")
         self.assertAlmostEqual(temperature_deviation, 0, delta=0.1,
@@ -560,12 +560,12 @@ class TestTemplate(CustomAssertions):
                          f"There should be {columns} nicely aligned decimal points")
 
     def test_updated_coordinates(self):
-        v1_results = insel.template('nurnberg_v1',
+        v1_results = insel.template('photovoltaic/nurnberg_v1',
                                     latitude=49.5,
                                     old_longitude=-11.08,
                                     old_timezone=23
                                     )
-        v2_results = insel.template('nurnberg_v2',
+        v2_results = insel.template('photovoltaic/nurnberg_v2',
                                     latitude=49.5,
                                     longitude=11.08,
                                     timezone=+1
@@ -694,7 +694,7 @@ class TestTemplate(CustomAssertions):
             dat_file = Path(tmpdirname) / basename
             self.assertFalse(dat_file.exists())
             model = insel.Template(
-                'write_params', dat_file=dat_file, **write_params)
+                'io/write_params', dat_file=dat_file, **write_params)
             model.run()
             self.assertEqual(model.warnings, [])
             self.assertTrue(dat_file.exists(), "File should have been written")
@@ -706,20 +706,21 @@ class TestTemplate(CustomAssertions):
                 self.compareLists(written, range(1, 11), places=5)
 
     def test_read_simple_file(self):
-        fourfivesix = insel.template('read_simple_file', ext='dat')
+        fourfivesix = insel.template('io/read_simple_file', ext='dat')
         self.compareLists(fourfivesix, [4, 5, 6])
 
     def test_read_csv_like_as_normal_file(self):
         # READ block used to completely skip CSV files :-/
         # Now it just tries to read it as a normal file
-        fourfivesix = insel.template('read_simple_file', ext='csv')
+        fourfivesix = insel.template('io/read_simple_file', ext='csv')
         self.compareLists(fourfivesix, [4, 5, 6])
 
     def test_read_epw_file(self):
         # Depending on extension, READ block will parse as normal file or EPW
-        stuttgart_epw_average_temp = insel.template('read_epw_file', ext='epw')
+        stuttgart_epw_average_temp = insel.template(
+            'io/read_epw_file', ext='epw')
         self.assertAlmostEqual(stuttgart_epw_average_temp, 9.1, places=1)
-        nothing_to_read = insel.template('read_epw_file', ext='txt')
+        nothing_to_read = insel.template('io/read_epw_file', ext='txt')
         self.assertEqual(nothing_to_read, [])
 
 
@@ -740,23 +741,23 @@ class TestExistingModel(CustomAssertions):
 
     def test_read_relative_file_when_in_correct_folder(self):
         with cwd(SCRIPT_DIR / 'templates'):
-            deviation = insel.run('read_relative_file.insel')
+            deviation = insel.run('io/read_relative_file.insel')
             self.compareLists(deviation, [0, 0], places=4)
 
     def test_read_relative_file_when_in_another_folder(self):
         with cwd(SCRIPT_DIR):
-            deviation = insel.run('templates/read_relative_file.insel')
+            deviation = insel.run('templates/io/read_relative_file.insel')
             self.compareLists(deviation, [0, 0], places=4)
 
     def test_can_read_relative_file_with_absolute_path(self):
         with cwd(Path.home()):
             deviation = insel.run(
-                (SCRIPT_DIR / 'templates' / 'read_relative_file.insel').resolve())
+                SCRIPT_DIR / 'templates' / 'io' / 'read_relative_file.insel')
             self.compareLists(deviation, [0, 0], places=4)
 
     def test_string_parameter_in_vseit_should_not_be_cut(self):
         for f in ['short_string.vseit', 'long_string.vseit']:
-            insel_model = insel.raw_run('-m', 'templates/' + f)
+            insel_model = insel.raw_run('-m', 'templates/io/' + f)
             string_params = [
                 p for p in insel_model.split() if p.count("'") == 2]
             self.assertEqual(len(string_params), 2,
@@ -764,14 +765,14 @@ class TestExistingModel(CustomAssertions):
 
     def test_screen_headline_should_be_displayed(self):
         for f in ['short_string.vseit', 'long_string.vseit']:
-            out = insel.raw_run('templates/' + f)
+            out = insel.raw_run('templates/io/' + f)
             lines = out.splitlines()
             headline = next(line for line in lines if 'String' in line)
             self.assertTrue(len(headline) < 100,
                             f"Headline '{headline}' shouldn't be too long")
 
     def test_screen_utf8_header_should_be_displayed(self):
-        out = insel.raw_run('templates/utf_headline.insel')
+        out = insel.raw_run('templates/io/utf_headline.insel')
         self.assertTrue('T€st 12345' in out,
                         "Headline should be allowed to be in UTF-8")
 
@@ -800,12 +801,12 @@ class TestInselFlags(unittest.TestCase):
                              f"'{part}' should be printed out by 'insel -l'")
 
     def test_insel_s(self):
-        insel_s = insel.raw_run('-s', 'templates/short_string.vseit')
+        insel_s = insel.raw_run('-s', 'templates/io/short_string.vseit')
         self.assertRegex(insel_s, '0 errors, 0 warnings',
                          "insel -s should check model")
 
     def test_insel_m(self):
-        insel_m = insel.raw_run('-m', 'templates/short_string.vseit')
+        insel_m = insel.raw_run('-m', 'templates/io/short_string.vseit')
         for part in ['b\s+1\s+DO', 'b\s+2\s+SCREEN', "'*'", "'ShortString'"]:
             self.assertRegex(insel_m, part,
                              f"'{part}' should be printed out by 'insel -l'")
