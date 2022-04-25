@@ -75,7 +75,7 @@ class TestBlock(CustomAssertions):
         """
         insel_b = insel.raw_run('-b')
         blocks = set(insel_b.split('\n\n')[-1].split())
-        for deleted_block in ['TIMEMS', 'TIMEMS0']:
+        for deleted_block in ['TIMEMS', 'TIMEMS0', 'DIV2']:
             self.assertFalse(deleted_block in blocks,
                              f'{deleted_block} should have been deleted.')
 
