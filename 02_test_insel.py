@@ -75,7 +75,7 @@ class TestBlock(CustomAssertions):
         """
         insel_b = insel.raw_run('-b')
         blocks = set(insel_b.split('\n\n')[-1].split())
-        for deleted_block in ['TIMEMS', 'TIMEMS0', 'DIV2']:
+        for deleted_block in ['TIMEMS', 'TIMEMS0', 'DIV2', 'NOW0']:
             self.assertFalse(deleted_block in blocks,
                              f'{deleted_block} should have been deleted.')
 
@@ -439,17 +439,13 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
 
     def test_now(self):
-        # NOTE: NOW returns current time, NOW0 returns time at beginning of simulation
-        for now_block in ['NOW', 'NOW0']:
-            year, month, day, hour, minute, second = insel.block(
-                now_block, outputs=6)
-            microsecond = int((second % 1)*1e6)
-            insel_now = datetime(int(year), int(month), int(day),
-                                 int(hour), int(minute), int(second), microsecond)
-            python_now = datetime.now()
+        year, month, day, hour, minute, second = insel.block('NOW', outputs=6)
+        microsecond = int((second % 1)*1e6)
+        insel_now = datetime(int(year), int(month), int(day),
+                             int(hour), int(minute), int(second), microsecond)
+        python_now = datetime.now()
 
-            self.assertAlmostEqual(insel_now, python_now,
-                                   delta=timedelta(seconds=5))
+        self.assertAlmostEqual(insel_now, python_now, delta=timedelta(seconds=5))
 
     def test_julian_day_number(self):
         """
