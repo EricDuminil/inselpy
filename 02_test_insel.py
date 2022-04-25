@@ -496,10 +496,10 @@ class TestBlock(CustomAssertions):
         self.assertEqual(1, insel.template('parametric/average'))
 
     def test_parametric_max(self):
-        self.assertEqual(1, insel.template('parametric_max'))
+        self.assertEqual(1, insel.template('parametric/max'))
 
     def test_parametric_min(self):
-        self.assertEqual(1, insel.template('parametric_min'))
+        self.assertEqual(1, insel.template('parametric/min'))
 
 
 class TestTemplate(CustomAssertions):
