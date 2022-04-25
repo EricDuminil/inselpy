@@ -7,7 +7,7 @@ import platform
 import logging
 import shutil
 from pathlib import Path
-from typing import Dict, List, Union, Optional, Any
+from typing import Dict, List, Union, Optional, Any, Sequence
 
 # Models can return:
 #  1
@@ -138,12 +138,12 @@ class TemporaryModel(Model):
 
 
 class OneBlockModel(TemporaryModel):
-    def __init__(self, name: str = '', inputs: List[float] = [], parameters : List[Parameter] = [], outputs: int = 1):
+    def __init__(self, name: str = '', inputs: Sequence[float] = [], parameters : List[Parameter] = [], outputs: int = 1):
         super().__init__()
         self.name = name
         self.parameters: List[str] = ["'%s'" % p if isinstance(p, str)
                            else str(p) for p in parameters]
-        self.inputs: List[float] = inputs
+        self.inputs: Sequence[float] = inputs
         self.n_in: int = len(inputs)
         self.n_out: int = outputs
 
