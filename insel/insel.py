@@ -11,7 +11,6 @@ from pathlib import Path
 
 # logging.basicConfig(level=logging.WARNING)
 # TODO: Move to separate files, one per class?
-# TODO: Replace os.path with pathlib
 # TODO: Add type hints
 
 class InselError(Exception):
@@ -170,13 +169,13 @@ class Template(TemporaryModel):
 
     def __init__(self, template_path, **parameters):
         super().__init__()
-        self.template_path = Path(template_path)
-        self.name = self.template_path.name
+        self.template_path = Path(template_path).with_suffix('.insel')
+        self.name = self.template_path.stem
         self.parameters = self.add_defaults_to(parameters)
 
     def template_filename(self):
-        f = Template.dirname / ('%s.insel' % self.template_path)
-        if os.path.exists(f):
+        f = Template.dirname / self.template_path
+        if f.exists():
             return f
         else:
             raise FileNotFoundError("No template in %s" % f)
@@ -198,8 +197,8 @@ class Template(TemporaryModel):
 
     def add_defaults_to(self, parameters):
         defaults = {
-            'bp_folder': os.path.join(Insel.dirname, "data", "bp"),
-            'data_folder': os.path.join(Template.dirname, "..", "data"),
+            'bp_folder': Insel.dirname / "data" / "bp",
+            'data_folder': Template.dirname.parent / "data",
             'template_folder': Template.dirname
         }
         defaults.update(parameters)

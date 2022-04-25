@@ -20,6 +20,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # TODO: Test with LC_ALL = DE
 # TODO: Add gnuplot tests
 
+
 @contextlib.contextmanager
 def cwd(path):
     """Changes working directory and returns to previous on exit."""
@@ -442,7 +443,8 @@ class TestBlock(CustomAssertions):
                              int(hour), int(minute), int(second), microsecond)
         python_now = datetime.now()
 
-        self.assertAlmostEqual(insel_now, python_now, delta=timedelta(seconds=5))
+        self.assertAlmostEqual(insel_now, python_now,
+                               delta=timedelta(seconds=5))
 
     def test_julian_day_number(self):
         """
@@ -610,7 +612,9 @@ class TestTemplate(CustomAssertions):
 
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
-        self.assertAlmostEqual(insel.template('a_times_b', a=4), 12, places=6)
+        # NOTE: .insel can be included in template_name, but doesn't have to.
+        self.assertAlmostEqual(insel.template(
+            'a_times_b.insel', a=4), 12, places=6)
         self.assertAlmostEqual(insel.template('a_times_b', a=4, b=5),
                                20, places=6)
 
@@ -625,40 +629,40 @@ class TestTemplate(CustomAssertions):
 
     def test_sunpower_isc(self):
         self.assertRaisesRegex(AttributeError, "UndefinedValue", insel.template,
-                               'i_sc')  # Missing pv_id. STC by default
-        spr_isc = insel.template('i_sc', pv_id='008823')
+                               'photovoltaic/i_sc')  # Missing pv_id. STC by default
+        spr_isc = insel.template('photovoltaic/i_sc', pv_id='008823')
         self.assertIsInstance(spr_isc, float)
         self.assertAlmostEqual(spr_isc, 5.87, places=2)
 
-        self.assertAlmostEqual(insel.template('i_sc', pv_id='003305'),
+        self.assertAlmostEqual(insel.template('photovoltaic/i_sc', pv_id='003305'),
                                5.96, places=2)
         # TODO: More research is needed :)
         self.skipTest("""This spec fails, probably because of a too low
                 'Temperature coeff of short-circuit current' in .bp files
                  .982E-7 in this example, instead of ~0.2E-3""")
-        self.assertAlmostEqual(insel.template('i_sc', pv_id='003305', temperature=70),
+        self.assertAlmostEqual(insel.template('photovoltaic/i_sc', pv_id='003305', temperature=70),
                                5.96 + (70 - 25) * 3.5e-3, places=2)
 
     def test_sunpower_uoc(self):
         # Missing pv_id. STC by default
-        self.assertRaises(AttributeError, insel.template, 'u_oc')
-        self.assertAlmostEqual(insel.template('u_oc', pv_id='003305'),
+        self.assertRaises(AttributeError, insel.template, 'photovoltaic/u_oc')
+        self.assertAlmostEqual(insel.template('photovoltaic/u_oc', pv_id='003305'),
                                64.2, places=2)
         temp = 70
         # TODO: More research is needed :)
         self.skipTest("Not sure about this calculation.")
-        self.assertAlmostEqual(insel.template('u_oc', pv_id='003305', temperature=temp),
+        self.assertAlmostEqual(insel.template('photovoltaic/u_oc', pv_id='003305', temperature=temp),
                                64.2 + (temp - 25) * (-0.1766), places=2)
 
     def test_sunpower_mpp(self):
         # Missing pv_id. STC by default
-        self.assertRaises(AttributeError, insel.template, 'mpp')
-        self.assertAlmostEqual(insel.template('mpp', pv_id='003305'),
+        self.assertRaises(AttributeError, insel.template, 'photovoltaic/mpp')
+        self.assertAlmostEqual(insel.template('photovoltaic/mpp', pv_id='003305'),
                                305, places=0)
         temp = 70
         # TODO: Check with PVSYST or PVLIB. Is this the correct formula?
         # NOTE: -0.38%/K P_mpp, according to SPR 305 manual (https://www.pocosolar.com/wp-content/themes/twentyfifteen/pdfs/Sunpower%20Solar%20Panels/sunpower_305wht_spec_sheet.pdf)
-        self.assertAlmostEqual(insel.template('mpp', pv_id='003305', temperature=temp),
+        self.assertAlmostEqual(insel.template('photovoltaic/mpp', pv_id='003305', temperature=temp),
                                305 * (1 - 0.38 / 100) ** (temp - 25), places=0)
 
     def test_write_block(self):
