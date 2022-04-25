@@ -6,10 +6,13 @@ import math
 import platform
 import logging
 import shutil
+from pathlib import Path
 
 
 # logging.basicConfig(level=logging.WARNING)
 # TODO: Move to separate files, one per class?
+# TODO: Replace os.path with pathlib
+# TODO: Add type hints
 
 class InselError(Exception):
     pass
@@ -160,17 +163,19 @@ class OneBlockModel(TemporaryModel):
 
 
 #TODO: Allow subfolders inside template folder
+#TODO: Allow absolute path
 class Template(TemporaryModel):
     dirname = os.path.join(os.path.dirname(__file__), '../templates')
     pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
-    def __init__(self, name='', **parameters):
+    def __init__(self, template_path, **parameters):
         super().__init__()
-        self.name = name
+        self.template_path = Path(template_path)
+        self.name = self.template_path.name
         self.parameters = self.add_defaults_to(parameters)
 
     def template_filename(self):
-        f = os.path.join(Template.dirname, '%s.insel' % self.name)
+        f = os.path.join(Template.dirname, '%s.insel' % self.template_path)
         if os.path.exists(f):
             return f
         else:

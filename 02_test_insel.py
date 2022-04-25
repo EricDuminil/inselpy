@@ -493,7 +493,7 @@ class TestBlock(CustomAssertions):
         self.assertNaN(insel.block('max', math.nan, 1, -1))
 
     def test_parametric_average(self):
-        self.assertEqual(1, insel.template('parametric_average'))
+        self.assertEqual(1, insel.template('parametric/average'))
 
     def test_parametric_max(self):
         self.assertEqual(1, insel.template('parametric_max'))
