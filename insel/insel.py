@@ -19,6 +19,7 @@ class InselError(Exception):
 
 
 class Insel(object):
+    script_directory = Path(__file__).resolve().parent
     calls = 0
 
     @staticmethod
@@ -27,18 +28,18 @@ class Insel(object):
 
         default_configs = {
             'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
-            'windows': {'dirname': os.path.join(os.getenv('ProgramFiles', ''), 'insel'), 'command': 'insel.exe'},
+            'windows': {'dirname': Path(os.getenv('ProgramFiles', '')) / 'insel', 'command': 'insel.exe'},
             'darwin': {'dirname': "/usr/local/insel/", 'command': 'insel'}
         }
 
         return default_configs[system]
 
     config = get_config.__func__()
-    dirname = os.environ.get('INSEL_HOME', config['dirname'])
+    dirname = Path(os.environ.get('INSEL_HOME', config['dirname']))
     command = config['command']
     if shutil.which(command) is None:
         # If insel is not in PATH, use absolute path.
-        command = os.path.join(dirname, command)
+        command = dirname / command
     extension = ".insel"
     normal_run = re.compile(
         r'Running insel [\d\w \.\-]+ \.\.\.\s+([^\*]*)Normal end of run',
@@ -162,10 +163,9 @@ class OneBlockModel(TemporaryModel):
         return "\n".join(lines)
 
 
-#TODO: Allow subfolders inside template folder
 #TODO: Allow absolute path
 class Template(TemporaryModel):
-    dirname = os.path.join(os.path.dirname(__file__), '../templates')
+    dirname = Insel.script_directory.parent / 'templates'
     pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
     def __init__(self, template_path, **parameters):
@@ -175,7 +175,7 @@ class Template(TemporaryModel):
         self.parameters = self.add_defaults_to(parameters)
 
     def template_filename(self):
-        f = os.path.join(Template.dirname, '%s.insel' % self.template_path)
+        f = Template.dirname / ('%s.insel' % self.template_path)
         if os.path.exists(f):
             return f
         else:

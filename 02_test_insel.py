@@ -14,7 +14,7 @@ from calendar import monthrange
 
 logging.basicConfig(level=logging.ERROR)
 
-SCRIPT_DIR = Path(__file__).parent.resolve()
+SCRIPT_DIR = Path(__file__).resolve().parent
 
 # TODO: X for Ymax
 # TODO: Test with LC_ALL = DE
