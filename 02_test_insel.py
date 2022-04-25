@@ -492,15 +492,6 @@ class TestBlock(CustomAssertions):
         self.assertInf(insel.block('max', math.inf, 1))
         self.assertNaN(insel.block('max', math.nan, 1, -1))
 
-    def test_parametric_average(self):
-        self.assertEqual(1, insel.template('parametric/average'))
-
-    def test_parametric_max(self):
-        self.assertEqual(1, insel.template('parametric/max'))
-
-    def test_parametric_min(self):
-        self.assertEqual(1, insel.template('parametric/min'))
-
 
 class TestTemplate(CustomAssertions):
     def test_empty_if(self):
@@ -581,32 +572,41 @@ class TestTemplate(CustomAssertions):
         self.compareLists(v2_results, v1_results, places=2)
 
     def test_cumc(self):
-        table = insel.template('cumc')
+        table = insel.template('conditional/sum')
         for month, (x, y) in zip(range(1, 13), table):
             _, days = monthrange(2021, month)
             self.assertAlmostEqual(month, x)
             self.assertAlmostEqual(days * (days + 1) / 2 * 24, y)
 
     def test_maxxc(self):
-        table = insel.template('maxxc')
+        table = insel.template('conditional/max')
         for month, (x, y) in zip(range(1, 13), table):
             _, days = monthrange(2021, month)
             self.assertAlmostEqual(month, x)
             self.assertAlmostEqual(days, y)
 
     def test_minnc(self):
-        table = insel.template('minnc')
+        table = insel.template('conditional/min')
         for month, (x, y) in zip(range(1, 13), table):
             _, days = monthrange(2021, month)
             self.assertAlmostEqual(month, x)
             self.assertAlmostEqual(-days, y)
 
     def test_avec(self):
-        table = insel.template('avec')
+        table = insel.template('conditional/average')
         for month, (x, y) in zip(range(1, 13), table):
             _, days = monthrange(2021, month)
             self.assertAlmostEqual(month, x)
             self.assertAlmostEqual((days + 1) / 2, y)
+
+    def test_parametric_average(self):
+        self.assertEqual(1, insel.template('parametric/average'))
+
+    def test_parametric_max(self):
+        self.assertEqual(1, insel.template('parametric/max'))
+
+    def test_parametric_min(self):
+        self.assertEqual(1, insel.template('parametric/min'))
 
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
