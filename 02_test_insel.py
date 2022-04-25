@@ -483,6 +483,14 @@ class TestBlock(CustomAssertions):
         self.assertRaisesRegex(InselError, "Invalid parameter",
                                insel.block, 'avew', 0, 1, parameters=[0, 0])
 
+    def test_min(self):
+        self.assertAlmostEqual(1, insel.block('min', 1))
+        self.assertAlmostEqual(-1, insel.block('min', -1, 1))
+        self.assertAlmostEqual(1, insel.block('min', 1, math.inf))
+        self.assertAlmostEqual(0, insel.block('min', 0, 1, 1000, 0.1))
+        self.assertInf(insel.block('min', -math.inf, 1))
+        self.assertNaN(insel.block('min', math.nan, 1, -1))
+
 
 class TestTemplate(CustomAssertions):
     def test_empty_if(self):
