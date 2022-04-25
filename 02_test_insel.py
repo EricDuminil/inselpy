@@ -491,6 +491,14 @@ class TestBlock(CustomAssertions):
         self.assertInf(insel.block('min', -math.inf, 1))
         self.assertNaN(insel.block('min', math.nan, 1, -1))
 
+    def test_max(self):
+        self.assertAlmostEqual(1, insel.block('max', 1))
+        self.assertAlmostEqual(1, insel.block('max', -1, 1))
+        self.assertAlmostEqual(1, insel.block('max', 1, -math.inf))
+        self.assertAlmostEqual(1000, insel.block('max', 0, 1, 1000, 0.1))
+        self.assertInf(insel.block('max', math.inf, 1))
+        self.assertNaN(insel.block('max', math.nan, 1, -1))
+
 
 class TestTemplate(CustomAssertions):
     def test_empty_if(self):
