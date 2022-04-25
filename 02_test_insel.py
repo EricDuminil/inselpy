@@ -16,11 +16,8 @@ logging.basicConfig(level=logging.ERROR)
 
 SCRIPT_DIR = Path(__file__).parent.resolve()
 
-
-# TODO: Moving average
 # TODO: X for Ymax
 # TODO: Test with LC_ALL = DE
-# TODO: parametric blocks
 # TODO: Add gnuplot tests
 
 @contextlib.contextmanager
@@ -494,6 +491,15 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(1000, insel.block('max', 0, 1, 1000, 0.1))
         self.assertInf(insel.block('max', math.inf, 1))
         self.assertNaN(insel.block('max', math.nan, 1, -1))
+
+    def test_parametric_average(self):
+        self.assertEqual(1, insel.template('parametric_average'))
+
+    def test_parametric_max(self):
+        self.assertEqual(1, insel.template('parametric_max'))
+
+    def test_parametric_min(self):
+        self.assertEqual(1, insel.template('parametric_min'))
 
 
 class TestTemplate(CustomAssertions):
