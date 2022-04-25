@@ -7,6 +7,7 @@ import platform
 import logging
 import shutil
 from pathlib import Path
+from typing import Dict, Any
 
 
 # logging.basicConfig(level=logging.WARNING)
@@ -82,7 +83,7 @@ class Model(object):
         else:
             return array
 
-    def raw_results(self):
+    def raw_results(self) -> bytes:
         Insel.calls += 1
         return subprocess.check_output(
             [Insel.command, self.path], shell=False, timeout=self.timeout)
@@ -93,7 +94,7 @@ class ExistingModel(Model):
         super().__init__()
         self.params = list(params)
 
-    def raw_results(self):
+    def raw_results(self) -> bytes:
         Insel.calls += 1
         return subprocess.check_output([Insel.command] + self.params,
                                        shell=False)
@@ -173,7 +174,7 @@ class Template(TemporaryModel):
         self.name = self.template_path.stem
         self.parameters = self.add_defaults_to(parameters)
 
-    def template_filename(self):
+    def template_filename(self) -> Path:
         # NOTE: template_path can be absolute too, Template.dirname simply won't be used.
         f = Template.dirname / self.template_path
         if f.exists():
@@ -181,7 +182,7 @@ class Template(TemporaryModel):
         else:
             raise FileNotFoundError("No template in %s" % f)
 
-    def replace(self, string):
+    def replace(self, string) -> str:
         var_name, index, default = string.groups()
         var_name = var_name.strip()
         if var_name in self.parameters:
@@ -205,7 +206,7 @@ class Template(TemporaryModel):
         defaults.update(parameters)
         return defaults
 
-    def content(self):
+    def content(self) -> str:
         # Replace unknown chars with backslash + code, so that content can be fed to INSEL
         with open(self.template_filename(), encoding='utf-8', errors='backslashreplace') as template:
             content = template.read()
