@@ -3,7 +3,7 @@
 # TODO: Check Java Palette
 # TODO: Check Documentation too
 COLUMNS = 13
-templates = Dir.glob("templates/*.insel")
+templates = Dir.glob("templates/**/*.insel")
 blocks_in_templates = templates.map{ |t|
   File.read(t).force_encoding("utf-8").encode("utf-8", invalid: :replace, replace: "?").scan(/^[bs]\s+\d+\s+(\w+)/i)
 }
