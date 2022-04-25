@@ -4,16 +4,14 @@
 # Reason : TRANS was defined twice (inselBS and inselEM), which caused random SIGSEGV
 # NOTE: os0txt is defined twice : either for Java or console
 
-from glob import glob
 import subprocess
 from collections import defaultdict
 from pathlib import Path
 from insel.insel import Insel
-import os
 
 symbols = defaultdict(set)
 
-for lib in glob(os.path.join(Insel.dirname, 'lib*.so')):
+for lib in Insel.dirname.glob('lib*.so'):
     out = subprocess.check_output(['nm', '-gDC', '-l', lib], shell=False)
     for line in out.decode().splitlines():
         line = line[19:]
