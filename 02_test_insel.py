@@ -60,7 +60,7 @@ class CustomAssertions(unittest.TestCase):
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
         insel_b = insel.raw_run('-b')
-        blocks = Counter(insel_b.split('\n\n')[-1].split())
+        blocks = Counter(insel_b.split('\n\n')[-1].split()) # type: Counter[str]
         self.assertTrue(len(blocks) > 300, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
         if duplicates:

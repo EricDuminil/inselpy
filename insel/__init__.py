@@ -4,10 +4,10 @@ from .insel import OneBlockModel, Template, ExistingModel, Parameter
 #TODO: Add docstrings
 #TODO: Add gnuplot functions
 
-def block(name: str, *args: float, **kwargs):
-    parameters: List[Parameter] = kwargs.get('parameters', [])
-    outputs: int = kwargs.get('outputs', 1)
-    return OneBlockModel(name, inputs=args, outputs=outputs, parameters=parameters).run()
+def block(name: str, *inputs: float,
+          parameters: List[Parameter] = [],
+          outputs: int = 1):
+    return OneBlockModel(name, inputs=inputs, outputs=outputs, parameters=parameters).run()
 
 def template(name, **parameters):
     return Template(name, **parameters).run()
