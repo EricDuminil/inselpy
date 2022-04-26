@@ -11,6 +11,7 @@ from datetime import datetime, timedelta
 from insel.insel import Insel, InselError
 from collections import Counter
 from calendar import monthrange
+from typing import List
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -34,7 +35,7 @@ def cwd(path):
 
 
 # INSEL 8.3 convention
-STUTTGART = [48.77, 9.18, 1]
+STUTTGART = [48.77, 9.18, 1] # type: List[insel.Parameter]
 
 
 class CustomAssertions(unittest.TestCase):
@@ -404,11 +405,12 @@ class TestBlock(CustomAssertions):
                           19, 12, parameters=[0, 0, 0]))
 
     def test_sunae(self):
-        for mode in range(3):
+        for mode in range(3): #type: insel.Parameter
             # Tested with Stellarium
             sun_stuttgart = insel.block('SUNAE2',
                                         2021, 11, 18, 12, 0,
-                                        parameters=[mode] + STUTTGART, outputs=4)
+                                        parameters=[mode] + STUTTGART,
+                                        outputs=4)
             # NOTE: Precision is pretty bad (+-0.06°). Why?
             # NOTE: Compared to https://levelup.gitconnected.com/python-sun-position-for-solar-energy-and-research-7a4ead801777, Holland & Michalsky seem less inprecise than Spencer
             # TODO: Check with detailed example from NREL
@@ -418,7 +420,7 @@ class TestBlock(CustomAssertions):
     def test_sunae_in_the_tropics(self):
         # SUNAE used to be broken in the tropics, and got azimuth in the wrong quadrant
         sun_azimuth = insel.block('SUNAE2', 2021, 6, 21, 6, 0,
-                                  parameters=[0] + [20, 0, 0])
+                                  parameters=[0, 20, 0, 0])
         self.assertAlmostEqual(sun_azimuth, 67 + 42 / 60, places=1)
 
     def test_do(self):
