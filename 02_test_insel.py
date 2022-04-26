@@ -35,7 +35,7 @@ def cwd(path):
 
 
 # INSEL 8.3 convention
-STUTTGART = [48.77, 9.18, 1] # type: List[insel.Parameter]
+STUTTGART = [48.77, 9.18, 1]  # type: List[insel.Parameter]
 
 
 class CustomAssertions(unittest.TestCase):
@@ -61,7 +61,8 @@ class CustomAssertions(unittest.TestCase):
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
         insel_b = insel.raw_run('-b')
-        blocks = Counter(insel_b.split('\n\n')[-1].split()) # type: Counter[str]
+        # type: Counter[str]
+        blocks = Counter(insel_b.split('\n\n')[-1].split())
         self.assertTrue(len(blocks) > 300, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
         if duplicates:
@@ -75,7 +76,11 @@ class TestBlock(CustomAssertions):
         """
         insel_b = insel.raw_run('-b')
         blocks = set(insel_b.split('\n\n')[-1].split())
-        for deleted_block in ['TIMEMS', 'TIMEMS0', 'DIV2', 'NOW0']:
+        deleted_blocks = ['DRY', 'FURWALL', 'FURWALL2', 'GASIF',
+                          'GENBOD', 'GOMPERTZ', 'HEATEX', 'MIXING', 'OPTIM',
+                          'PRIMARY', 'SECON1', 'SECON2', 'TIMEMS', 'TIMEMS0',
+                          'DIV2', 'NOW0']
+        for deleted_block in deleted_blocks:
             self.assertFalse(deleted_block in blocks,
                              f'{deleted_block} should have been deleted.')
 
@@ -405,7 +410,7 @@ class TestBlock(CustomAssertions):
                           19, 12, parameters=[0, 0, 0]))
 
     def test_sunae(self):
-        for mode in range(3): #type: insel.Parameter
+        for mode in range(3):  # type: insel.Parameter
             # Tested with Stellarium
             sun_stuttgart = insel.block('SUNAE2',
                                         2021, 11, 18, 12, 0,
