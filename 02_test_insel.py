@@ -537,11 +537,11 @@ class TestTemplate(CustomAssertions):
         # Check that numbers displayed by SCREEN '*' are separated by at least one space
         # and that the decimal separators are aligned one above the other
         matrix = insel.template('expg')
-        for x, row in zip(range(-20, 20), matrix):
-            x = x / 2
-            self.assertAlmostEqual(x, row[0], places=6)
-            r1 = 10 ** x
-            r2 = -10 ** (-x)
+        for i, row in zip(range(-20, 20), matrix):
+            power = i / 2
+            self.assertAlmostEqual(power, row[0], places=6)
+            r1 = 10 ** power
+            r2 = -10 ** (-power)
             self.assertAlmostEqual(r1, row[1], delta=r1 / 1e6)
             self.assertAlmostEqual(r2, row[2], delta=-r2 / 1e6)
 
