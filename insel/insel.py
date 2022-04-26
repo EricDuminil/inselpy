@@ -197,7 +197,7 @@ class Template(TemporaryModel):
         else:
             raise FileNotFoundError("No template in %s" % full_path)
 
-    def replace(self, match_object: re.Match[str]) -> str:
+    def replace(self, match_object: re.Match) -> str:
         var_name: str
         index: str
         default: str
