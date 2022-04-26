@@ -366,10 +366,10 @@ class TestBlock(CustomAssertions):
         self.assertTrue("MTMLALO is deprecated" in str(m.warnings))
 
         m = insel.OneBlockModel('MTMLALO2', inputs=[6], parameters=STUTTGART)
-        r = m.run()
+        june_irradiance = m.run()
         self.assertEqual(m.warnings, [], 'No problem with correct convention')
         # ~225W/m² in june in Stuttgart
-        self.assertAlmostEqual(r, 225, places=0)
+        self.assertEqual(june_irradiance, 225)
 
     def test_moonae(self):
         # Tested with Stellarium
@@ -625,11 +625,11 @@ class TestTemplate(CustomAssertions):
     def test_non_ascii_template(self):
         utf8_template = insel.Template('a_times_b_utf8', a=2, b=2)
         utf8_template.timeout = 5
-        self.assertAlmostEqual(utf8_template.run(), 4, places=6)
+        self.assertEqual(utf8_template.run(), 4)
 
         iso_template = insel.Template('a_times_b_iso8859', a=4, b=4)
         iso_template.timeout = 5
-        self.assertAlmostEqual(iso_template.run(), 16, places=6)
+        self.assertEqual(iso_template.run(), 16)
 
     def test_sunpower_isc(self):
         self.assertRaisesRegex(AttributeError, "UndefinedValue", insel.template,
