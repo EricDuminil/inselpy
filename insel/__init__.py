@@ -7,6 +7,26 @@ from .insel import OneBlockModel, Template, ExistingModel, Parameter
 def block(name: str, *inputs: float,
           parameters: List[Parameter] = [],
           outputs: int = 1):
+    """
+    Returns the output of INSEL block *name*, with the given inputs and parameters.
+    One output is returned by default, but more can be returned if desired.
+
+    * If the block returns one value, this function returns a float.
+    * If the block returns multiple values on one line, this function returns a list of floats.
+    * If the block returns multiple lines, this function returns a list of floats.
+    * If the block returns multiple values on multiple lines, this function returns a list of list of floats.
+
+    >>> insel.block('pi')
+    3.141593
+    >>> insel.block('sum', 2, 3)
+    5.0
+    >>> insel.block('do', parameters=[1, 10, 1])
+    [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+    >>> insel.block('do', parameters=[1, 10, 1])
+    [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+    >>> insel.block('gain', 2, 5, 7, parameters=[3], outputs=3)
+    [6.0, 15.0, 21.0]
+    """
     return OneBlockModel(name, inputs=inputs, outputs=outputs, parameters=parameters).run()
 
 def template(name, **parameters):
