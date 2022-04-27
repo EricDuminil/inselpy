@@ -1,8 +1,9 @@
 from typing import List
 from .insel import OneBlockModel, Template, ExistingModel, Parameter
 
-#TODO: Add docstrings
-#TODO: Add gnuplot functions
+# TODO: Add docstrings
+# TODO: Add gnuplot functions
+
 
 def block(name: str, *inputs: float,
           parameters: List[Parameter] = [],
@@ -29,8 +30,23 @@ def block(name: str, *inputs: float,
     """
     return OneBlockModel(name, inputs=inputs, outputs=outputs, parameters=parameters).run()
 
-def template(name, **parameters):
-    return Template(name, **parameters).run()
+
+def template(template_path, **parameters):
+    """
+    Returns the output of INSEL template found at template_path,
+    after substituting parameters inside the template.
+
+    If template_path is an absolute path, the corresponding template will be used.
+    If template_path is a relative path, the template will be searched in templates/ folder.
+
+
+    >>> insel.template('a_times_b', a=7, b=3)
+    21.0
+    >>> insel.template('photovoltaic/i_sc',
+          pv_id='008823', temperature=25, irradiance=1000)
+    5.87388
+    """
+    return Template(template_path, **parameters).run()
 
 
 def run(path):
