@@ -1,0 +1,15 @@
+% Returns a weird table, with rows with one value, two values or three values
+b 1 DO
+p 1
+                    1
+                    2
+                    1
+b 2 SCREEN  1.1
+p 2
+    '*'
+b 3 SCREEN  1.1 1.1
+p 3
+    '*'
+b 4 SCREEN  1.1 1.1 1.1
+p 4
+    '*'

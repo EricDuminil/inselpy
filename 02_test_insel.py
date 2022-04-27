@@ -19,7 +19,6 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 # TODO: X for Ymax
 # TODO: Test with LC_ALL = DE
-# TODO: Test weird_output
 # TODO: Add gnuplot tests
 
 
@@ -61,7 +60,6 @@ class CustomAssertions(unittest.TestCase):
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
         insel_b = insel.raw_run('-b')
-        # type: Counter[str]
         blocks = Counter(insel_b.split('\n\n')[-1].split())
         self.assertTrue(len(blocks) > 300, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
@@ -97,11 +95,13 @@ class TestBlock(CustomAssertions):
         # Boltzmann
         self.assertAlmostEqual(insel.block('k'), 1.380649e-23, delta=1e-27)
         # Reduced Planck
-        self.assertAlmostEqual(insel.block('hbar'), 1.05457182e-34, delta=1e-38)
+        self.assertAlmostEqual(insel.block(
+            'hbar'), 1.05457182e-34, delta=1e-38)
         # Planck
         self.assertAlmostEqual(insel.block('h'), 6.626176e-34, delta=1e-38)
         # Stefan-Boltzmann
-        self.assertAlmostEqual(insel.block('sigma'), 5.670374419e-8, delta=1e-12)
+        self.assertAlmostEqual(insel.block(
+            'sigma'), 5.670374419e-8, delta=1e-12)
         # Dilution factor... nowhere else to be seen
         #       The F block provides the \textit{dilution factor}: the ratio of irradiances
         #       between the solar constant on Earth, and the irradiance at the
@@ -752,6 +752,12 @@ class TestTemplate(CustomAssertions):
         self.assertAlmostEqual(stuttgart_epw_average_temp, 9.1, places=1)
         nothing_to_read = insel.template('io/read_epw_file', ext='txt')
         self.assertEqual(nothing_to_read, [])
+
+    def test_weird_output(self):
+        floats_and_lists = insel.template('io/weird_output')
+        out = ';'.join(sorted(str(x) for x in floats_and_lists))
+        self.assertEqual(
+            out, '1.0;2.0;[1.0, 1.0, 1.0];[1.0, 1.0];[2.0, 2.0, 2.0];[2.0, 2.0]')
 
 
 class TestExistingModel(CustomAssertions):
