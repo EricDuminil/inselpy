@@ -102,6 +102,11 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('h'), 6.626176e-34, delta=1e-38)
         # Stefan-Boltzmann
         self.assertAlmostEqual(insel.block('sigma'), 5.670374419e-8, delta=1e-12)
+        # Dilution factor... nowhere else to be seen
+        #       The F block provides the \textit{dilution factor}: the ratio of irradiances
+        #       between the solar constant on Earth, and the irradiance at the
+        #       solar surface. $\frac{\mathrm{Sun\_Radius}^2}{\mathrm{Astronomical\_Unit}^2}$
+        self.assertAlmostEqual(insel.block('f'), 696**2 / 149600**2)
 
     def test_and(self):
         self.assertAlmostEqual(insel.block('and', 1, 1), 1)
