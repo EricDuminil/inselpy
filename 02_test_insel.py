@@ -87,6 +87,22 @@ class TestBlock(CustomAssertions):
     def test_pi(self):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
 
+    def test_constants(self):
+        # Solar constant. Should it be 1361?
+        # https://en.wikipedia.org/wiki/Solar_constant
+        self.assertAlmostEqual(insel.block('gs'), 1367)
+        self.assertAlmostEqual(insel.block('e'), math.exp(1), places=6)
+        # Elementary charge
+        self.assertAlmostEqual(insel.block('q'), 1.60217663e-19, delta=1e-23)
+        # Boltzmann
+        self.assertAlmostEqual(insel.block('k'), 1.380649e-23, delta=1e-27)
+        # Reduced Planck
+        self.assertAlmostEqual(insel.block('hbar'), 1.05457182e-34, delta=1e-38)
+        # Planck
+        self.assertAlmostEqual(insel.block('h'), 6.626176e-34, delta=1e-38)
+        # Stefan-Boltzmann
+        self.assertAlmostEqual(insel.block('sigma'), 5.670374419e-8, delta=1e-12)
+
     def test_and(self):
         self.assertAlmostEqual(insel.block('and', 1, 1), 1)
         self.assertAlmostEqual(insel.block('and', 0, 1), 0)
