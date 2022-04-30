@@ -77,7 +77,7 @@ class TestBlock(CustomAssertions):
         deleted_blocks = ['DRY', 'FURWALL', 'FURWALL2', 'GASIF',
                           'GENBOD', 'GOMPERTZ', 'HEATEX', 'MIXING', 'OPTIM',
                           'PRIMARY', 'SECON1', 'SECON2', 'TIMEMS', 'TIMEMS0',
-                          'DIV2', 'NOW0', 'EPLUS']
+                          'DIV2', 'NOW0', 'EPLUS', 'PHI2PSI', 'PSI2PHI']
         for deleted_block in deleted_blocks:
             self.assertFalse(deleted_block in blocks,
                              f'{deleted_block} should have been deleted.')
