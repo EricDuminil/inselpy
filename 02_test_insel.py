@@ -17,8 +17,8 @@ logging.basicConfig(level=logging.ERROR)
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
-# TODO: X for Ymax
 # TODO: Test with LC_ALL = DE
+# TODO: Test if insel_gui is installed?
 # TODO: Add gnuplot tests
 
 
@@ -619,6 +619,8 @@ class TestTemplate(CustomAssertions):
     def test_max_xy(self):
         table = insel.template('stats/max_xy')
         self.compareLists(table, [90, 1])
+        self.assertEqual(insel.template('stats/max_xy_c'),
+                         [[2020, 31], [2021, 31]])
         table = [v for r in insel.template('stats/max_xy_p') for v in r]
         self.compareLists(table, [90, 1, 360, 0], places=6)
 
