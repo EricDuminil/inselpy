@@ -1,0 +1,23 @@
+B 1 DO
+P 1
+    1               % Initial value
+    360             % Final value
+    1               % Increment
+
+B 2 SIN
+    1.1
+P 2
+    0               % Unit of angle
+
+B 3 SCREEN
+    4.1
+    4.2
+P 3
+    '*'             % Format
+
+B 4 MAXXXYP
+    1.1
+    2.1
+P 4
+    180              % Number of steps
+

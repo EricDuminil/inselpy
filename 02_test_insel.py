@@ -616,6 +616,19 @@ class TestTemplate(CustomAssertions):
             self.assertAlmostEqual(month, x)
             self.assertAlmostEqual(days, y)
 
+    def test_max_xy(self):
+        table = insel.template('max_xy')
+        self.compareLists(table, [90, 1])
+        table = [v for r in insel.template('max_xy_p') for v in r]
+        self.compareLists(table, [90, 1, 360, 0], places=6)
+
+    def test_min_xy(self):
+        table = insel.template('min_xy')
+        self.compareLists(table, [270, -1])
+        self.assertEqual(insel.template('min_xy_c'), [[2020, 29], [2021, 28]])
+        table = [v for r in insel.template('min_xy_p') for v in r]
+        self.compareLists(table, [0, 0, 270, -1], places=6)
+
     def test_minnc(self):
         table = insel.template('conditional/min')
         for month, (x, y) in zip(range(1, 13), table):
