@@ -113,6 +113,14 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('and', 0, 1), 0)
         self.assertAlmostEqual(insel.block('and', 1, 0), 0)
         self.assertAlmostEqual(insel.block('and', 0, 0), 0)
+        #NOTE: should throw some warnings, but still return a value
+        #TODO: Check warning
+        #   Compiling and_2_2.vseit ...
+        #   0 errors, 0 warnings
+        #   Running INSEL 8.3.0.8b ...
+        #   W05052 Block 00001: Invalid non logical input
+        #   W05053 Block 00001: Calls with invalid non logical input: 1000
+        #   Normal end of run
         self.assertAlmostEqual(insel.block('and', 2, 2), 0)
         self.assertAlmostEqual(insel.block('and', 0.9, 1.1), 1)
 
@@ -236,6 +244,7 @@ class TestBlock(CustomAssertions):
         m = insel.OneBlockModel('div', inputs=[2, 0])
         m.run()
         self.assertTrue(len(m.warnings) >= 1, "A warning should be shown")
+        #TODO: Check warning
 
     def test_sine(self):
         self.assertAlmostEqual(insel.block('sin', 0), 0)
@@ -752,6 +761,7 @@ class TestTemplate(CustomAssertions):
                 self.compareLists(written, range(1, 11), places=5)
 
     def test_read_simple_file(self):
+        #TODO: Add test with "F05031 Block 2: Unexpected end of file - simulation terminated"
         fourfivesix = insel.template('io/read_simple_file', ext='dat')
         self.compareLists(fourfivesix, [4, 5, 6])
 
