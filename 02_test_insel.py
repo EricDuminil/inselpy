@@ -113,15 +113,11 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('and', 0, 1), 0)
         self.assertAlmostEqual(insel.block('and', 1, 0), 0)
         self.assertAlmostEqual(insel.block('and', 0, 0), 0)
-        #NOTE: should throw some warnings, but still return a value
-        #TODO: Check warning
-        #   Compiling and_2_2.vseit ...
-        #   0 errors, 0 warnings
-        #   Running INSEL 8.3.0.8b ...
-        #   W05052 Block 00001: Invalid non logical input
-        #   W05053 Block 00001: Calls with invalid non logical input: 1000
-        #   Normal end of run
-        self.assertAlmostEqual(insel.block('and', 2, 2), 0)
+        m = insel.OneBlockModel('and', inputs=[2, 2])
+        result = m.run()
+        self.compareLists(m.warnings, ['W05052 Block 00003: Invalid non logical input',
+            'W05053 Block 00003: Calls with invalid non logical input: 1'])
+        self.assertAlmostEqual(result, 0)
         self.assertAlmostEqual(insel.block('and', 0.9, 1.1), 1)
 
     def test_or(self):
@@ -242,9 +238,10 @@ class TestBlock(CustomAssertions):
                                            3, 2), 1.5, places=8)
         # Division by 0
         m = insel.OneBlockModel('div', inputs=[2, 0])
-        m.run()
-        self.assertTrue(len(m.warnings) >= 1, "A warning should be shown")
-        #TODO: Check warning
+        result = m.run()
+        self.compareLists(m.warnings, ['W05001 Block 00003: Division by zero',
+            'W05002 Block 00003: Number of divisions by zero: 1'])
+        self.assertNaN(result) #NOTE: Used to be zero in INSEL <= 8.2
 
     def test_sine(self):
         self.assertAlmostEqual(insel.block('sin', 0), 0)
@@ -761,9 +758,14 @@ class TestTemplate(CustomAssertions):
                 self.compareLists(written, range(1, 11), places=5)
 
     def test_read_simple_file(self):
-        #TODO: Add test with "F05031 Block 2: Unexpected end of file - simulation terminated"
         fourfivesix = insel.template('io/read_simple_file', ext='dat')
         self.compareLists(fourfivesix, [4, 5, 6])
+
+    def test_read_too_many_lines(self):
+        model = insel.Template('io/read_simple_file', ext='dat', lines=5)
+        fourfivesix = model.run()
+        self.compareLists(fourfivesix, [4, 5, 6])
+        self.compareLists(model.warnings, ['F05031 Block 00002: Unexpected end of file - simulation terminated'])
 
     def test_read_csv_like_as_normal_file(self):
         # READ block used to completely skip CSV files :-/
