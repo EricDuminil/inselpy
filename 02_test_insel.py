@@ -388,18 +388,16 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(july[0], 230, places=-1)
 
     def test_mtmlalo(self):
-        m = insel.OneBlockModel('MTMLALO', inputs=[5], parameters=STUTTGART)
-        m.run()
-        self.assertTrue(len(m.warnings) >= 1, "A warning should be shown")
+        insel.block('MTMLALO', 5, parameters=STUTTGART)
+        warnings = Insel.last_warnings
+        self.assertTrue(len(warnings) >= 1, "A warning should be shown")
         self.assertTrue(
-            "Block 00002: '48.77° N, 9.18° W' seems to be in the ocean" in str(m.warnings))
-        self.assertTrue("MTMLALO is deprecated" in str(m.warnings))
+            "Block 00002: '48.77° N, 9.18° W' seems to be in the ocean" in str(warnings))
+        self.assertTrue("MTMLALO is deprecated" in str(warnings))
 
-        m = insel.OneBlockModel('MTMLALO2', inputs=[6], parameters=STUTTGART)
-        june_irradiance = m.run()
-        self.assertEqual(m.warnings, [], 'No problem with correct convention')
         # ~225W/m² in june in Stuttgart
-        self.assertEqual(june_irradiance, 225)
+        self.assertEqual(insel.block('MTMLALO2', 6, parameters=STUTTGART), 225)
+        self.assertEqual(Insel.last_warnings, [], 'No problem with correct convention')
 
     def test_moonae(self):
         # Tested with Stellarium
@@ -760,10 +758,9 @@ class TestTemplate(CustomAssertions):
         self.compareLists(fourfivesix, [4, 5, 6])
 
     def test_read_too_many_lines(self):
-        model = insel.Template('io/read_simple_file', ext='dat', lines=5)
-        fourfivesix = model.run()
+        fourfivesix = insel.template('io/read_simple_file', ext='dat', lines=5)
         self.compareLists(fourfivesix, [4, 5, 6])
-        self.compareLists(model.warnings, ['F05031 Block 00002: Unexpected end of file - simulation terminated'])
+        self.compareLists(Insel.last_warnings, ['F05031 Block 00002: Unexpected end of file - simulation terminated'])
 
     def test_read_csv_like_as_normal_file(self):
         # READ block used to completely skip CSV files :-/
