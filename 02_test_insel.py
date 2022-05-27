@@ -113,11 +113,10 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('and', 0, 1), 0)
         self.assertAlmostEqual(insel.block('and', 1, 0), 0)
         self.assertAlmostEqual(insel.block('and', 0, 0), 0)
-        m = insel.OneBlockModel('and', inputs=[2, 2])
-        result = m.run()
-        self.compareLists(m.warnings, ['W05052 Block 00003: Invalid non logical input',
-            'W05053 Block 00003: Calls with invalid non logical input: 1'])
-        self.assertAlmostEqual(result, 0)
+        self.assertAlmostEqual(insel.block('and', 2, 2), 0)
+        self.compareLists(Insel.last_warnings,
+                ['W05052 Block 00003: Invalid non logical input',
+                 'W05053 Block 00003: Calls with invalid non logical input: 1'])
         self.assertAlmostEqual(insel.block('and', 0.9, 1.1), 1)
 
     def test_or(self):
@@ -237,11 +236,10 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('div',
                                            3, 2), 1.5, places=8)
         # Division by 0
-        m = insel.OneBlockModel('div', inputs=[2, 0])
-        result = m.run()
-        self.compareLists(m.warnings, ['W05001 Block 00003: Division by zero',
-            'W05002 Block 00003: Number of divisions by zero: 1'])
-        self.assertNaN(result) #NOTE: Used to be zero in INSEL <= 8.2
+        self.assertNaN(insel.block('div', 1, 0))
+        self.compareLists(Insel.last_warnings,
+                          ['W05001 Block 00003: Division by zero',
+                           'W05002 Block 00003: Number of divisions by zero: 1'])
 
     def test_sine(self):
         self.assertAlmostEqual(insel.block('sin', 0), 0)

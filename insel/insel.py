@@ -51,6 +51,8 @@ class Insel(object):
         r'Running insel [\d\w \.\-]+ \.\.\.\s+([^\*]*)Normal end of run',
         re.I | re.DOTALL)
     warning = re.compile(r'^[EFW]\d{5}.*?$', re.M)
+    # Contains warnings during last execution. Might be convenient for testing. Not thread-safe!
+    last_warnings: List[str] = []
 
 
 # NOTE: Abstract class
@@ -58,6 +60,7 @@ class Model(object):
 
     def __init__(self) -> None:
         self.warnings: List[str] = []
+        Insel.last_warnings = self.warnings
         self.timeout: Optional[int] = None
         self.path: Path
         self.name: str
