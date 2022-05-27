@@ -6,12 +6,12 @@ import tempfile
 import os
 from pathlib import Path
 import contextlib
-import insel
 from datetime import datetime, timedelta
-from insel.insel import Insel, InselError
 from collections import Counter
 from calendar import monthrange
 from typing import List
+import insel
+from insel.insel import Insel, InselError
 
 logging.basicConfig(level=logging.ERROR)
 
