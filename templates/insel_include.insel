@@ -1,0 +1,6 @@
+i 'macros/constants.insel'
+
+S 3 SUM 1.1 2.1
+
+i 'macros/screen.insel'
+

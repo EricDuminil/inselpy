@@ -794,6 +794,18 @@ class TestExistingModel(CustomAssertions):
         self.assertRaisesRegex(InselError, "File not found",
                                insel.run, 'not_here/model.insel')
 
+    def test_not_an_insel_file(self):
+        self.assertRaisesRegex(InselError, "Invalid INSEL model file extension",
+                               insel.run, 'data/gengt_comparison.dat')
+        self.assertRaisesRegex(InselError, "Invalid INSEL model file extension",
+                               insel.run, 'not_even_a_file.csv')
+
+    def test_insel_constants(self):
+        self.assertEqual(insel.run('templates/insel_constants.insel'), 3)
+
+    def test_insel_include(self):
+        self.assertEqual(insel.run('templates/insel_include.insel'), 3)
+
     def test_merging_two_loops(self):
         self.assertRaisesRegex(InselError, "Please try to merge 2 & 3", insel.run,
                                'templates/merge_distinct_loops.insel')
