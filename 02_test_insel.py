@@ -758,7 +758,7 @@ class TestTemplate(CustomAssertions):
         self.compareLists(fourfivesix, [4, 5, 6])
 
     def test_read_missing_file(self):
-        self.assertRaisesRegex(InselError, "(?m)^F05029 Block 00001: Cannot open file: .*/not_here$",
+        self.assertRaisesRegex(InselError, "(?m)^F05029 Block 00001: Cannot open file: .*not_here$",
                                insel.template, 'io/not_here')
 
     def test_read_too_many_lines(self):
