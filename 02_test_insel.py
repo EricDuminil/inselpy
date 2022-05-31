@@ -756,6 +756,11 @@ class TestTemplate(CustomAssertions):
     def test_read_simple_file(self):
         fourfivesix = insel.template('io/read_simple_file', ext='dat')
         self.compareLists(fourfivesix, [4, 5, 6])
+		
+    def test_read_missing_file(self):
+        insel.template('io/not_here.insel')
+        print(Insel.last_warnings)
+		#TODO: Test no crash, no too many spaces in filename
 
     def test_read_too_many_lines(self):
         fourfivesix = insel.template('io/read_simple_file', ext='dat', lines=5)
