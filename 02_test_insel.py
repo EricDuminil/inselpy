@@ -792,6 +792,10 @@ class TestExistingModel(CustomAssertions):
         self.compareLists(
             insel.run('templates/one_to_ten.insel'), range(1, 11))
 
+    def test_add_negative_inputs(self):
+        # Little known feature. Could be deleted.
+        self.assertEqual(insel.template('add_negative_inputs.insel'), -8)
+
     def test_nonexisting_model(self):
         self.assertRaisesRegex(InselError, "File not found",
                                insel.run, 'templates/not_here.insel')
