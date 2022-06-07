@@ -53,6 +53,7 @@ class Insel(object):
     warning = re.compile(r'^[EFW]\d{5}.*?$', re.M)
     # Contains warnings during last execution. Might be convenient for testing. Not thread-safe!
     last_warnings: List[str] = []
+    last_raw_output: Optional[str]
 
 
 # NOTE: Abstract class
@@ -60,6 +61,7 @@ class Model(object):
 
     def __init__(self) -> None:
         self.warnings: List[str] = []
+        Insel.last_raw_output: Optional[str] = None
         Insel.last_warnings = self.warnings
         self.timeout: Optional[int] = None
         self.path: Path
@@ -67,6 +69,7 @@ class Model(object):
 
     def run(self) -> Union[float, Row, Table]:
         raw: str = self.raw_results().decode()
+        Insel.last_raw_output = raw
         problem: str
         for problem in Insel.warning.findall(raw):
             logging.warning('INSEL : %s', problem)

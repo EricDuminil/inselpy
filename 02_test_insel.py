@@ -202,6 +202,8 @@ class TestBlock(CustomAssertions):
 
         # Not exactly 2 inputs:
         self.assertRaisesRegex(InselError, "Too few", insel.block, 'diff')
+        self.assertRegex(Insel.last_raw_output, '1 errors?, 0 warnings?')
+        self.assertRaisesRegex(InselError, "Too few", insel.block, 'diff')
         self.assertRaisesRegex(InselError, "Too few", insel.block, 'diff', 1)
         self.assertRaisesRegex(InselError, "Too many",
                                insel.block, 'diff', 1, 2, 3)
@@ -228,6 +230,8 @@ class TestBlock(CustomAssertions):
         # Division by 0
         self.assertRaisesRegex(InselError, "Zero .+ invalid",
                                insel.block, 'att', 1, parameters=[0])
+
+        self.assertRegex(Insel.last_raw_output, '1 errors?, 0 warnings?')
         # Multiple inputs
         results = insel.block('att', 9, 3, 6, 7.5, parameters=[3], outputs=4)
         self.assertEqual(repr(results), '[3.0, 1.0, 2.0, 2.5]')
@@ -390,6 +394,7 @@ class TestBlock(CustomAssertions):
     def test_mtmlalo(self):
         insel.block('MTMLALO', 5, parameters=STUTTGART)
         warnings = Insel.last_warnings
+        self.assertRegex(Insel.last_raw_output, '0 errors?, 1 warnings?')
         self.assertTrue(len(warnings) >= 1, "A warning should be shown")
         self.assertTrue(
             "Block 00002: '48.77° N, 9.18° W' seems to be in the ocean" in str(warnings))
@@ -596,6 +601,7 @@ class TestTemplate(CustomAssertions):
                                     old_longitude=-11.08,
                                     old_timezone=23
                                     )
+        self.assertRegex(Insel.last_raw_output, '0 errors?, 4 warnings?')
         v2_results = insel.template('photovoltaic/nurnberg_v2',
                                     latitude=49.5,
                                     longitude=11.08,
@@ -760,6 +766,7 @@ class TestTemplate(CustomAssertions):
     def test_read_missing_file(self):
         self.assertRaisesRegex(InselError, "(?m)^F05029 Block 00001: Cannot open file: .*not_here$",
                                insel.template, 'io/not_here')
+        self.assertRegex(Insel.last_raw_output, '1 errors?, 0 warnings?')
 
     def test_read_too_many_lines(self):
         fourfivesix = insel.template('io/read_simple_file', ext='dat', lines=5)
