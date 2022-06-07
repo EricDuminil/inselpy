@@ -684,6 +684,7 @@ class TestTemplate(CustomAssertions):
     def test_sunpower_isc(self):
         self.assertRaisesRegex(AttributeError, "UndefinedValue", insel.template,
                                'photovoltaic/i_sc')  # Missing pv_id. STC by default
+        self.assertIsNone(Insel.last_raw_output)
         spr_isc = insel.template('photovoltaic/i_sc', pv_id='008823')
         self.assertIsInstance(spr_isc, float)
         self.assertAlmostEqual(spr_isc, 5.87, places=2)
