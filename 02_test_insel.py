@@ -114,7 +114,7 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('and', 1, 0), 0)
         self.assertAlmostEqual(insel.block('and', 0, 0), 0)
         self.assertAlmostEqual(insel.block('and', 2, 2), 0)
-        self.compareLists(Insel.last_warnings,
+        self.assertEqual(Insel.last_warnings,
                 ['W05052 Block 00003: Invalid non logical input',
                  'W05053 Block 00003: Calls with invalid non logical input: 1'])
         self.assertAlmostEqual(insel.block('and', 0.9, 1.1), 1)
@@ -241,9 +241,9 @@ class TestBlock(CustomAssertions):
                                            3, 2), 1.5, places=8)
         # Division by 0
         self.assertNaN(insel.block('div', 1, 0))
-        self.compareLists(Insel.last_warnings,
-                          ['W05001 Block 00003: Division by zero',
-                           'W05002 Block 00003: Number of divisions by zero: 1'])
+        self.assertEqual(Insel.last_warnings,
+                         ['W05001 Block 00003: Division by zero',
+                          'W05002 Block 00003: Number of divisions by zero: 1'])
 
     def test_sine(self):
         self.assertAlmostEqual(insel.block('sin', 0), 0)
@@ -772,7 +772,7 @@ class TestTemplate(CustomAssertions):
     def test_read_too_many_lines(self):
         fourfivesix = insel.template('io/read_simple_file', ext='dat', lines=5)
         self.compareLists(fourfivesix, [4, 5, 6])
-        self.compareLists(Insel.last_warnings, ['F05031 Block 00002: Unexpected end of file - simulation terminated'])
+        self.assertEqual(Insel.last_warnings, ['F05031 Block 00002: Unexpected end of file - simulation terminated'])
 
     def test_read_csv_like_as_normal_file(self):
         # READ block used to completely skip CSV files :-/
@@ -818,6 +818,15 @@ class TestExistingModel(CustomAssertions):
 
     def test_insel_constants(self):
         self.assertEqual(insel.run('templates/insel_constants.insel'), 3)
+
+    def test_insel_duplicate_constant(self):
+        self.assertEqual(insel.run('templates/duplicate_constant.insel'), 12345)
+        self.assertEqual(Insel.last_warnings,
+                ['W04024 Redefinition of constant TEST skipped'])
+
+    def test_insel_empty_constant(self):
+        self.assertEqual(insel.run('templates/empty_constant.insel'), 12345)
+        self.assertRegex(Insel.last_raw_output, "W05313 Stray constant definition detected at line 00003 of file .*empty_constant.insel")
 
     def test_insel_include(self):
         self.assertEqual(insel.run('templates/insel_include.insel'), 3)
