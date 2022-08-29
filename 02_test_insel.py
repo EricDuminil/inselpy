@@ -884,7 +884,7 @@ class TestInselFlags(unittest.TestCase):
     def test_insel_v(self):
         insel_v = insel.raw_run('-v')
         for part in ['libInselEngine', 'libInselBridge', 'libInselTools',
-                     'libInselFB', 'libInselEM', 'libInselSE', r'_20\d\d\d\d\d\d_',
+                     'libInselFB', 'libInselEM', 'libInselSE', r'_20\d\d\-\d\d\-\d\d_',
                      # gcc __DATE__ __TIME__ format. e.g. "Mar 31 2022 13:42:25"
                      r'[A-Z][a-z][a-z] [ \d]\d 20\d\d \d\d:\d\d:\d\d']:
             self.assertRegex(insel_v, part,
