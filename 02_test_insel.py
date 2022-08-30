@@ -60,8 +60,8 @@ class CustomAssertions(unittest.TestCase):
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
         insel_b = insel.raw_run('-b')
-        blocks = Counter(insel_b.split('\n\n')[-1].split())
-        self.assertTrue(len(blocks) > 300, "There should be many blocks")
+        blocks = Counter(b.strip() for b in insel_b.split('\n\n')[-1].split('\n'))
+        self.assertTrue(len(blocks) > 350, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
         if duplicates:
             self.fail("Some blocks are defined multiples times : " +
@@ -73,7 +73,7 @@ class TestBlock(CustomAssertions):
         and should not be available anymore.
         """
         insel_b = insel.raw_run('-b')
-        blocks = set(insel_b.split('\n\n')[-1].split())
+        blocks = set(b.strip() for b in insel_b.split('\n\n')[-1].split('\n'))
         deleted_blocks = ['DRY', 'FURWALL', 'FURWALL2', 'GASIF',
                           'GENBOD', 'GOMPERTZ', 'HEATEX', 'MIXING', 'OPTIM',
                           'PRIMARY', 'SECON1', 'SECON2', 'TIMEMS', 'TIMEMS0',
