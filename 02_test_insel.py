@@ -876,7 +876,7 @@ class TestExistingModel(CustomAssertions):
 class TestInselFlags(unittest.TestCase):
     def test_insel(self):
         just_insel = insel.raw_run()
-        for part in [r'This is INSEL \d\.\d\.\d', '(32|64) bit',
+        for part in [r'This is INSEL \d\.\d\.\d', '(32|64) bit for (Linux|Windows|macOS)',
                      '-d', '-l', '-m', '-v', '-b']:
             self.assertRegex(just_insel, part,
                              f"'{part}' should be printed out by 'insel'")
