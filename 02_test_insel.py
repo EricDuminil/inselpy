@@ -78,6 +78,10 @@ class TestBlock(CustomAssertions):
                           'GENBOD', 'GOMPERTZ', 'HEATEX', 'MIXING', 'OPTIM',
                           'PRIMARY', 'SECON1', 'SECON2', 'TIMEMS', 'TIMEMS0',
                           'DIV2', 'NOW0', 'EPLUS', 'PHI2PSI', 'PSI2PHI', 'XXXXX']
+        important_blocks = ['MUL', 'PI', 'PVI', 'MPP', 'DO', 'CLOCK']
+        for important_block in important_blocks:
+            self.assertTrue(important_block in blocks,
+                    f'{important_block} should be displayed by insel -b')
         for deleted_block in deleted_blocks:
             self.assertFalse(deleted_block in blocks,
                              f'{deleted_block} should have been deleted.')
