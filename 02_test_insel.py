@@ -61,7 +61,7 @@ class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
         insel_b = insel.raw_run('-b')
         blocks = Counter(b.strip() for b in insel_b.split('\n\n')[-1].split('\n'))
-        self.assertTrue(len(blocks) > 350, "There should be many blocks")
+        self.assertTrue(len(blocks) > 390, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
         if duplicates:
             self.fail("Some blocks are defined multiples times : " +
