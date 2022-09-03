@@ -1,10 +1,12 @@
 import insel
 
+
 print((insel.block('pi')))
 print((insel.block('sum', 2, 3)))
 print((insel.block('do', parameters=[1, 10, 1])))
 print((insel.block('mtm', 12, parameters=['Strasbourg'])))
 
+# NOTE: Templates will be searched inside the 'templates/' folder, relative to the current working directory.
 print((insel.template('a_times_b', a=7, b=3)))
 print((insel.template('photovoltaic/i_sc',
       pv_id='008823', temperature=25, irradiance=1000)))

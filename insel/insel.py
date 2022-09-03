@@ -38,7 +38,6 @@ class InselError(Exception):
 
 
 class Insel(object):
-    script_directory: Path = Path(__file__).resolve().parent
     calls: int = 0
     config = get_config()
     dirname: Path = Path(os.environ.get('INSEL_HOME', config['dirname']))
@@ -186,7 +185,9 @@ class OneBlockModel(TemporaryModel):
 
 
 class Template(TemporaryModel):
-    dirname: Path = Insel.script_directory.parent / 'templates'
+    # dirname is relative to current working directory.
+    # NOTE: It should not be resolved yet, because CWD might change after "import insel"
+    dirname: Path = Path('templates')
     pattern = re.compile(
         r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
@@ -197,7 +198,7 @@ class Template(TemporaryModel):
         self.parameters: Dict[str, Any] = self.add_defaults_to(parameters)
 
     def template_full_path(self) -> Path:
-        full_path: Path = Template.dirname / self.template_path
+        full_path: Path = Template.dirname.resolve() / self.template_path
         if full_path.exists():
             return full_path
         else:
