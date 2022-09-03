@@ -17,6 +17,7 @@ logging.basicConfig(level=logging.ERROR)
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 
+# TODO: Move to inner package inside insel, so it can get imported after pip install?
 # TODO: Test with LC_ALL = DE
 # TODO: Test if insel_gui is installed?
 # TODO: Add gnuplot tests
