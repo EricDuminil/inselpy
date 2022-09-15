@@ -37,6 +37,7 @@ def cwd(path):
 
 # INSEL 8.3 convention
 STUTTGART = [48.77, 9.18, 1]  # type: List[insel.Parameter]
+IMPORTANT_BLOCKS = ['MUL', 'PI', 'PVI', 'MPP', 'DO', 'CLOCK']
 
 
 class CustomAssertions(unittest.TestCase):
@@ -80,8 +81,7 @@ class TestBlock(CustomAssertions):
                           'GENBOD', 'GOMPERTZ', 'HEATEX', 'MIXING', 'OPTIM',
                           'PRIMARY', 'SECON1', 'SECON2', 'TIMEMS', 'TIMEMS0',
                           'DIV2', 'NOW0', 'EPLUS', 'PHI2PSI', 'PSI2PHI', 'XXXXX']
-        important_blocks = ['MUL', 'PI', 'PVI', 'MPP', 'DO', 'CLOCK']
-        for important_block in important_blocks:
+        for important_block in IMPORTANT_BLOCKS:
             self.assertTrue(important_block in blocks,
                     f'{important_block} should be displayed by insel -b')
         for deleted_block in deleted_blocks:
@@ -898,7 +898,7 @@ class TestInselFlags(unittest.TestCase):
 
     def test_insel_l(self):
         insel_l = insel.raw_run('-l', 'templates/one_to_ten.insel')
-        for part in ['1\s*DO\s*T', '2\s*SCREEN\s*S']:
+        for part in [r'1\s*DO\s*T', r'2\s*SCREEN\s*S']:
             self.assertRegex(insel_l, part,
                              f"'{part}' should be printed out by 'insel -l'")
 
@@ -909,7 +909,7 @@ class TestInselFlags(unittest.TestCase):
 
     def test_insel_m(self):
         insel_m = insel.raw_run('-m', 'templates/io/short_string.vseit')
-        for part in ['b\s+1\s+DO', 'b\s+2\s+SCREEN', "'*'", "'ShortString'"]:
+        for part in [r'b\s+1\s+DO', r'b\s+2\s+SCREEN', "'*'", "'ShortString'"]:
             self.assertRegex(insel_m, part,
                              f"'{part}' should be printed out by 'insel -l'")
 
@@ -931,6 +931,25 @@ class TestUserBlocks(CustomAssertions):
         self.assertAlmostEqual(insel.block('ubisonland', 48.77, -9.18), 0)
 
     # TODO: Test UBCHP
+
+
+class TestInselDoc(unittest.TestCase):
+    def test_insel_pdfs(self):
+        doc_dir = Insel.dirname / 'doc'
+        for basename in ['Tutorial', 'BlockReference', 'UserBlockReference',
+                'GettingStarted', 'ProgrammersGuide']:
+            pdf = doc_dir / f"insel{basename}_en.pdf"
+            self.assertTrue(pdf.exists(), f"{pdf} should exist")
+            self.assertTrue(pdf.stat().st_size > 100_000,
+                    f"{pdf} should be large enough")
+
+    def test_insel_block_pdfs(self):
+        doc_dir = Insel.dirname / 'doc' / 'inselBlocks'
+        for basename in IMPORTANT_BLOCKS:
+            pdf = doc_dir / f"{basename}.pdf"
+            self.assertTrue(pdf.exists(), f"{pdf} should exist")
+            self.assertTrue(pdf.stat().st_size > 10_000,
+                    f"{pdf} should be large enough")
 
 
 if __name__ == '__main__':
