@@ -63,7 +63,8 @@ class CustomAssertions(unittest.TestCase):
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
         insel_b = insel.raw_run('-b')
-        blocks = Counter(b.strip() for b in insel_b.split('\n\n')[-1].split('\n'))
+        blocks = Counter(b.strip()
+                         for b in insel_b.split('\n\n')[-1].split('\n'))
         self.assertTrue(len(blocks) > 390, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
         if duplicates:
@@ -83,7 +84,7 @@ class TestBlock(CustomAssertions):
                           'DIV2', 'NOW0', 'EPLUS', 'PHI2PSI', 'PSI2PHI', 'XXXXX']
         for important_block in IMPORTANT_BLOCKS:
             self.assertTrue(important_block in blocks,
-                    f'{important_block} should be displayed by insel -b')
+                            f'{important_block} should be displayed by insel -b')
         for deleted_block in deleted_blocks:
             self.assertFalse(deleted_block in blocks,
                              f'{deleted_block} should have been deleted.')
@@ -121,8 +122,8 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('and', 0, 0), 0)
         self.assertAlmostEqual(insel.block('and', 2, 2), 0)
         self.assertEqual(Insel.last_warnings,
-                ['W05052 Block 00003: Invalid non logical input',
-                 'W05053 Block 00003: Calls with invalid non logical input: 1'])
+                         ['W05052 Block 00003: Invalid non logical input',
+                          'W05053 Block 00003: Calls with invalid non logical input: 1'])
         self.assertAlmostEqual(insel.block('and', 0.9, 1.1), 1)
 
     def test_or(self):
@@ -408,7 +409,8 @@ class TestBlock(CustomAssertions):
 
         # ~225W/m² in june in Stuttgart
         self.assertEqual(insel.block('MTMLALO2', 6, parameters=STUTTGART), 225)
-        self.assertEqual(Insel.last_warnings, [], 'No problem with correct convention')
+        self.assertEqual(Insel.last_warnings, [],
+                         'No problem with correct convention')
 
     def test_moonae(self):
         # Tested with Stellarium
@@ -778,7 +780,8 @@ class TestTemplate(CustomAssertions):
     def test_read_too_many_lines(self):
         fourfivesix = insel.template('io/read_simple_file', ext='dat', lines=5)
         self.compareLists(fourfivesix, [4, 5, 6])
-        self.assertEqual(Insel.last_warnings, ['F05031 Block 00002: Unexpected end of file - simulation terminated'])
+        self.assertEqual(Insel.last_warnings, [
+                         'F05031 Block 00002: Unexpected end of file - simulation terminated'])
 
     def test_read_csv_like_as_normal_file(self):
         # READ block used to completely skip CSV files :-/
@@ -826,13 +829,15 @@ class TestExistingModel(CustomAssertions):
         self.assertEqual(insel.run('templates/insel_constants.insel'), 3)
 
     def test_insel_duplicate_constant(self):
-        self.assertEqual(insel.run('templates/duplicate_constant.insel'), 12345)
+        self.assertEqual(
+            insel.run('templates/duplicate_constant.insel'), 12345)
         self.assertEqual(Insel.last_warnings,
-                ['W04024 Redefinition of constant TEST skipped'])
+                         ['W04024 Redefinition of constant TEST skipped'])
 
     def test_insel_empty_constant(self):
         self.assertEqual(insel.run('templates/empty_constant.insel'), 12345)
-        self.assertRegex(Insel.last_raw_output, "W05313 Stray constant definition detected at line 00003 of file .*empty_constant.insel")
+        self.assertRegex(Insel.last_raw_output,
+                         "W05313 Stray constant definition detected at line 00003 of file .*empty_constant.insel")
 
     def test_insel_include(self):
         self.assertEqual(insel.run('templates/insel_include.insel'), 3)
@@ -937,11 +942,11 @@ class TestInselDoc(unittest.TestCase):
     def test_insel_pdfs(self):
         doc_dir = Insel.dirname / 'doc'
         for basename in ['Tutorial', 'BlockReference', 'UserBlockReference',
-                'GettingStarted', 'ProgrammersGuide']:
+                         'GettingStarted', 'ProgrammersGuide']:
             pdf = doc_dir / f"insel{basename}_en.pdf"
             self.assertTrue(pdf.exists(), f"{pdf} should exist")
             self.assertTrue(pdf.stat().st_size > 100_000,
-                    f"{pdf} should be large enough")
+                            f"{pdf} should be large enough")
 
     def test_insel_block_pdfs(self):
         doc_dir = Insel.dirname / 'doc' / 'inselBlocks'
@@ -949,7 +954,7 @@ class TestInselDoc(unittest.TestCase):
             pdf = doc_dir / f"{basename}.pdf"
             self.assertTrue(pdf.exists(), f"{pdf} should exist")
             self.assertTrue(pdf.stat().st_size > 10_000,
-                    f"{pdf} should be large enough")
+                            f"{pdf} should be large enough")
 
 
 if __name__ == '__main__':
