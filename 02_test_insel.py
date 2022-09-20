@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.ERROR)
 SCRIPT_DIR = Path(__file__).resolve().parent
 
 # TODO: Move to inner package inside insel, so it can get imported after pip install?
-# TODO: Test with LC_ALL = DE
+# TODO: Test with LC_ALL = DE ?
 # TODO: Test if insel_gui is installed?
 # TODO: Add gnuplot tests
 
@@ -385,8 +385,7 @@ class TestBlock(CustomAssertions):
                          '0.5 0.0 -0.4 -0.6 -0.7')
 
     def test_mtm(self):
-        december = insel.block('mtm2', 12, parameters=[
-                               'Strasbourg'], outputs=9)
+        december = insel.block('mtm2', 12, parameters=['Strasbourg'], outputs=9)
         # 1.5° in december in Strasbourg
         self.assertAlmostEqual(december[2], 1.5, places=1)
         # ~28W/m² in december in Strasbourg
@@ -396,6 +395,17 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(july[2], 19, places=0)
         # ~230W/m² in july in Stuttgart
         self.assertAlmostEqual(july[0], 230, places=-1)
+
+    def test_mtm_with_unknown_location(self):
+        self.assertRaisesRegex(InselError, "Location not found",
+                               insel.block, 'mtm2', 1, parameters=["NOT_A_CITY"])
+
+    def test_mtm_with_incorrect_input(self):
+        insel.block('MTM2', 13, parameters=['Tokyo'])
+        warnings = Insel.last_warnings
+        self.assertTrue(len(warnings) >= 1, "A warning should be shown")
+        self.assertTrue(
+            "Block 00002: Invalid input" in str(warnings))
 
     def test_mtmlalo(self):
         insel.block('MTMLALO', 5, parameters=STUTTGART)
