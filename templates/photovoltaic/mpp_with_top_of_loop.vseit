@@ -1,0 +1,291 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- XML for representing entities of a VSEit Network with their attributes and relationships-->
+
+<vseit-network xmlns:xlink="http://www.w3.org/1999/xlink" client-class="eu.insel.vseit.InselVseit" client-class-version="9" first-id="0" entity-count="27">
+<entity id="_0" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_15</to><to>_10</to></ref>
+<ref name="portOf"><to>_25</to></ref>
+</entity>
+<entity id="_1" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_16</to></ref>
+<ref name="portOf"><to>_19</to></ref>
+</entity>
+<entity id="_2" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_8</to></ref>
+<ref name="portOf"><to>_21</to></ref>
+</entity>
+<entity id="_3" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_9</to><to>_14</to></ref>
+<ref name="portOf"><to>_19</to></ref>
+</entity>
+<entity id="_4" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_25</to></ref>
+</entity>
+<entity id="_5" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_11</to></ref>
+<ref name="portOf"><to>_22</to></ref>
+</entity>
+<entity id="_6" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_13</to></ref>
+<ref name="portOf"><to>_20</to></ref>
+</entity>
+<entity id="_7" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_18</to><to>_12</to><to>_17</to></ref>
+<ref name="portOf"><to>_26</to></ref>
+</entity>
+<entity id="_8" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_2</to></ref>
+<ref name="portOf"><to>_25</to></ref>
+</entity>
+<entity id="_9" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_3</to></ref>
+<ref name="portOf"><to>_26</to></ref>
+</entity>
+<entity id="_10" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_0</to></ref>
+<ref name="portOf"><to>_22</to></ref>
+</entity>
+<entity id="_11" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_5</to></ref>
+<ref name="portOf"><to>_24</to></ref>
+</entity>
+<entity id="_12" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_7</to></ref>
+<ref name="portOf"><to>_24</to></ref>
+</entity>
+<entity id="_13" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_6</to></ref>
+<ref name="portOf"><to>_25</to></ref>
+</entity>
+<entity id="_14" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_3</to></ref>
+<ref name="portOf"><to>_23</to></ref>
+</entity>
+<entity id="_15" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_0</to></ref>
+<ref name="portOf"><to>_19</to></ref>
+</entity>
+<entity id="_16" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_1</to></ref>
+<ref name="portOf"><to>_23</to></ref>
+</entity>
+<entity id="_17" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_7</to></ref>
+<ref name="portOf"><to>_22</to></ref>
+</entity>
+<entity id="_18" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_7</to></ref>
+<ref name="portOf"><to>_25</to></ref>
+</entity>
+<entity id="_19" class="eu.insel.block.MPP">
+<ref name="inPorts"><to>_15</to></ref>
+<ref name="outPorts"><to>_3</to><to>_1</to></ref>
+<attr name="blockName"><string>MPP</string></attr>
+<attr name="blockFunction"><string>fb0057</string></attr>
+<attr name="userBlockNumber"><int>1</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><string>0</string></attr>
+<attr name="bp2"><string>30</string></attr>
+<attr name="bp3"><string>0.01</string></attr>
+</entity>
+<entity id="_20" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_6</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>2</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>25</string></attr>
+</entity>
+<entity id="_21" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_2</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>3</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>1000</string></attr>
+</entity>
+<entity id="_22" class="eu.insel.block.MUL">
+<ref name="inPorts"><to>_17</to><to>_10</to></ref>
+<ref name="outPorts"><to>_5</to></ref>
+<attr name="blockName"><string>MUL</string></attr>
+<attr name="blockFunction"><string>fb0002</string></attr>
+<attr name="userBlockNumber"><int>4</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+</entity>
+<entity id="_23" class="eu.insel.block.SCREEN">
+<ref name="inPorts"><to>_14</to><to>_16</to></ref>
+<attr name="blockName"><string>SCREEN</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>5</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="sp1"><string>(''Maximum at '',F4.1,'' Volt and '',F4.1,'' Watt'')</string></attr>
+</entity>
+<entity id="_24" class="eu.insel.block.SCREEN">
+<ref name="inPorts"><to>_12</to><to>_11</to></ref>
+<attr name="blockName"><string>SCREEN</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>6</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="sp1"><string>(2F10.3)</string></attr>
+</entity>
+<entity id="_25" class="eu.insel.block.PVI">
+<ref name="inPorts"><to>_18</to><to>_8</to><to>_13</to></ref>
+<ref name="outPorts"><to>_0</to><to>_4</to></ref>
+<attr name="blockName"><string>PVI</string></attr>
+<attr name="blockFunction"><string>se0001</string></attr>
+<attr name="userBlockNumber"><int>7</int></attr>
+<attr name="inputPortsCount"><int>3</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><enum>In3Mode</enum></attr>
+<attr name="bp2"><string>36</string></attr>
+<attr name="bp3"><string>1</string></attr>
+<attr name="bp4"><string>1</string></attr>
+<attr name="bp5"><string>1</string></attr>
+<attr name="bp6"><string>0.01</string></attr>
+<attr name="bp7"><string>0.494</string></attr>
+<attr name="bp8"><string>1.14</string></attr>
+<attr name="bp9"><string>0.2841</string></attr>
+<attr name="bp10"><string>0.000164</string></attr>
+<attr name="bp11"><string>14589</string></attr>
+<attr name="bp12"><string>1.189</string></attr>
+<attr name="bp13"><string>0.00013041</string></attr>
+<attr name="bp14"><string>0.0899</string></attr>
+<attr name="bp15"><string>1</string></attr>
+<attr name="bp16"><string>2</string></attr>
+<attr name="bp17"><string>0</string></attr>
+<attr name="bp18"><string>0</string></attr>
+<attr name="bp19"><string>0</string></attr>
+<attr name="bp20"><string>5</string></attr>
+<attr name="bp21"><string>-5</string></attr>
+<attr name="bp22"><string>0.459</string></attr>
+<attr name="bp23"><string>6.65</string></attr>
+<attr name="bp24"><string>0.7</string></attr>
+<attr name="bp25"><string>0.85</string></attr>
+<attr name="bp26"><string>900</string></attr>
+<attr name="bp27"><string>47</string></attr>
+<attr name="bp28"><string>25</string></attr>
+<attr name="bp29"><string>0.001</string></attr>
+<attr name="bp30"><string>100</string></attr>
+<attr name="sp1"><string>000000</string></attr>
+</entity>
+<entity id="_26" class="eu.insel.block.TOL">
+<ref name="inPorts"><to>_9</to></ref>
+<ref name="outPorts"><to>_7</to></ref>
+<attr name="blockName"><string>TOL</string></attr>
+<attr name="blockFunction"><string>fb0056</string></attr>
+<attr name="userBlockNumber"><int>8</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+</entity>
+
+<!-- One or more layouts of the VSEit Network above -->
+<layout name="Global Perspective" show-name="false" routing-policy="de.vseit.network.routing.RoutingPolicyOrthogonal" background-color="none" auto-display-new="true">
+<geom node="_5"><layer>1</layer><x>305</x><y>118</y><w>2</w><h>6</h></geom>
+<geom node="_10"><layer>1</layer><x>267</x><y>127</y><w>2</w><h>6</h></geom>
+<geom node="_17"><layer>1</layer><x>267</x><y>109</y><w>2</w><h>6</h></geom>
+<geom node="_22"><layer>1</layer><x>270</x><y>108</y><w>34</w><h>34</h></geom>
+<geom node="_11"><layer>1</layer><x>348</x><y>100</y><w>2</w><h>6</h></geom>
+<geom node="_12"><layer>1</layer><x>348</x><y>82</y><w>2</w><h>6</h></geom>
+<geom node="_24"><layer>1</layer><x>351</x><y>81</y><w>34</w><h>34</h></geom>
+<geom node="_2"><layer>1</layer><x>143</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_21"><layer>1</layer><x>108</x><y>162</y><w>34</w><h>16</h></geom>
+<geom node="_15"><layer>1</layer><x>330</x><y>154</y><w>2</w><h>6</h></geom>
+<geom node="_3"><layer>1</layer><x>368</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_1"><layer>1</layer><x>368</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_19"><layer>1</layer><x>333</x><y>144</y><w>34</w><h>34</h></geom>
+<geom node="_18"><layer>1</layer><x>186</x><y>154</y><w>2</w><h>6</h></geom>
+<geom node="_8"><layer>1</layer><x>186</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_13"><layer>1</layer><x>186</x><y>172</y><w>2</w><h>6</h></geom>
+<geom node="_0"><layer>1</layer><x>224</x><y>154</y><w>2</w><h>6</h></geom>
+<geom node="_4"><layer>1</layer><x>224</x><y>172</y><w>2</w><h>6</h></geom>
+<geom node="_25"><layer>1</layer><x>189</x><y>153</y><w>34</w><h>34</h></geom>
+<geom node="_6"><layer>1</layer><x>143</x><y>190</y><w>2</w><h>6</h></geom>
+<geom node="_20"><layer>1</layer><x>108</x><y>189</y><w>34</w><h>16</h></geom>
+<geom node="_9"><layer>1</layer><x>105</x><y>127</y><w>2</w><h>6</h></geom>
+<geom node="_7"><layer>1</layer><x>143</x><y>127</y><w>2</w><h>6</h></geom>
+<geom node="_26"><layer>1</layer><x>108</x><y>117</y><w>34</w><h>34</h></geom>
+<geom node="_16"><layer>1</layer><x>411</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_14"><layer>1</layer><x>411</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_23"><layer>1</layer><x>414</x><y>144</y><w>34</w><h>34</h></geom>
+</layout>
+<insel-file><![CDATA[
+B 1 MPP
+    7.1
+P 1
+    0               % Lower limit
+    30              % Upper limit
+    0.01            % Error tolerance
+
+B 2 CONST
+P 2
+    25              % Constant value
+
+B 3 CONST
+P 3
+    1000            % Constant value
+
+B 4 MUL
+    8.1
+    7.1
+
+B 5 SCREEN
+    1.1
+    1.2
+P 5
+    '(''Maximum at '',F4.1,'' Volt and '',F4.1,'' Watt'')' % Format
+
+B 6 SCREEN
+    8.1
+    4.1
+P 6
+    '(2F10.3)'      % Format
+
+B 7 PVI
+    8.1
+    3.1
+    2.1
+P 7
+    0               % Module temperature is
+    36              % Number of cells in series per module
+    1               % Number of cells in parallel per module
+    1               % Number of modules in series
+    1               % Number of modules in parallel
+    0.01            % Single cell area
+    0.494           % Single module area
+    1.14            % Band gap
+    0.2841          % Coefficient of short-circuit current density
+    0.000164        % Temperature coefficient of short-circuit current
+    14589           % Coefficient of saturation current density (Shockley diode)
+    1.189           % Coefficient of saturation current density (Recombination diode)
+    0.00013041      % Series resistance
+    0.0899          % Parallel resistance
+    1               % Diode ideality factor alpha
+    2               % Diode ideality factor beta
+    0               % Bishop parameter a
+    0               % Bishop parameter M
+    0               % Bishop parameter Vbr
+    5               % Module tolerance plus
+    -5              % Module tolerance minus
+    0.459           % Characteristic module length
+    6.65            % Module weight
+    0.7             % Absorption coefficient
+    0.85            % Emission factor
+    900             % Specific heat of a module
+    47              % Nominal operating cell temperature
+    25              % Initial cell temperature
+    0.001           % Single cell voltage error tolerance
+    100             % Maximum number of iterations
+    '000000'        % Product ID
+
+B 8 TOL
+    1.1
+
+]]>
+</insel-file>
+</vseit-network>

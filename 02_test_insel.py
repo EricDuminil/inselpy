@@ -387,7 +387,8 @@ class TestBlock(CustomAssertions):
                          '0.5 0.0 -0.4 -0.6 -0.7')
 
     def test_mtm(self):
-        december = insel.block('mtm2', 12, parameters=['Strasbourg'], outputs=9)
+        december = insel.block('mtm2', 12, parameters=[
+                               'Strasbourg'], outputs=9)
         # 1.5° in december in Strasbourg
         self.assertAlmostEqual(december[2], 1.5, places=1)
         # ~28W/m² in december in Strasbourg
@@ -893,6 +894,14 @@ class TestExistingModel(CustomAssertions):
         out = insel.raw_run('templates/io/utf_headline.insel')
         self.assertTrue('T€st 12345' in out,
                         "Headline should be allowed to be in UTF-8")
+
+    def test_mpp_without_top_of_loop(self):
+        self.assertRaisesRegex(InselError, "No TOL-block", insel.run,
+                               'templates/photovoltaic/mpp_without_top_of_loop.vseit')
+
+    def test_mpp_with_top_of_loop(self):
+        out = insel.raw_run('templates/photovoltaic/mpp_with_top_of_loop.vseit')
+        self.assertRegex(out, r'Maximum at 17\.3 Volt and 52\.6 Watt')
 
 
 class TestInselFlags(unittest.TestCase):
