@@ -21,6 +21,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # TODO: Test with LC_ALL = DE ?
 # TODO: Test if insel_gui is installed?
 # TODO: Add gnuplot tests
+# TODO: Test inselHelp installed?
+# FIXME: Algebraic loops seem to break INSEL. Test & fix
 
 
 @contextlib.contextmanager
