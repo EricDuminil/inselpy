@@ -1,0 +1,11 @@
+% Leads to segfault on 8.2 & 8.3
+b 1 DO  2.1
+p 1
+                    1
+                   10
+                    1
+b 2 DO  1.1
+p 2
+                    1
+                   10
+                    1
