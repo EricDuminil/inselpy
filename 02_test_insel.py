@@ -903,6 +903,15 @@ class TestExistingModel(CustomAssertions):
         out = insel.raw_run('templates/photovoltaic/mpp_with_top_of_loop.vseit')
         self.assertRegex(out, r'Maximum at 17\.3 Volt and 52\.6 Watt')
 
+    def test_algebraic_loop(self):
+        self.assertRaisesRegex(InselError, "Algebraic loop detected", insel.run,
+                               'templates/engine/sum_sum.insel')
+
+    def test_algebraic_loop_with_dos(self):
+        self.assertRaisesRegex(InselError, "Algebraic loop detected", insel.run,
+                               'templates/engine/do_do.insel')
+
+
 
 class TestInselFlags(unittest.TestCase):
     def test_insel(self):
