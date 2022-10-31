@@ -756,21 +756,24 @@ class TestTemplate(CustomAssertions):
 
         self.run_write_block(header='#Some header here')
 
-    def test_write_block_fails(self):
+    def test_write_block_fails_if_folder_missing(self):
         self.assertRaisesRegex(InselError, "(?m)^F05029 Block 00003: Cannot open file: /probably/doesn_t/exist$",
-                self.run_write_block, basename='/probably/doesn_t/exist')
+                insel.template, 'io/write_params', dat_file='/probably/doesn_t/exist')
 
+    def test_write_block_fails_if_read_only(self):
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / 'read_only.dat'
             # Create read-only temp file:
             dat_file.touch()
             dat_file.chmod(mode=0o444)
-            self.run_write_block(basename=dat_file, overwrite=1, should_exist=True)
+            insel.template('io/write_params', dat_file=dat_file, overwrite=1)
+            self.assertEqual(Insel.last_warnings, [
+                         'F05069 Block 00003: Unexpected write error - simulation terminated'])
 
-    def run_write_block(self, basename='test.dat', should_exist=False, **write_params):
+    def run_write_block(self, basename='test.dat', **write_params):
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / basename
-            self.assertEqual(should_exist, dat_file.exists())
+            self.assertFalse(dat_file.exists())
             model = insel.Template(
                 'io/write_params', dat_file=dat_file, **write_params)
             model.run()
