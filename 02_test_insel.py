@@ -757,14 +757,20 @@ class TestTemplate(CustomAssertions):
         self.run_write_block(header='#Some header here')
 
     def test_write_block_fails(self):
-        # self.run_write_block(basename='/probably/doesn_t/exist')
         self.assertRaisesRegex(InselError, "(?m)^F05029 Block 00003: Cannot open file: /probably/doesn_t/exist$",
                 self.run_write_block, basename='/probably/doesn_t/exist')
 
-    def run_write_block(self, basename='test.dat', **write_params):
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            dat_file = Path(tmpdirname) / 'read_only.dat'
+            # Create read-only temp file:
+            dat_file.touch()
+            dat_file.chmod(mode=0o444)
+            self.run_write_block(basename=dat_file, overwrite=1, should_exist=True)
+
+    def run_write_block(self, basename='test.dat', should_exist=False, **write_params):
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / basename
-            self.assertFalse(dat_file.exists())
+            self.assertEqual(should_exist, dat_file.exists())
             model = insel.Template(
                 'io/write_params', dat_file=dat_file, **write_params)
             model.run()
