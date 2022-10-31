@@ -754,18 +754,10 @@ class TestTemplate(CustomAssertions):
 
         self.run_write_block(fortran_format='(2F10.5)')
 
-        self.run_write_block(overwrite=0, fnq=0)
-        self.run_write_block(overwrite=0, fnq=1)
-
-        self.run_write_block(overwrite=0, fnq=0, separator=0)
-        self.run_write_block(overwrite=0, fnq=0, separator=1)
-        self.run_write_block(overwrite=0, fnq=0, separator=2)
-
         self.run_write_block(header='#Some header here')
 
 
     def run_write_block(self, basename='test.dat', **write_params):
-        separator = [None, ',', ';'][write_params.get('separator', 0)]
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / basename
             self.assertFalse(dat_file.exists())
@@ -778,8 +770,8 @@ class TestTemplate(CustomAssertions):
                 if write_params.get('header'):
                     next(out)
                 content = out.readlines()
-                written = [float(line.split(separator)[0]) for line in content]
-                self.compareLists(written, range(1, 11), places=5)
+                written = [float(line.split()[1]) for line in content]
+                self.compareLists(written, [x**2 for x in range(1, 11)], places=5)
 
     def test_read_simple_file(self):
         fourfivesix = insel.template('io/read_simple_file', ext='dat')
