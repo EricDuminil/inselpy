@@ -752,7 +752,7 @@ class TestTemplate(CustomAssertions):
         self.run_write_block(basename='with a space.txt')
         self.run_write_block(basename='with_underscore.txt')
 
-        self.run_write_block(fortran_format='(F10.5)')
+        self.run_write_block(fortran_format='(2F10.5)')
 
         self.run_write_block(overwrite=0, fnq=0)
         self.run_write_block(overwrite=0, fnq=1)
@@ -762,6 +762,7 @@ class TestTemplate(CustomAssertions):
         self.run_write_block(overwrite=0, fnq=0, separator=2)
 
         self.run_write_block(header='#Some header here')
+
 
     def run_write_block(self, basename='test.dat', **write_params):
         separator = [None, ',', ';'][write_params.get('separator', 0)]

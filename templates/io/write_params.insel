@@ -3,7 +3,8 @@ p 1
                     1
                    10
                     1
-b 3 WRITE  1.1
+b 2 MUL 1.1 1.1
+b 3 WRITE  1.1 2.1
 p 3
     $overwrite||$         % Overwrite mode : (Error as default)
     $fnq      ||$         % Useless FNQ parameter : (No as default)
