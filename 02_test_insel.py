@@ -756,6 +756,10 @@ class TestTemplate(CustomAssertions):
 
         self.run_write_block(header='#Some header here')
 
+    def test_write_block_fails(self):
+        # self.run_write_block(basename='/probably/doesn_t/exist')
+        self.assertRaisesRegex(InselError, "(?m)^F05029 Block 00003: Cannot open file: /probably/doesn_t/exist$",
+                self.run_write_block, basename='/probably/doesn_t/exist')
 
     def run_write_block(self, basename='test.dat', **write_params):
         with tempfile.TemporaryDirectory() as tmpdirname:
