@@ -4,6 +4,7 @@ import math
 import logging
 import tempfile
 import os
+import re
 from pathlib import Path
 import contextlib
 from datetime import datetime, timedelta
@@ -12,6 +13,7 @@ from calendar import monthrange
 from typing import List
 import insel
 from insel.insel import Insel, InselError
+import platform
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -773,8 +775,10 @@ class TestTemplate(CustomAssertions):
                 self.compareLists(written, [x**2 for x in range(1, 11)], places=5)
 
     def test_write_block_fails_if_folder_missing(self):
-        self.assertRaisesRegex(InselError, "(?m)^F05029 Block 00003: Cannot open file: /probably/doesn_t/exist$",
-                insel.template, 'io/write_params', dat_file='/probably/doesn_t/exist')
+        filename = r'S:\\missing\\folder.txt' if platform.system().lower() == 'windows' else '/not/here.txt'
+
+        self.assertRaisesRegex(InselError, rf"(?m)^F05029 Block 00003: Cannot open file: {re.escape(filename)}$",
+                insel.template, 'io/write_params', dat_file=filename)
 
     def test_write_block_fails_if_read_only(self):
         with tempfile.TemporaryDirectory() as tmpdirname:
