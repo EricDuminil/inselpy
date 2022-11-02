@@ -3,7 +3,6 @@ import unittest
 import math
 import logging
 import tempfile
-import os
 from pathlib import Path
 import contextlib
 from calendar import monthrange
@@ -25,6 +24,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 @contextlib.contextmanager
 def cwd(path):
+    import os
     """Changes working directory and returns to previous on exit."""
     prev_cwd = Path.cwd()
     os.chdir(path)
