@@ -4,16 +4,12 @@ import math
 import logging
 import tempfile
 import os
-import re
 from pathlib import Path
 import contextlib
-from datetime import datetime, timedelta
-from collections import Counter
 from calendar import monthrange
 from typing import List
 import insel
 from insel.insel import Insel, InselError
-import platform
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -65,6 +61,7 @@ class CustomAssertions(unittest.TestCase):
 
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
+        from collections import Counter
         insel_b = insel.raw_run('-b')
         blocks = Counter(b.strip()
                          for b in insel_b.split('\n\n')[-1].split('\n'))
@@ -495,6 +492,7 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
 
     def test_now(self):
+        from datetime import datetime, timedelta
         year, month, day, hour, minute, second = insel.block('NOW', outputs=6)
         microsecond = int((second % 1)*1e6)
         insel_now = datetime(int(year), int(month), int(day),
@@ -775,6 +773,8 @@ class TestTemplate(CustomAssertions):
                 self.compareLists(written, [x**2 for x in range(1, 11)], places=5)
 
     def test_write_block_fails_if_folder_missing(self):
+        import platform
+        import re
         filename = r'S:\\missing\\folder.txt' if platform.system().lower() == 'windows' else '/not/here.txt'
 
         self.assertRaisesRegex(InselError, rf"(?m)^F05029 Block 00003: Cannot open file: {re.escape(filename)}$",
