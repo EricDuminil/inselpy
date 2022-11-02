@@ -7,12 +7,14 @@ from pathlib import Path
 import contextlib
 from calendar import monthrange
 from typing import List
+import platform
 import insel
 from insel.insel import Insel, InselError
 
 logging.basicConfig(level=logging.ERROR)
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+IS_WINDOWS = platform.system().lower() == 'windows'
 
 # TODO: Move to inner package inside insel, so it can get imported after pip install?
 # TODO: Test with LC_ALL = DE ?
@@ -773,14 +775,16 @@ class TestTemplate(CustomAssertions):
                 self.compareLists(written, [x**2 for x in range(1, 11)], places=5)
 
     def test_write_block_fails_if_folder_missing(self):
-        import platform
         import re
-        filename = r'S:\\missing\\folder.txt' if platform.system().lower() == 'windows' else '/not/here.txt'
+        filename = r'S:\\missing\\folder.txt' if IS_WINDOWS else '/not/here.txt'
 
         self.assertRaisesRegex(InselError, rf"(?m)^F05029 Block 00003: Cannot open file: {re.escape(filename)}$",
                 insel.template, 'io/write_params', dat_file=filename)
 
     def test_write_block_fails_if_read_only(self):
+        if IS_WINDOWS:
+            #FIXME: Docker tests for Windows are still run as root, and don't care about file permissions. :-/
+            return
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / 'read_only.dat'
             # Create read-only temp file:
