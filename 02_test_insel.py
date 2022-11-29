@@ -83,7 +83,7 @@ class TestBlock(CustomAssertions):
         deleted_blocks = ['DRY', 'FURWALL', 'FURWALL2', 'GASIF',
                           'GENBOD', 'GOMPERTZ', 'HEATEX', 'MIXING', 'OPTIM',
                           'PRIMARY', 'SECON1', 'SECON2', 'TIMEMS', 'TIMEMS0',
-                          'DIV2', 'NOW0', 'EPLUS', 'PHI2PSI', 'PSI2PHI', 'XXXXX']
+                          'DIV2', 'NOW0', 'EPLUS', 'PHI2PSI', 'PSI2PHI', 'XXXXX', 'SCREENG']
         for important_block in IMPORTANT_BLOCKS:
             self.assertTrue(important_block in blocks,
                             f'{important_block} should be displayed by insel -b')
@@ -552,6 +552,15 @@ class TestBlock(CustomAssertions):
         self.assertInf(insel.block('max', math.inf, 1))
         self.assertNaN(insel.block('max', math.nan, 1, -1))
 
+    def test_screen(self):
+        # SCREEN has no output
+        self.assertRaisesRegex(InselError, "Invalid output",
+                               insel.block, 'screen')
+    def test_screen1g(self):
+        # SCREEN1G has no output
+        self.assertRaisesRegex(InselError, "Invalid output",
+                               insel.block, 'screen1g')
+
 
 class TestTemplate(CustomAssertions):
     def test_empty_if(self):
@@ -834,6 +843,12 @@ class TestExistingModel(CustomAssertions):
     def test_one_to_ten(self):
         self.compareLists(
             insel.run('templates/one_to_ten.insel'), range(1, 11))
+
+    def test_screen(self):
+        self.compareLists(insel.run('templates/io/screen.insel'), [1, 2, 3])
+
+    def test_screen1g(self):
+        self.compareLists(insel.run('templates/io/screen1g.insel'), [])
 
     def test_add_negative_inputs(self):
         # Little known feature. Could be deleted.
