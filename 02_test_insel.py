@@ -846,6 +846,10 @@ class TestExistingModel(CustomAssertions):
 
     def test_screen(self):
         self.compareLists(insel.run('templates/io/screen.insel'), [1, 2, 3])
+        header_content = insel.raw_run('templates/io/screen_header.insel')
+        self.assertTrue('# HASHTAG' in header_content)
+        self.assertTrue('! EXCLAMATION' in header_content)
+
 
     def test_screen1g(self):
         self.compareLists(insel.run('templates/io/screen1g.insel'), [])
