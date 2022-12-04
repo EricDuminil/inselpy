@@ -1002,6 +1002,33 @@ class TestUserBlocks(CustomAssertions):
     # TODO: Test UBCHP
 
 
+class TestGenericExpression(CustomAssertions):
+    def expr(self, expression, *args):
+        return insel.block('ubexpression', *args, parameters=[expression])
+
+    def test_constant(self):
+        self.assertAlmostEqual(self.expr('(1 + sqrt(5)) / 2'), (1+5**0.5)/2)
+        # https://xkcd.com/1047/:
+        self.assertAlmostEqual(self.expr('sqrt(3) / 2  - e / pi'), 0, delta=1e-3)
+
+    def test_one_input(self):
+        self.assertAlmostEqual(self.expr('cos(x)', math.pi), -1)
+
+    def test_two_inputs(self):
+        self.assertAlmostEqual(self.expr('x*y', 2, 3), 6)
+
+    def test_three_inputs(self):
+        self.assertAlmostEqual(self.expr('(x*y*z)*x^2', -1, 2, 3.5), -7)
+
+    def test_modulo(self):
+        self.assertAlmostEqual(self.expr('x % y', 111, 7), 6)
+
+    def test_nan(self):
+        self.assertNaN(insel.block('ubexpression', parameters=['0/0']))
+
+
+
+
 class TestInselDoc(unittest.TestCase):
     def test_insel_pdfs(self):
         doc_dir = Insel.dirname / 'doc'
