@@ -1011,6 +1011,11 @@ class TestGenericExpression(CustomAssertions):
         # https://xkcd.com/1047/:
         self.assertAlmostEqual(self.expr('sqrt(3) / 2  - e / pi'), 0, delta=1e-3)
 
+    def test_power(self):
+        # Used to be ^.
+        self.assertEqual(self.expr('2**4'), 16)
+        self.assertEqual(self.expr('3**3'), 27)
+
     def test_one_input(self):
         self.assertAlmostEqual(self.expr('cos(x)', math.pi), -1)
 
