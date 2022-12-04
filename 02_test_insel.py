@@ -1044,6 +1044,20 @@ class TestGenericExpression(CustomAssertions):
         self.assertEqual(self.expr('1 && 0'), 0)
         self.assertEqual(self.expr('1 && 1'), 1)
 
+    def test_wrong_formulas(self):
+        self.expr(') 2 + 3')
+        self.expr('x + ')
+        self.expr('sin(1 * )')
+
+    def test_missing_x(self):
+        self.expr('x + 3')
+
+    def test_missing_y(self):
+        self.expr('x + y', 1)
+
+    def test_missing_z(self):
+        self.expr('x + y + z', 1, 2)
+
 class TestInselDoc(unittest.TestCase):
     def test_insel_pdfs(self):
         doc_dir = Insel.dirname / 'doc'
