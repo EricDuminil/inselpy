@@ -1016,6 +1016,8 @@ class TestGenericExpression(CustomAssertions):
 
     def test_two_inputs(self):
         self.assertAlmostEqual(self.expr('x*y', 2, 3), 6)
+        self.assertAlmostEqual(self.expr('x*x > y*y', -4, 2), 1)
+        self.assertAlmostEqual(self.expr('AVERAGE(x, y)', 3, 12), 7.5)
 
     def test_three_inputs(self):
         self.assertAlmostEqual(self.expr('(x*y*z)*x^2', -1, 2, 3.5), -7)
@@ -1026,8 +1028,15 @@ class TestGenericExpression(CustomAssertions):
     def test_nan(self):
         self.assertNaN(insel.block('ubexpression', parameters=['0/0']))
 
-
-
+    def test_logic(self):
+        self.assertEqual(self.expr('or(3 < 1, 2 > 3)'), 0)
+        self.assertEqual(self.expr('or(3 < 1, 2 < 3)'), 1)
+        self.assertEqual(self.expr('and(3 < 1, 2 < 3)'), 0)
+        self.assertEqual(self.expr('and(3 >= 1, 2 < 3)'), 1)
+        self.assertEqual(self.expr('0 || 0'), 0)
+        self.assertEqual(self.expr('1 || 0 || 0'), 1)
+        self.assertEqual(self.expr('1 && 0'), 0)
+        self.assertEqual(self.expr('1 && 1'), 1)
 
 class TestInselDoc(unittest.TestCase):
     def test_insel_pdfs(self):
