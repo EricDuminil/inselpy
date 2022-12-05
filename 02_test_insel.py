@@ -1045,9 +1045,12 @@ class TestGenericExpression(CustomAssertions):
         self.assertEqual(self.expr('1 && 1'), 1)
 
     def test_wrong_formulas(self):
-        self.expr(') 2 + 3')
-        self.expr('x + ')
-        self.expr('sin(1 * )')
+        self.assertRaisesRegex(InselError, r" \^ First error is here",
+                               self.expr, ') 2 + 3')
+        self.assertRaisesRegex(InselError, r" __\^ First error is here",
+                               self.expr, 'x + ')
+        self.assertRaisesRegex(InselError, r" \^ First error is here",
+                               self.expr, 'sin(1 * )')
 
     def test_missing_x(self):
         self.assertRaisesRegex(InselError, "Unknown variable 'x'",
