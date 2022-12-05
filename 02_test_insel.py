@@ -1051,6 +1051,8 @@ class TestGenericExpression(CustomAssertions):
                                self.expr, 'x + ')
         self.assertRaisesRegex(InselError, r" ________\^ First error is here",
                                self.expr, 'sin(1 * )')
+        self.assertRaisesRegex(InselError, r" ____\^ First error is here",
+                               self.expr, '1 + a + b')
 
     def test_missing_x(self):
         self.assertRaisesRegex(InselError, "Unknown variable 'x'",
