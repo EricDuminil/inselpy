@@ -1049,7 +1049,7 @@ class TestGenericExpression(CustomAssertions):
                                self.expr, ') 2 + 3')
         self.assertRaisesRegex(InselError, r" __\^ First error is here",
                                self.expr, 'x + ')
-        self.assertRaisesRegex(InselError, r" \^ First error is here",
+        self.assertRaisesRegex(InselError, r" ________\^ First error is here",
                                self.expr, 'sin(1 * )')
 
     def test_missing_x(self):
