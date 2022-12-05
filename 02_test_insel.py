@@ -1004,7 +1004,7 @@ class TestUserBlocks(CustomAssertions):
 
 class TestGenericExpression(CustomAssertions):
     def expr(self, expression, *args):
-        return insel.block('ubexpression', *args, parameters=[expression])
+        return insel.block('expression', *args, parameters=[expression])
 
     def test_constant(self):
         self.assertAlmostEqual(self.expr('(1 + sqrt(5)) / 2'), (1+5**0.5)/2)
@@ -1032,7 +1032,7 @@ class TestGenericExpression(CustomAssertions):
         self.assertAlmostEqual(self.expr('x % y', 111, 7), 6)
 
     def test_nan(self):
-        self.assertNaN(insel.block('ubexpression', parameters=['0/0']))
+        self.assertNaN(self.expr('0/0'))
 
     def test_logic(self):
         self.assertEqual(self.expr('or(3 < 1, 2 > 3)'), 0)
