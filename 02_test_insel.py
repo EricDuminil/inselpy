@@ -1050,13 +1050,16 @@ class TestGenericExpression(CustomAssertions):
         self.expr('sin(1 * )')
 
     def test_missing_x(self):
-        self.expr('x + 3')
+        self.assertRaisesRegex(InselError, "Unknown variable 'x'",
+                               self.expr, 'x + 3')
 
     def test_missing_y(self):
-        self.expr('x + y', 1)
+        self.assertRaisesRegex(InselError, "Unknown variable 'y'",
+                               self.expr, 'x + y', 1)
 
     def test_missing_z(self):
-        self.expr('x + y + z', 1, 2)
+        self.assertRaisesRegex(InselError, "Unknown variable 'z'",
+                               self.expr, 'x + y + z', 1, 2)
 
 class TestInselDoc(unittest.TestCase):
     def test_insel_pdfs(self):
