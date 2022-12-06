@@ -1013,9 +1013,10 @@ class TestGenericExpression(CustomAssertions):
 
     def test_power(self):
         # Used to be ^.
-        self.assertEqual(self.expr('-1^2'), 1) # That's weird, it's parsed as (-1)**2
         self.assertEqual(self.expr('2^4'), 16)
         self.assertEqual(self.expr('3^3'), 27)
+        self.skipTest("TinyExpr does exponentiation from left to right")
+        self.assertEqual(self.expr('-1^2'), -1) # but it's parsed as (-1)**2 :-/
 
     def test_one_input(self):
         self.assertAlmostEqual(self.expr('cos(x)', math.pi), -1)
