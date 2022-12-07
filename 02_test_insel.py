@@ -18,6 +18,7 @@ IS_WINDOWS = platform.system().lower() == 'windows'
 
 # TODO: Move to inner package inside insel, so it can get imported after pip install?
 # TODO: Test with LC_ALL = DE ?
+# TODO: Test PVDET1
 # TODO: Test if insel_gui is installed?
 # TODO: Add gnuplot tests
 # TODO: Test inselHelp installed?
