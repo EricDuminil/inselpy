@@ -21,7 +21,7 @@ It can run single blocks, with the specified inputs, parameters and number of ou
 
 ## INSEL templates
 
-It can also run INSEL templates:
+INSELpy can also run INSEL templates:
 ```
 % Calculates a*b
 s 1 MUL  3.1 2.1
@@ -36,11 +36,30 @@ p 4
     '*'
 ```
 
+Templates will be searched inside the 'templates/' folder, relative to the current working directory.
+
 ```python
 >>> insel.template('a_times_b', a=7, b=3)
 21.0
 >>> insel.template('photovoltaic/i_sc', pv_id='008823', temperature=25, irradiance=1000)
 5.87388
+
+```python
+name = 'Roma'
+lat = 41.8
+lon = 12.58
+timezone = 1
+
+irradiances = insel.template('weather/get_irradiance_profile', latitude=lat, longitude=lon)
+print(irradiances)
+
+print((insel.template('weather/average_irradiance_on_tilted_surface',
+                      tilt=30,
+                      azimuth=180,
+                      irradiance_profile=irradiances,
+                      latitude=lat,
+                      longitude=lon,
+                      timezone=timezone)))
 ```
 
 ## INSEL models
