@@ -1,7 +1,13 @@
-tests:
-	python3 -m unittest 02_test_insel.py
+help:     ## Show this help.
+	@egrep -h '(\s##\s|^##\s)' $(MAKEFILE_LIST) | egrep -v '^--' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m  %-35s\033[0m %s\n", $$1, $$2}'
 
-clean:
+tests: ## Run tests
+	python3 -m unittest
+
+coverage: ## Check tests coverage
+	ruby misc/check_block_coverage.rb
+
+clean: ## Remove pyc and pycache
 	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
 
 #package, doc, upload
