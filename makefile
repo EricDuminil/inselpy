@@ -4,6 +4,9 @@ help:     ## Show this help.
 tests: ## Run tests
 	python3 -m unittest
 
+pytests: ## Run detailed tests
+	pytest -v
+
 coverage: ## Check tests coverage
 	ruby misc/check_block_coverage.rb
 
