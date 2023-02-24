@@ -1,5 +1,5 @@
 from typing import List
-from .insel import OneBlockModel, Template, ExistingModel, Parameter, Insel
+from .insel import OneBlockModel, Template, ExistingModel, Parameter
 
 # TODO: Add docstrings
 # TODO: Add gnuplot functions

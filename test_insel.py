@@ -467,10 +467,14 @@ class TestBlock(CustomAssertions):
                                         parameters=[mode] + STUTTGART,
                                         outputs=4)
             # NOTE: Precision is pretty bad (+-0.06°). Why?
-            # NOTE: Compared to https://levelup.gitconnected.com/python-sun-position-for-solar-energy-and-research-7a4ead801777, Holland & Michalsky seem less inprecise than Spencer
+            # NOTE: Compared to
+            #       https://levelup.gitconnected.com/python-sun-position-for-solar-energy-and-research-7a4ead801777,
+            #       Holland & Michalsky seem less inprecise than Spencer
             # TODO: Check with detailed example from NREL
             self.compareLists(sun_stuttgart,
-                              [177 + 50 / 60, 21 + 52 / 60 + 14 / 3600, -19 - 17 / 60, (23 + 51 / 60) * 15], places=0)
+                              [177 + 50 / 60, 21 + 52 / 60 + 14 / 3600,
+                               -19 - 17 / 60, (23 + 51 / 60) * 15],
+                              places=0)
 
     def test_sunae_in_the_tropics(self):
         # SUNAE used to be broken in the tropics, and got azimuth in the wrong quadrant
@@ -557,6 +561,7 @@ class TestBlock(CustomAssertions):
         # SCREEN has no output
         self.assertRaisesRegex(InselError, "Invalid output",
                                insel.block, 'screen')
+
     def test_screen1g(self):
         # SCREEN1G has no output
         self.assertRaisesRegex(InselError, "Invalid output",
@@ -587,7 +592,8 @@ class TestTemplate(CustomAssertions):
 
     def test_gengt_consistency(self):
         deviation = insel.template('weather/gengt_comparison')
-        # NOTE: Depending on system, pseudo random values can vary very slightly. 1e-4 really isn't any problem for °C or W/m²
+        # NOTE: Depending on system, pseudo random values can vary very slightly.
+        #       1e-4 really isn't any problem for °C or W/m²
         self.compareLists(deviation, [0, 0], places=4)
 
     def test_gengt_averages(self):
@@ -748,7 +754,8 @@ class TestTemplate(CustomAssertions):
                                305, places=0)
         temp = 70
         # TODO: Check with PVSYST or PVLIB. Is this the correct formula?
-        # NOTE: -0.38%/K P_mpp, according to SPR 305 manual (https://www.pocosolar.com/wp-content/themes/twentyfifteen/pdfs/Sunpower%20Solar%20Panels/sunpower_305wht_spec_sheet.pdf)
+        # NOTE: -0.38%/K P_mpp, according to SPR 305 manual
+        #       (https://www.pocosolar.com/wp-content/themes/twentyfifteen/pdfs/Sunpower%20Solar%20Panels/sunpower_305wht_spec_sheet.pdf)
         self.assertAlmostEqual(insel.template('photovoltaic/mpp', pv_id='003305', temperature=temp),
                                305 * (1 - 0.38 / 100) ** (temp - 25), places=0)
 
@@ -788,13 +795,14 @@ class TestTemplate(CustomAssertions):
         import re
         filename = r'S:\\missing\\folder.txt' if IS_WINDOWS else '/not/here.txt'
 
-        self.assertRaisesRegex(InselError, rf"(?m)^F05029 Block 00003: Cannot open file: {re.escape(filename)}$",
-                insel.template, 'io/write_params', dat_file=filename)
+        self.assertRaisesRegex(InselError,
+                               rf"(?m)^F05029 Block 00003: Cannot open file: {re.escape(filename)}$",
+                               insel.template, 'io/write_params',
+                               dat_file=filename)
 
     def test_write_block_fails_if_read_only(self):
         if IS_WINDOWS:
-            #FIXME: Docker tests for Windows are still run as root, and don't care about file permissions. :-/
-            return
+            self.skipTest("Docker tests for Windows are still run as root, and dont care about file permissions")
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / 'read_only.dat'
             # Create read-only temp file:
@@ -850,7 +858,6 @@ class TestExistingModel(CustomAssertions):
         header_content = insel.raw_run('templates/io/screen_header.insel')
         self.assertTrue('# HASHTAG' in header_content)
         self.assertTrue('! EXCLAMATION' in header_content)
-
 
     def test_screen1g(self):
         self.compareLists(insel.run('templates/io/screen1g.insel'), [])
@@ -946,7 +953,6 @@ class TestExistingModel(CustomAssertions):
 
     def test_algebraic_loop_with_sum_sum(self):
         self.skipTest("templates/engine/sum_sum.insel fails with SIGSEGV")
-
 
 
 class TestInselFlags(unittest.TestCase):
@@ -1065,6 +1071,7 @@ class TestGenericExpression(CustomAssertions):
     def test_missing_z(self):
         self.assertRaisesRegex(InselError, "Unknown variable 'z'",
                                self.expr, 'x + y + z', 1, 2)
+
 
 class TestInselDoc(unittest.TestCase):
     def test_insel_pdfs(self):

@@ -21,12 +21,14 @@ Parameter = Union[float, str]
 # logging.basicConfig(level=logging.WARNING)
 # TODO: Move to separate files, one per class?
 
+
 def get_config():
     system = platform.system().lower()
 
     default_configs = {
         'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
-        'windows': {'dirname': Path(os.getenv('ProgramFiles', '')) / 'insel', 'command': 'insel.exe'},
+        'windows': {'dirname': Path(os.getenv('ProgramFiles', '')) / 'insel',
+                    'command': 'insel.exe'},
         'darwin': {'dirname': "/usr/local/insel/", 'command': 'insel'}
     }
 
@@ -52,7 +54,7 @@ class Insel(object):
     warning = re.compile(r'^[EFW]\d{5}.*?$', re.M)
     # Contains warnings during last execution. Might be convenient for testing. Not thread-safe!
     last_warnings: List[str] = []
-    last_raw_output: Optional[str]
+    last_raw_output: Optional[str] = None
 
 
 # NOTE: Abstract class
@@ -143,11 +145,12 @@ class TemporaryModel(Model):
 
 
 class OneBlockModel(TemporaryModel):
-    def __init__(self, name: str = '', inputs: Sequence[float] = [], parameters : List[Parameter] = [], outputs: int = 1):
+    def __init__(self, name: str = '', inputs: Sequence[float] = None,
+                 parameters: List[Parameter] = None, outputs: int = 1):
         super().__init__()
         self.name = name
         self.parameters: List[str] = ["'%s'" % p if isinstance(p, str)
-                           else str(p) for p in parameters]
+                                      else str(p) for p in parameters]
         self.inputs: Sequence[float] = inputs
         self.n_in: int = len(inputs)
         self.n_out: int = outputs
@@ -233,7 +236,9 @@ class Template(TemporaryModel):
 
     def content(self) -> str:
         # Replace unknown chars with backslash + code, so that content can be fed to INSEL
-        with open(self.template_full_path(), encoding='utf-8', errors='backslashreplace') as template:
+        with open(self.template_full_path(),
+                  encoding='utf-8',
+                  errors='backslashreplace') as template:
             content = template.read()
             content = re.sub(Template.pattern, self.replace, content)
             return content
