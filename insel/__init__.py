@@ -1,7 +1,6 @@
 from typing import List
 from .insel import OneBlockModel, Template, ExistingModel, Parameter
 
-# TODO: Add docstrings
 # TODO: Add gnuplot functions
 
 
@@ -50,8 +49,35 @@ def template(template_path, **parameters):
 
 
 def run(path):
+    """Returns the output of INSEL model found at path, without
+    substituting any parameter.
+    The output is parsed, and returned as float, list of floats or list of list of floats.
+
+    >>> insel.run('templates/one_to_ten.insel')
+    [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+    """
     return ExistingModel(path).run()
 
 
 def raw_run(*params):
+    """Returns the output of INSEL model found at path, without
+    substituting any parameter.
+    The output is returned as is, without being parsed.
+
+    >>> print(insel.raw_run('templates/one_to_ten.insel'))
+    Compiling one_to_ten.insel ...
+    0 errors, 0 warnings
+    Running INSEL 8.3.0.9b ...
+        1             
+        2             
+        3             
+        4             
+        5             
+        6             
+        7             
+        8             
+        9             
+        10             
+    Normal end of run
+    """
     return ExistingModel(*params).raw_results().decode()
