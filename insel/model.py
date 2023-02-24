@@ -1,6 +1,8 @@
 from typing import Dict, List, Union, Optional, Any, Sequence
+import subprocess
+import logging
 from pathlib import Path
-from .insel import Insel
+from .insel import Insel, InselError
 
 Row = List[float]
 Table = List[Union[float, Row]]

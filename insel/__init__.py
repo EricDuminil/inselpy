@@ -1,5 +1,7 @@
 from typing import List
-from .insel import OneBlockModel, ExistingModel, Parameter
+from .insel import Parameter
+from .existing_model import ExistingModel
+from .one_block_model import OneBlockModel
 from .template import Template
 
 # TODO: Add gnuplot functions

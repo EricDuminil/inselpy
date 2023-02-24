@@ -1,6 +1,8 @@
 from .temporary_model import TemporaryModel
 from pathlib import Path
+from typing import Dict, List, Union, Optional, Any, Sequence
 import re
+from .insel import Insel
 
 
 class Template(TemporaryModel):

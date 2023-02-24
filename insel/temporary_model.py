@@ -1,4 +1,7 @@
 from .model import Model
+import tempfile
+import os
+from .insel import Insel
 
 
 # NOTE: Abstract class
