@@ -1,5 +1,6 @@
 from typing import List
-from .insel import OneBlockModel, Template, ExistingModel, Parameter
+from .insel import OneBlockModel, ExistingModel, Parameter
+from .template import Template
 
 # TODO: Add gnuplot functions
 
@@ -14,7 +15,8 @@ def block(name: str, *inputs: float,
     * If the block returns one value, this function returns a float.
     * If the block returns multiple values on one line, this function returns a list of floats.
     * If the block returns multiple lines, this function returns a list of floats.
-    * If the block returns multiple values on multiple lines, this function returns a list of list of floats.
+    * If the block returns multiple values on multiple lines,
+         this function returns a list of list of floats.
 
     >>> insel.block('pi')
     3.141593
@@ -68,16 +70,16 @@ def raw_run(*params):
     Compiling one_to_ten.insel ...
     0 errors, 0 warnings
     Running INSEL 8.3.0.9b ...
-        1             
-        2             
-        3             
-        4             
-        5             
-        6             
-        7             
-        8             
-        9             
-        10             
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+        10
     Normal end of run
     """
     return ExistingModel(*params).raw_results().decode()
