@@ -1,4 +1,8 @@
 from typing import List
+#  To allow from insel import Insel, InselError in tests:
+from .insel import Insel as Insel
+from .insel_error import InselError as InselError
+
 from .insel import Parameter
 from .existing_model import ExistingModel
 from .one_block_model import OneBlockModel

@@ -9,7 +9,7 @@ from calendar import monthrange
 from typing import List
 import platform
 import insel
-from insel.insel import Insel, InselError
+from insel import Insel, InselError
 
 logging.basicConfig(level=logging.ERROR)
 

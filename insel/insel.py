@@ -44,8 +44,3 @@ class Insel(object):
     # Contains warnings during last execution. Might be convenient for testing. Not thread-safe!
     last_warnings: List[str] = []
     last_raw_output: Optional[str] = None
-
-
-# TODO: How to move to separate class? without breaking tests?
-class InselError(Exception):
-    pass

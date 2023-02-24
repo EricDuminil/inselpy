@@ -2,7 +2,8 @@ from typing import List, Union, Optional
 import subprocess
 import logging
 from pathlib import Path
-from .insel import Insel, InselError
+from .insel import Insel
+from .insel_error import InselError
 
 Row = List[float]
 Table = List[Union[float, Row]]

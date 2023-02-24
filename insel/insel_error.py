@@ -1,0 +1,2 @@
+class InselError(Exception):
+    pass
