@@ -1,10 +1,9 @@
-import math
 import platform
 import shutil
 from pathlib import Path
 import os
 import re
-from typing import Dict, List, Union, Optional, Any, Sequence
+from typing import List, Optional, Union
 
 # Models can return:
 #  1
@@ -14,7 +13,6 @@ from typing import Dict, List, Union, Optional, Any, Sequence
 Parameter = Union[float, str]
 
 # logging.basicConfig(level=logging.WARNING)
-# TODO: Move to separate files, one per class?
 
 
 def get_config():
@@ -48,6 +46,6 @@ class Insel(object):
     last_raw_output: Optional[str] = None
 
 
-#TODO: How to move to separate class? without breaking tests?
+# TODO: How to move to separate class? without breaking tests?
 class InselError(Exception):
     pass

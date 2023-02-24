@@ -1,5 +1,5 @@
-from .model import Model
 import subprocess
+from .model import Model
 from .insel import Insel
 
 

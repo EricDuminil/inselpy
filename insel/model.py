@@ -1,4 +1,4 @@
-from typing import Dict, List, Union, Optional, Any, Sequence
+from typing import List, Union, Optional
 import subprocess
 import logging
 from pathlib import Path
@@ -7,8 +7,9 @@ from .insel import Insel, InselError
 Row = List[float]
 Table = List[Union[float, Row]]
 
-# NOTE: Abstract class
+
 class Model(object):
+    """Abstract class"""
 
     def __init__(self) -> None:
         self.warnings: List[str] = []

@@ -1,7 +1,7 @@
+import math
+from typing import List, Sequence
 from .temporary_model import TemporaryModel
 from .insel import Parameter
-from typing import Dict, List, Union, Optional, Any, Sequence
-import math
 
 
 class OneBlockModel(TemporaryModel):
