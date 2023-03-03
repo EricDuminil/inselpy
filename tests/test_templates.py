@@ -1,13 +1,16 @@
 import tempfile
 import platform
 import re
+import os
 from calendar import monthrange
 from pathlib import Path
 import insel
 from insel import Insel, InselError
-from custom_assertions import CustomAssertions
+from .custom_assertions import CustomAssertions
 SCRIPT_DIR = Path(__file__).resolve().parent
 IS_WINDOWS = platform.system().lower() == 'windows'
+
+os.chdir(SCRIPT_DIR)
 
 
 class TestTemplate(CustomAssertions):

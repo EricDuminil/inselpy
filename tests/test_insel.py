@@ -7,7 +7,7 @@ import contextlib
 from typing import List
 import platform
 import insel
-from custom_assertions import CustomAssertions
+from .custom_assertions import CustomAssertions
 from insel import Insel, InselError
 
 logging.basicConfig(level=logging.ERROR)
@@ -34,6 +34,9 @@ def cwd(path):
         yield
     finally:
         os.chdir(prev_cwd)
+
+
+cwd(SCRIPT_DIR)
 
 
 # INSEL 8.3 convention
@@ -794,6 +797,5 @@ class TestInselDoc(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    with cwd(SCRIPT_DIR):
-        unittest.main(exit=False)
-        print(f'Total INSEL calls : {Insel.calls}')
+    unittest.main(exit=False)
+    print(f'Total INSEL calls : {Insel.calls}')
