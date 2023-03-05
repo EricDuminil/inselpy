@@ -12,8 +12,8 @@ coverage: ## Check tests coverage
 
 clean: ## Remove pyc and pycache
 	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
-	rm dist/*.tar.gz
-	rm dist/*.whl
+	rm -f dist/*.tar.gz
+	rm -f dist/*.whl
 
 build_package: clean pytests ## Build PyPI package
 	python3 -m pip install --upgrade build
