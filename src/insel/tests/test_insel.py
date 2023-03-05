@@ -43,8 +43,6 @@ STUTTGART = [48.77, 9.18, 1]  # type: List[insel.Parameter]
 IMPORTANT_BLOCKS = ['MUL', 'PI', 'PVI', 'MPP', 'DO', 'CLOCK']
 
 
-
-
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
         from collections import Counter
@@ -593,7 +591,8 @@ class TestExistingModel(CustomAssertions):
     def test_insel_empty_constant(self):
         self.assertEqual(insel.run('templates/empty_constant.insel'), 12345)
         self.assertRegex(Insel.last_raw_output,
-                         "W05313 Stray constant definition detected at line 00003 of file .*empty_constant.insel")
+                         ("W05313 Stray constant definition detected at line 00003"
+                          " of file .*empty_constant.insel"))
 
     def test_insel_include(self):
         self.assertEqual(insel.run('templates/insel_include.insel'), 3)
