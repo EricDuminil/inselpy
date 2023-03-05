@@ -13,6 +13,12 @@ coverage: ## Check tests coverage
 clean: ## Remove pyc and pycache
 	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
 
-build_package: ## Build PyPI package
+build_package: pytests ## Build PyPI package
 	python3 -m pip install --upgrade build
 	python3 -m build
+
+_check_upload:
+	@echo -n "Are you sure you want to upload the package to PyPI? [y/N] " && read ans && [ $${ans:-N} = y ]
+
+upload_package: _check_upload build_package ## Upload PyPI package
+	python3 -m twine upload --repository testpypi dist/* --verbose
