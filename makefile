@@ -18,6 +18,7 @@ clean: ## Remove pyc and pycache
 
 build_package: clean pytests ## Build PyPI package
 	python3 -m pip install --upgrade build
+	#TODO: Package templates too!
 	python3 -m build
 
 _check_upload:
