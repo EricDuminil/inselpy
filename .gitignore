@@ -5,3 +5,4 @@
 .settings
 .hypothesis
 *.egg-info
+dist
