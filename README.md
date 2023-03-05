@@ -38,13 +38,20 @@ p 4
 
 Templates will be searched inside the 'templates/' folder, relative to the current working directory.
 
+Either in the REPL:
+
 ```python
 >>> insel.template('a_times_b', a=7, b=3)
 21.0
 >>> insel.template('photovoltaic/i_sc', pv_id='008823', temperature=25, irradiance=1000)
 5.87388
+```
+
+or in complete scripts:
 
 ```python
+import insel
+
 name = 'Roma'
 lat = 41.8
 lon = 12.58
@@ -52,6 +59,7 @@ timezone = 1
 
 irradiances = insel.template('weather/get_irradiance_profile', latitude=lat, longitude=lon)
 print(irradiances)
+# => [71.0, 106.0, 158.0, 208.0, 251.0, 275.0, 286.0, 257.0, 196.0, 137.0, 84.0, 63.0]
 
 print((insel.template('weather/average_irradiance_on_tilted_surface',
                       tilt=30,
@@ -60,6 +68,7 @@ print((insel.template('weather/average_irradiance_on_tilted_surface',
                       latitude=lat,
                       longitude=lon,
                       timezone=timezone)))
+# => 195.8578
 ```
 
 ## INSEL models
