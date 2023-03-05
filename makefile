@@ -22,5 +22,8 @@ build_package: clean pytests ## Build PyPI package
 _check_upload:
 	@echo -n "Are you sure you want to upload the package to PyPI? [y/N] " && read ans && [ $${ans:-N} = y ]
 
-upload_package: _check_upload build_package ## Upload PyPI package
+upload_package_to_testpypi: _check_upload build_package ## Upload PyPI package to https://test.pypi.org/
 	python3 -m twine upload --repository testpypi dist/* --verbose
+
+upload_package_to_pypi: _check_upload build_package ## Upload PyPI package to https://pypi.org/
+	python3 -m twine upload dist/* --verbose
