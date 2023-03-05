@@ -12,8 +12,9 @@ coverage: ## Check tests coverage
 
 clean: ## Remove pyc and pycache
 	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
-	rm -f dist/*.tar.gz
-	rm -f dist/*.whl
+	find dist -type f -name '*.tar.gz' -delete
+	find dist -type f -name '*.whl' -delete
+	# remove src/insel.egg-info/
 
 build_package: clean pytests ## Build PyPI package
 	python3 -m pip install --upgrade build
