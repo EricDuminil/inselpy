@@ -7,8 +7,8 @@ import contextlib
 from typing import List
 import platform
 import insel
-from .custom_assertions import CustomAssertions
 from insel import Insel, InselError
+from .custom_assertions import CustomAssertions
 
 logging.basicConfig(level=logging.ERROR)
 

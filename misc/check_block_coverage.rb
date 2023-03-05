@@ -3,12 +3,13 @@
 # TODO: Check Java Palette
 # TODO: Check Documentation too
 COLUMNS = 13
-templates = Dir.glob("templates/**/*.insel")
+TEST_DIR = "src/insel/tests"
+templates = Dir.glob("#{TEST_DIR}/templates/**/*.insel")
 blocks_in_templates = templates.map{ |t|
   File.read(t).force_encoding("utf-8").encode("utf-8", invalid: :replace, replace: "?").scan(/^[bs]\s+\d+\s+(\w+)/i)
 }
 
-blocks_in_py = File.read('test_insel.py').scan(/insel\.block\(\s*["'](\w+?)["']/)
+blocks_in_py = Dir.glob("#{TEST_DIR}/test*.py").map{ |py| File.read(py).scan(/insel\.block\(\s*["'](\w+?)["']/) }.flatten
 
 tested_blocks = (blocks_in_templates + blocks_in_py).flatten.uniq.sort.map(&:upcase)
 
