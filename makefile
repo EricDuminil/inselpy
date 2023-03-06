@@ -19,7 +19,7 @@ clean: ## Remove pyc and pycache
 build_package: clean pytests ## Build PyPI package
 	python3 -m pip install --upgrade build
 	python3 -m build
-	tar -ztvf dist/*.tar.gz
+	unzip -l dist/*.whl
 
 _check_upload:
 	@echo -n "Are you sure you want to upload the package to PyPI? [y/N] " && read ans && [ $${ans:-N} = y ]
