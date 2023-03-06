@@ -36,6 +36,7 @@ where = [
 namespaces = false
 
 [tool.setuptools.package-data]
+#FIXME: Don't include .pytest_cache
 "insel.tests.data" = ["**"]
 "insel.tests.templates" = ["**"]
 
