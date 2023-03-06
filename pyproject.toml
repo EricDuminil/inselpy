@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "insel"
-version = "0.0.6"
+dynamic = ["version"] # Version is read from insel/__init__.py
 authors = [
     { name = "Eric Duminil", email = "inselpy@ericduminil.com" },
 ]
@@ -41,3 +41,6 @@ namespaces = false
 [tool.setuptools.package-data]
 "insel.tests.data" = ["**"]
 "insel.tests.templates" = ["**"]
+
+[tool.setuptools.dynamic]
+version = {attr = "insel.__version__"}

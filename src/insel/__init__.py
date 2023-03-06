@@ -8,6 +8,8 @@ from .existing_model import ExistingModel
 from .one_block_model import OneBlockModel
 from .template import Template
 
+__version__ = "0.0.7"
+
 # TODO: Add gnuplot functions
 
 
