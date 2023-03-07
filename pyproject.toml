@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-    "setuptools>=61.2",
+    "setuptools>=61.2", "wheel"
 ]
 build-backend = "setuptools.build_meta"
 
@@ -33,7 +33,6 @@ Homepage = "https://github.com/EricDuminil/inselpy"
 where = [
     "src",
 ]
-namespaces = false
 
 [tool.setuptools.package-data]
 #FIXME: Don't include .pytest_cache
