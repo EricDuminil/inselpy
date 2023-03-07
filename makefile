@@ -14,12 +14,13 @@ clean: ## Remove pyc and pycache
 	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
 	find dist -type f -name '*.tar.gz' -delete
 	find dist -type f -name '*.whl' -delete
-	# remove src/insel.egg-info/
+	#NOTE: .egg-info holds too much information
+	rm -rf src/insel.egg-info/
 
 build_package: clean pytests ## Build PyPI package
 	python3 -m pip install --upgrade build
-	#TODO: Package templates too!
 	python3 -m build
+	unzip -l dist/*.whl
 
 _check_upload:
 	@echo -n "Are you sure you want to upload the package to PyPI? [y/N] " && read ans && [ $${ans:-N} = y ]
