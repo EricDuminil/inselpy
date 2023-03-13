@@ -7,6 +7,9 @@ tests: ## Run tests
 pytests: ## Run detailed tests
 	pytest -v
 
+tests_installed_package: ## Tests the installed insel package
+	pytest --pyargs insel -v
+
 coverage: ## Check tests coverage
 	ruby misc/check_block_coverage.rb
 
