@@ -1,46 +1,14 @@
 # coding=utf8
 import unittest
-import math
 import logging
 from pathlib import Path
-import contextlib
 from typing import List
-import platform
 import insel
-from insel import Insel, InselError
-from .custom_assertions import CustomAssertions
+from .constants import SCRIPT_DIR, cwd
+
 
 logging.basicConfig(level=logging.ERROR)
-
-SCRIPT_DIR = Path(__file__).resolve().parent
-IS_WINDOWS = platform.system().lower() == 'windows'
-
-# TODO: Test with LC_ALL = DE ?
-# TODO: Test PVDET1
-# TODO: Test if insel_gui is installed?
-# TODO: Add gnuplot tests
-# TODO: Test inselHelp installed?
-# FIXME: Algebraic loops seem to break INSEL. Test & fix
-
-
-@contextlib.contextmanager
-def cwd(path):
-    import os
-    """Changes working directory and returns to previous on exit."""
-    prev_cwd = Path.cwd()
-    os.chdir(path)
-    try:
-        yield
-    finally:
-        os.chdir(prev_cwd)
-
-
 cwd(SCRIPT_DIR)
-
-
-# INSEL 8.3 convention
-STUTTGART = [48.77, 9.18, 1]  # type: List[insel.Parameter]
-IMPORTANT_BLOCKS = ['MUL', 'PI', 'PVI', 'MPP', 'DO', 'CLOCK']
 
 
 class TestInselFlags(unittest.TestCase):
