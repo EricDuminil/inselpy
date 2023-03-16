@@ -1,5 +1,7 @@
 # coding=utf8
 import math
+from collections import Counter
+from datetime import datetime, timedelta
 import insel
 from insel import Insel, InselError
 from .custom_assertions import CustomAssertions
@@ -8,7 +10,6 @@ from .constants import STUTTGART, IMPORTANT_BLOCKS
 
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
-        from collections import Counter
         insel_b = insel.raw_run('-b')
         blocks = Counter(b.strip()
                          for b in insel_b.split('\n\n')[-1].split('\n'))
@@ -443,7 +444,6 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(float('+inf'), insel.block('infinity'))
 
     def test_now(self):
-        from datetime import datetime, timedelta
         year, month, day, hour, minute, second = insel.block('NOW', outputs=6)
         microsecond = int((second % 1)*1e6)
         insel_now = datetime(int(year), int(month), int(day),
