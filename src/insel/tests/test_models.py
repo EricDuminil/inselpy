@@ -1,5 +1,4 @@
 # coding=utf8
-import unittest
 from pathlib import Path
 import insel
 from insel import Insel, InselError
@@ -115,7 +114,3 @@ class TestExistingModel(CustomAssertions):
 
     def test_algebraic_loop_with_sum_sum(self):
         self.skipTest("templates/engine/sum_sum.insel fails with SIGSEGV")
-
-
-if __name__ == '__main__':
-    unittest.main(exit=False)

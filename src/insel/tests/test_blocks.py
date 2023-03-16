@@ -1,5 +1,4 @@
 # coding=utf8
-import unittest
 import math
 import insel
 from insel import Insel, InselError
@@ -575,7 +574,3 @@ class TestGenericExpression(CustomAssertions):
     def test_missing_z(self):
         self.assertRaisesRegex(InselError, "Unknown variable 'z'",
                                self.expr, 'x + y + z', 1, 2)
-
-
-if __name__ == '__main__':
-    unittest.main(exit=False)

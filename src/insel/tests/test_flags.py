@@ -47,7 +47,3 @@ class TestInselFlags(unittest.TestCase):
                      'block DO', 'block SCREEN']:
             self.assertRegex(insel_d, part,
                              f"'{part}' should be printed out by 'insel -d'")
-
-
-if __name__ == '__main__':
-    unittest.main(exit=False)
