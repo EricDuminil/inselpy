@@ -12,7 +12,7 @@ class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
         insel_b = insel.raw_run('-b')
         blocks = Counter(b.strip()
-                         for b in insel_b.split('\n\n')[-1].split('\n'))
+                         for b in insel_b.rsplit('\n\n', maxsplit=1)[-1].split('\n'))
         self.assertTrue(len(blocks) > 390, "There should be many blocks")
         duplicates = [(b, c) for (b, c) in blocks.most_common() if c > 1]
         if duplicates:
@@ -25,7 +25,7 @@ class TestBlock(CustomAssertions):
         and should not be available anymore.
         """
         insel_b = insel.raw_run('-b')
-        blocks = set(b.strip() for b in insel_b.split('\n\n')[-1].split('\n'))
+        blocks = set(b.strip() for b in insel_b.rsplit('\n\n', maxsplit=1)[-1].split('\n'))
         deleted_blocks = ['DRY', 'FURWALL', 'FURWALL2', 'GASIF',
                           'GENBOD', 'GOMPERTZ', 'HEATEX', 'MIXING', 'OPTIM',
                           'PRIMARY', 'SECON1', 'SECON2', 'TIMEMS', 'TIMEMS0',
