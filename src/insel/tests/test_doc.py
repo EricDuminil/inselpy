@@ -1,5 +1,5 @@
 import unittest
-from insel import Insel, InselError
+from insel import Insel
 from .constants import IMPORTANT_BLOCKS
 
 
@@ -20,3 +20,7 @@ class TestInselDoc(unittest.TestCase):
             self.assertTrue(pdf.exists(), f"{pdf} should exist")
             self.assertTrue(pdf.stat().st_size > 10_000,
                             f"{pdf} should be large enough")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)

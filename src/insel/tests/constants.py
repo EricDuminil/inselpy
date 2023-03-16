@@ -1,6 +1,7 @@
 import platform
 from pathlib import Path
 from typing import List
+import insel
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 IS_WINDOWS = platform.system().lower() == 'windows'

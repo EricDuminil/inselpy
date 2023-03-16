@@ -13,7 +13,6 @@ from pathlib import Path
 SRC_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-
 def suite():
     loader = unittest.TestLoader()
     return loader.discover(SRC_DIR)
