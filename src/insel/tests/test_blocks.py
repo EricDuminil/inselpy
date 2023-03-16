@@ -1,18 +1,10 @@
 # coding=utf8
 import unittest
 import math
-from typing import List
 import insel
 from insel import Insel, InselError
 from .custom_assertions import CustomAssertions
-from .constants import SCRIPT_DIR, cwd
-
-cwd(SCRIPT_DIR)
-
-
-# INSEL 8.3 convention
-STUTTGART = [48.77, 9.18, 1]  # type: List[insel.Parameter]
-IMPORTANT_BLOCKS = ['MUL', 'PI', 'PVI', 'MPP', 'DO', 'CLOCK']
+from .constants import STUTTGART, IMPORTANT_BLOCKS
 
 
 class TestBlock(CustomAssertions):
