@@ -614,4 +614,3 @@ class TestGenericExpression(CustomAssertions):
 
 if __name__ == '__main__':
     unittest.main(exit=False)
-    print(f'Total INSEL calls : {Insel.calls}')

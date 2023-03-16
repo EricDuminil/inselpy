@@ -5,15 +5,13 @@ import logging
 from pathlib import Path
 import contextlib
 from typing import List
-import platform
 import insel
 from insel import Insel, InselError
 from .custom_assertions import CustomAssertions
+from .constants import SCRIPT_DIR
 
 logging.basicConfig(level=logging.ERROR)
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-IS_WINDOWS = platform.system().lower() == 'windows'
 
 # TODO: Test with LC_ALL = DE ?
 # TODO: Test PVDET1
@@ -36,11 +34,6 @@ def cwd(path):
 
 
 cwd(SCRIPT_DIR)
-
-
-# INSEL 8.3 convention
-STUTTGART = [48.77, 9.18, 1]  # type: List[insel.Parameter]
-IMPORTANT_BLOCKS = ['MUL', 'PI', 'PVI', 'MPP', 'DO', 'CLOCK']
 
 
 class TestExistingModel(CustomAssertions):
@@ -163,25 +156,5 @@ class TestUserBlocks(CustomAssertions):
     # TODO: Test UBCHP
 
 
-class TestInselDoc(unittest.TestCase):
-    def test_insel_pdfs(self):
-        doc_dir = Insel.dirname / 'doc'
-        for basename in ['Tutorial', 'BlockReference', 'UserBlockReference',
-                         'GettingStarted', 'ProgrammersGuide']:
-            pdf = doc_dir / f"insel{basename}_en.pdf"
-            self.assertTrue(pdf.exists(), f"{pdf} should exist")
-            self.assertTrue(pdf.stat().st_size > 100_000,
-                            f"{pdf} should be large enough")
-
-    def test_insel_block_pdfs(self):
-        doc_dir = Insel.dirname / 'doc' / 'inselBlocks'
-        for basename in IMPORTANT_BLOCKS:
-            pdf = doc_dir / f"{basename}.pdf"
-            self.assertTrue(pdf.exists(), f"{pdf} should exist")
-            self.assertTrue(pdf.stat().st_size > 10_000,
-                            f"{pdf} should be large enough")
-
-
 if __name__ == '__main__':
     unittest.main(exit=False)
-    print(f'Total INSEL calls : {Insel.calls}')
