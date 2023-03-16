@@ -75,12 +75,12 @@ class TestExistingModel(CustomAssertions):
             self.compareLists(deviation, [0, 0], places=4)
 
     def test_string_parameter_in_vseit_should_not_be_cut(self):
-        for f in ['short_string.vseit', 'long_string.vseit']:
-            insel_model = insel.raw_run('-m', 'templates/io/' + f)
+        for model in ['short_string.vseit', 'long_string.vseit']:
+            insel_model = insel.raw_run('-m', 'templates/io/' + model)
             string_params = [
                 p for p in insel_model.split() if p.count("'") == 2]
             self.assertEqual(len(string_params), 2,
-                             f"2 string parameters should be found in {f}")
+                             f"2 string parameters should be found in {model}")
 
     def test_screen_headline_should_be_displayed(self):
         for f in ['short_string.vseit', 'long_string.vseit']:
