@@ -21,5 +21,5 @@ def suite():
 if __name__ == '__main__':
     runner = unittest.TextTestRunner()
     runner.run(suite(), )
-    # ?
+    # COULD DO:
     # print(f'Total INSEL calls : {Insel.calls}')

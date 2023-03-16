@@ -54,10 +54,10 @@ class TestTemplate(CustomAssertions):
         for i, row in zip(range(-20, 20), matrix):
             power = i / 2
             self.assertAlmostEqual(power, row[0], places=6)
-            r1 = 10 ** power
-            r2 = -10 ** (-power)
-            self.assertAlmostEqual(r1, row[1], delta=r1 / 1e6)
-            self.assertAlmostEqual(r2, row[2], delta=-r2 / 1e6)
+            positive = 10 ** power
+            negative = -10 ** (-power)
+            self.assertAlmostEqual(positive, row[1], delta=positive / 1e6)
+            self.assertAlmostEqual(negative, row[2], delta=-negative / 1e6)
 
         # Run again, this time checking the nicely formatted raw output.
         aligned = insel.raw_run('templates/expg.insel')
