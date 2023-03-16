@@ -547,6 +547,71 @@ class TestBlock(CustomAssertions):
                                insel.block, 'screen1g')
 
 
+class TestGenericExpression(CustomAssertions):
+    def expr(self, expression, *args):
+        return insel.block('expression', *args, parameters=[expression])
+
+    def test_constant(self):
+        self.assertAlmostEqual(self.expr('(1 + sqrt(5)) / 2'), (1+5**0.5)/2)
+        # https://xkcd.com/1047/:
+        self.assertAlmostEqual(self.expr('sqrt(3) / 2  - e / pi'), 0, delta=1e-3)
+
+    def test_power(self):
+        self.assertEqual(self.expr('2^4'), 16)
+        self.assertEqual(self.expr('3^3'), 27)
+        self.assertEqual(self.expr('-1^2'), -1)
+
+    def test_one_input(self):
+        self.assertAlmostEqual(self.expr('cos(x)', math.pi), -1)
+
+    def test_two_inputs(self):
+        self.assertAlmostEqual(self.expr('x*y', 2, 3), 6)
+        self.assertAlmostEqual(self.expr('x*x > y*y', -4, 2), 1)
+        self.assertAlmostEqual(self.expr('AVERAGE(x, y)', 3, 12), 7.5)
+
+    def test_three_inputs(self):
+        self.assertAlmostEqual(self.expr('(x*y*z)*x^2', -1, 2, 3.5), -7)
+
+    def test_modulo(self):
+        self.assertAlmostEqual(self.expr('x % y', 111, 7), 6)
+
+    def test_nan(self):
+        self.assertNaN(self.expr('0/0'))
+
+    def test_logic(self):
+        self.assertEqual(self.expr('or(3 < 1, 2 > 3)'), 0)
+        self.assertEqual(self.expr('or(3 < 1, 2 < 3)'), 1)
+        self.assertEqual(self.expr('and(3 < 1, 2 < 3)'), 0)
+        self.assertEqual(self.expr('and(3 >= 1, 2 < 3)'), 1)
+        self.assertEqual(self.expr('0 || 0'), 0)
+        self.assertEqual(self.expr('1 || 0 || 0'), 1)
+        self.assertEqual(self.expr('1 && 0'), 0)
+        self.assertEqual(self.expr('1 && 1'), 1)
+
+    def test_wrong_formulas(self):
+        self.assertRaisesRegex(InselError, r" \^ First error is here",
+                               self.expr, ') 2 + 3')
+        self.assertRaisesRegex(InselError, r" __\^ First error is here",
+                               self.expr, 'x + ')
+        self.assertRaisesRegex(InselError, r" ________\^ First error is here",
+                               self.expr, 'sin(1 * )')
+        self.assertRaisesRegex(InselError, r" ____\^ First error is here",
+                               self.expr, '1 + a + b')
+
+    def test_missing_x(self):
+        self.assertRaisesRegex(InselError, "Unknown variable 'x'",
+                               self.expr, 'x + 3')
+
+    def test_missing_y(self):
+        self.assertRaisesRegex(InselError, "Unknown variable 'y'",
+                               self.expr, 'x + y', 1)
+
+    def test_missing_z(self):
+        self.assertRaisesRegex(InselError, "Unknown variable 'z'",
+                               self.expr, 'x + y + z', 1, 2)
+
+
+
 if __name__ == '__main__':
     unittest.main(exit=False)
     print(f'Total INSEL calls : {Insel.calls}')

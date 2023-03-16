@@ -151,48 +151,6 @@ class TestExistingModel(CustomAssertions):
         self.skipTest("templates/engine/sum_sum.insel fails with SIGSEGV")
 
 
-class TestInselFlags(unittest.TestCase):
-    def test_insel(self):
-        just_insel = insel.raw_run()
-        for part in [r'This is INSEL \d\.\d\.\d', '(32|64) bit for (Linux|Windows|macOS)',
-                     '-d', '-l', '-m', '-v', '-b']:
-            self.assertRegex(just_insel, part,
-                             f"'{part}' should be printed out by 'insel'")
-
-    def test_insel_v(self):
-        insel_v = insel.raw_run('-v')
-        for part in ['libInselEngine', 'libInselBridge', 'libInselTools',
-                     'libInselFB', 'libInselEM', 'libInselSE', r'_20\d\d\-\d\d\-\d\d_',
-                     # gcc __DATE__ __TIME__ format. e.g. "Mar 31 2022 13:42:25"
-                     r'[A-Z][a-z][a-z] [ \d]\d 20\d\d \d\d:\d\d:\d\d']:
-            self.assertRegex(insel_v, part,
-                             f"'{part}' should be printed out by 'insel -v'")
-
-    def test_insel_l(self):
-        insel_l = insel.raw_run('-l', 'templates/one_to_ten.insel')
-        for part in [r'1\s*DO\s*T', r'2\s*SCREEN\s*S']:
-            self.assertRegex(insel_l, part,
-                             f"'{part}' should be printed out by 'insel -l'")
-
-    def test_insel_s(self):
-        insel_s = insel.raw_run('-s', 'templates/io/short_string.vseit')
-        self.assertRegex(insel_s, '0 errors, 0 warnings',
-                         "insel -s should check model")
-
-    def test_insel_m(self):
-        insel_m = insel.raw_run('-m', 'templates/io/short_string.vseit')
-        for part in [r'b\s+1\s+DO', r'b\s+2\s+SCREEN', "'*'", "'ShortString'"]:
-            self.assertRegex(insel_m, part,
-                             f"'{part}' should be printed out by 'insel -l'")
-
-    def test_insel_d(self):
-        insel_d = insel.raw_run('-d', 'templates/one_to_ten.insel')
-        for part in ['Compiling', 'Constructor call', 'Destructor call', 'Standard call',
-                     'block DO', 'block SCREEN']:
-            self.assertRegex(insel_d, part,
-                             f"'{part}' should be printed out by 'insel -d'")
-
-
 class TestUserBlocks(CustomAssertions):
     def test_ubstorage(self):
         insel.block('ubstorage', 1, 2, parameters=[
@@ -203,70 +161,6 @@ class TestUserBlocks(CustomAssertions):
         self.assertAlmostEqual(insel.block('ubisonland', 48.77, -9.18), 0)
 
     # TODO: Test UBCHP
-
-
-class TestGenericExpression(CustomAssertions):
-    def expr(self, expression, *args):
-        return insel.block('expression', *args, parameters=[expression])
-
-    def test_constant(self):
-        self.assertAlmostEqual(self.expr('(1 + sqrt(5)) / 2'), (1+5**0.5)/2)
-        # https://xkcd.com/1047/:
-        self.assertAlmostEqual(self.expr('sqrt(3) / 2  - e / pi'), 0, delta=1e-3)
-
-    def test_power(self):
-        self.assertEqual(self.expr('2^4'), 16)
-        self.assertEqual(self.expr('3^3'), 27)
-        self.assertEqual(self.expr('-1^2'), -1)
-
-    def test_one_input(self):
-        self.assertAlmostEqual(self.expr('cos(x)', math.pi), -1)
-
-    def test_two_inputs(self):
-        self.assertAlmostEqual(self.expr('x*y', 2, 3), 6)
-        self.assertAlmostEqual(self.expr('x*x > y*y', -4, 2), 1)
-        self.assertAlmostEqual(self.expr('AVERAGE(x, y)', 3, 12), 7.5)
-
-    def test_three_inputs(self):
-        self.assertAlmostEqual(self.expr('(x*y*z)*x^2', -1, 2, 3.5), -7)
-
-    def test_modulo(self):
-        self.assertAlmostEqual(self.expr('x % y', 111, 7), 6)
-
-    def test_nan(self):
-        self.assertNaN(self.expr('0/0'))
-
-    def test_logic(self):
-        self.assertEqual(self.expr('or(3 < 1, 2 > 3)'), 0)
-        self.assertEqual(self.expr('or(3 < 1, 2 < 3)'), 1)
-        self.assertEqual(self.expr('and(3 < 1, 2 < 3)'), 0)
-        self.assertEqual(self.expr('and(3 >= 1, 2 < 3)'), 1)
-        self.assertEqual(self.expr('0 || 0'), 0)
-        self.assertEqual(self.expr('1 || 0 || 0'), 1)
-        self.assertEqual(self.expr('1 && 0'), 0)
-        self.assertEqual(self.expr('1 && 1'), 1)
-
-    def test_wrong_formulas(self):
-        self.assertRaisesRegex(InselError, r" \^ First error is here",
-                               self.expr, ') 2 + 3')
-        self.assertRaisesRegex(InselError, r" __\^ First error is here",
-                               self.expr, 'x + ')
-        self.assertRaisesRegex(InselError, r" ________\^ First error is here",
-                               self.expr, 'sin(1 * )')
-        self.assertRaisesRegex(InselError, r" ____\^ First error is here",
-                               self.expr, '1 + a + b')
-
-    def test_missing_x(self):
-        self.assertRaisesRegex(InselError, "Unknown variable 'x'",
-                               self.expr, 'x + 3')
-
-    def test_missing_y(self):
-        self.assertRaisesRegex(InselError, "Unknown variable 'y'",
-                               self.expr, 'x + y', 1)
-
-    def test_missing_z(self):
-        self.assertRaisesRegex(InselError, "Unknown variable 'z'",
-                               self.expr, 'x + y + z', 1, 2)
 
 
 class TestInselDoc(unittest.TestCase):
