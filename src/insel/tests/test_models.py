@@ -83,8 +83,8 @@ class TestExistingModel(CustomAssertions):
                              f"2 string parameters should be found in {model}")
 
     def test_screen_headline_should_be_displayed(self):
-        for f in ['short_string.vseit', 'long_string.vseit']:
-            out = insel.raw_run('templates/io/' + f)
+        for model in ['short_string.vseit', 'long_string.vseit']:
+            out = insel.raw_run('templates/io/' + model)
             lines = out.splitlines()
             headline = next(line for line in lines if 'String' in line)
             self.assertTrue(len(headline) < 100,
