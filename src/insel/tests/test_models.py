@@ -5,8 +5,6 @@ from insel import Insel, InselError
 from .custom_assertions import CustomAssertions
 from .constants import SCRIPT_DIR, cwd
 
-cwd(SCRIPT_DIR)
-
 
 class TestExistingModel(CustomAssertions):
     def test_one_to_ten(self):

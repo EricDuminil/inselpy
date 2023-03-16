@@ -1,10 +1,7 @@
 # coding=utf8
 import unittest
 import insel
-from .constants import SCRIPT_DIR, cwd
-
-
-cwd(SCRIPT_DIR)
+from .constants import SCRIPT_DIR
 
 
 class TestInselFlags(unittest.TestCase):
