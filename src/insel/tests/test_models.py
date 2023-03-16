@@ -1,13 +1,11 @@
 # coding=utf8
 import unittest
-import logging
 from pathlib import Path
 import insel
 from insel import Insel, InselError
 from .custom_assertions import CustomAssertions
 from .constants import SCRIPT_DIR, cwd
 
-logging.basicConfig(level=logging.ERROR)
 cwd(SCRIPT_DIR)
 
 

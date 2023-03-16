@@ -1,10 +1,7 @@
 # coding=utf8
 import unittest
-import logging
 import insel
 from .custom_assertions import CustomAssertions
-
-logging.basicConfig(level=logging.ERROR)
 
 
 class TestUserBlocks(CustomAssertions):

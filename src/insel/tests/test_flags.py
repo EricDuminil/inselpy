@@ -1,13 +1,9 @@
 # coding=utf8
 import unittest
-import logging
-from pathlib import Path
-from typing import List
 import insel
 from .constants import SCRIPT_DIR, cwd
 
 
-logging.basicConfig(level=logging.ERROR)
 cwd(SCRIPT_DIR)
 
 
