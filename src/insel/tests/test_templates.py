@@ -144,6 +144,10 @@ class TestTemplate(CustomAssertions):
     def test_parametric_min(self):
         self.assertEqual(1, insel.template('parametric/min'))
 
+    def test_polyg(self):
+        values = insel.template('mathematics/polyg')
+        self.compareLists(values, [1, 1, 5, 4, -2, 0, 2, 4, 4, 4])
+
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
         # NOTE: .insel can be included in template_name, but doesn't have to.
