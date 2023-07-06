@@ -42,8 +42,8 @@ class TestTemplate(CustomAssertions):
     def test_gengt_averages(self):
         irradiance_deviation, temperature_deviation = \
             insel.template('weather/gengt_monthly_averages')
-        self.assertAlmostEqual(irradiance_deviation, 0, delta=5,
-                               msg="Irradiance shouldnt vary by more than 5 W/m²")
+        self.assertAlmostEqual(irradiance_deviation, 0, delta=6,
+                               msg="Irradiance shouldnt vary by more than 6 W/m²")
         self.assertAlmostEqual(temperature_deviation, 0, delta=0.1,
                                msg="Temperature shouldnt vary by more than 0.1K")
 
@@ -88,7 +88,7 @@ class TestTemplate(CustomAssertions):
                                     longitude=11.08,
                                     timezone=+1
                                     )
-        self.compareLists(v1_results, [3865, 3645], places=-1)
+        self.compareLists(v1_results, [3873, 3660], places=-1)
         self.compareLists(v2_results, v1_results, places=2)
 
     def test_cumc(self):

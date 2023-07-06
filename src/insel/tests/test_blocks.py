@@ -41,9 +41,9 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block('pi'), math.pi, places=6)
 
     def test_constants(self):
-        # Solar constant. Should it be 1361?
+        # Solar constant. INSEL used to say it's 1367, now it's 1361
         # https://en.wikipedia.org/wiki/Solar_constant
-        self.assertAlmostEqual(insel.block('gs'), 1367)
+        self.assertAlmostEqual(insel.block('gs'), 1361)
         self.assertAlmostEqual(insel.block('e'), math.exp(1), places=6)
         # Elementary charge
         self.assertAlmostEqual(insel.block('q'), 1.60217663e-19, delta=1e-23)
