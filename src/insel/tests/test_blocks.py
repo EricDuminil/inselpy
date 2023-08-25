@@ -200,6 +200,30 @@ class TestBlock(CustomAssertions):
                          ['W05001 Block 00003: Division by zero',
                           'W05002 Block 00003: Number of divisions by zero: 1'])
 
+    def test_mod(self):
+        """
+        https://gcc.gnu.org/onlinedocs/gfortran/MOD.html
+        The type and kind of the return value is the same as that of the arguments. The returned value has the same sign as A and a magnitude less than the magnitude of P. 
+        """
+
+        self.assertAlmostEqual(insel.block('mod',
+                                           3, 2), 1, places=8)
+        self.assertAlmostEqual(insel.block('mod',
+                                           4, 2), 0, places=8)
+        self.assertAlmostEqual(insel.block('mod',
+                                           5, -2), 1, places=8)
+        self.assertAlmostEqual(insel.block('mod',
+                                           -11, 7), -4, places=8)
+        self.assertAlmostEqual(insel.block('mod',
+                                           -11, -7), -4, places=8)
+        self.assertAlmostEqual(insel.block('mod',
+                                           3.5, 1), 0.5, places=8)
+        # Division by 0
+        self.assertNaN(insel.block('mod', 1, 0))
+        self.assertEqual(Insel.last_warnings,
+                         ['W05001 Block 00003: Division by zero',
+                          'W05002 Block 00003: Number of divisions by zero: 1'])
+
     def test_sine(self):
         self.assertAlmostEqual(insel.block('sin', 0), 0)
         self.assertAlmostEqual(insel.block('sin', 180), 0, places=6)
