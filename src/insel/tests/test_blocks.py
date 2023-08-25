@@ -200,24 +200,19 @@ class TestBlock(CustomAssertions):
                          ['W05001 Block 00003: Division by zero',
                           'W05002 Block 00003: Number of divisions by zero: 1'])
 
-    def test_mod(self):
+    def test_modulo(self):
         """
         https://gcc.gnu.org/onlinedocs/gfortran/MOD.html
-        The type and kind of the return value is the same as that of the arguments. The returned value has the same sign as A and a magnitude less than the magnitude of P. 
+        The returned value of A % P has the same sign as A and a magnitude less than the magnitude of P. 
         """
 
-        self.assertAlmostEqual(insel.block('mod',
-                                           3, 2), 1, places=8)
-        self.assertAlmostEqual(insel.block('mod',
-                                           4, 2), 0, places=8)
-        self.assertAlmostEqual(insel.block('mod',
-                                           5, -2), 1, places=8)
-        self.assertAlmostEqual(insel.block('mod',
-                                           -11, 7), -4, places=8)
-        self.assertAlmostEqual(insel.block('mod',
-                                           -11, -7), -4, places=8)
-        self.assertAlmostEqual(insel.block('mod',
-                                           3.5, 1), 0.5, places=8)
+        self.assertAlmostEqual(insel.block('mod', 3, 2), 1)
+        self.assertAlmostEqual(insel.block('mod', 4, 2), 0)
+        self.assertAlmostEqual(insel.block('mod', 5, -2), 1)
+        self.assertAlmostEqual(insel.block('mod', -11, 7), -4)
+        self.assertAlmostEqual(insel.block('mod', -11, -7), -4)
+        self.assertAlmostEqual(insel.block('mod', 3.5, 1), 0.5)
+        self.assertAlmostEqual(insel.block('mod', 1.2, 0.5), 0.2)
         # Division by 0
         self.assertNaN(insel.block('mod', 1, 0))
         self.assertEqual(Insel.last_warnings,
@@ -560,7 +555,7 @@ class TestGenericExpression(CustomAssertions):
     def test_three_inputs(self):
         self.assertAlmostEqual(self.expr('(x*y*z)*x^2', -1, 2, 3.5), -7)
 
-    def test_modulo(self):
+    def test_modulo_expr(self):
         self.assertAlmostEqual(self.expr('x % y', 111, 7), 6)
 
     def test_nan(self):
