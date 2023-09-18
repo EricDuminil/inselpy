@@ -11,7 +11,28 @@ from .constants import SCRIPT_DIR, IS_WINDOWS
 os.chdir(SCRIPT_DIR)
 
 
-class TestTemplate(CustomAssertions):
+class TestBasicTemplates(CustomAssertions):
+    def test_a_times_b(self):
+        self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
+        # NOTE: .insel can be included in template_name, but doesn't have to.
+        self.assertAlmostEqual(insel.template(
+            'a_times_b.insel', a=4), 12, places=6)
+        # NOTE: template path can also be absolute.
+        self.assertAlmostEqual(insel.template(SCRIPT_DIR / 'templates' / 'a_times_b.insel',
+                                              a=4, b=5),
+                               20, places=6)
+
+    def test_array_parameter(self):
+        self.assertRaisesRegex(AttributeError, "UndefinedValue for 'x'", insel.template,
+                               'array_parameters')
+        self.assertRaisesRegex(AttributeError, "'x' should be an array.", insel.template,
+                               'array_parameters', x=3)
+        self.assertEqual(6, insel.template('array_parameters', x=[1, 2, 3]))
+        self.assertEqual(6, insel.template(
+            'array_parameters', x={0: 1, 1: 3, 2: 2}))
+
+
+class TestTemplates(CustomAssertions):
     def test_empty_if(self):
         self.assertEqual(insel.template('empty_if'), [])
 
@@ -148,16 +169,6 @@ class TestTemplate(CustomAssertions):
         values = insel.template('mathematics/polyg')
         self.compareLists(values, [1, 1, 5, 4, -2, 0, 2, 4, 4, 4])
 
-    def test_a_times_b(self):
-        self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
-        # NOTE: .insel can be included in template_name, but doesn't have to.
-        self.assertAlmostEqual(insel.template(
-            'a_times_b.insel', a=4), 12, places=6)
-        # NOTE: template path can also be absolute.
-        self.assertAlmostEqual(insel.template(SCRIPT_DIR / 'templates' / 'a_times_b.insel',
-                                              a=4, b=5),
-                               20, places=6)
-
     def test_non_ascii_template(self):
         utf8_template = insel.Template('a_times_b_utf8', a=2, b=2)
         utf8_template.timeout = 5
@@ -238,7 +249,8 @@ class TestTemplate(CustomAssertions):
                     next(out)
                 content = out.readlines()
                 written = [float(line.split()[1]) for line in content]
-                self.compareLists(written, [x**2 for x in range(1, 11)], places=5)
+                self.compareLists(
+                    written, [x**2 for x in range(1, 11)], places=5)
 
     def test_write_block_fails_if_folder_missing(self):
         filename = r'S:\\missing\\folder.txt' if IS_WINDOWS else '/not/here.txt'
@@ -251,7 +263,8 @@ class TestTemplate(CustomAssertions):
 
     def test_write_block_fails_if_read_only(self):
         if IS_WINDOWS:
-            self.skipTest("Docker tests for Windows are run as root, and ignore file permissions")
+            self.skipTest(
+                "Docker tests for Windows are run as root, and ignore file permissions")
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / 'read_only.dat'
             # Create read-only temp file:
@@ -259,7 +272,7 @@ class TestTemplate(CustomAssertions):
             dat_file.chmod(mode=0o444)
             insel.template('io/write_params', dat_file=dat_file, overwrite=1)
             self.assertEqual(Insel.last_warnings, [
-                         'F05069 Block 00003: Unexpected write error - simulation terminated'])
+                'F05069 Block 00003: Unexpected write error - simulation terminated'])
 
     def test_read_simple_file(self):
         fourfivesix = insel.template('io/read_simple_file', ext='dat')

@@ -1,7 +1,7 @@
-from .temporary_model import TemporaryModel
 from pathlib import Path
-from typing import Dict, List, Union, Optional, Any, Sequence
+from typing import Dict, Any
 import re
+from .temporary_model import TemporaryModel
 from .insel import Insel
 
 
@@ -33,7 +33,10 @@ class Template(TemporaryModel):
         var_name = var_name.strip()
         if var_name in self.parameters:
             if index:
-                return str(self.parameters[var_name][int(index)])
+                try:
+                    return str(self.parameters[var_name][int(index)])
+                except TypeError:
+                    raise AttributeError(f"'{var_name}' should be an array.")
             else:
                 return str(self.parameters[var_name])
         elif default is not None:

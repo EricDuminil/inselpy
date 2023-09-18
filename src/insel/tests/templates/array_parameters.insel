@@ -1,0 +1,12 @@
+B 1 CONST
+P 1 $x[0]$
+
+B 2 CONST
+P 2 $x[1]$
+
+B 3 CONST
+P 3 $x[2]$
+
+B 4 SUM 1 2 3
+
+B 5 SCREEN 4
