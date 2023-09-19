@@ -32,6 +32,11 @@ class TestBasicTemplates(CustomAssertions):
             'array_parameters', x={0: 1, 1: 3, 2: 2}))
 
 
+class TestVseitTemplates(CustomAssertions):
+    def test_a_plus_b(self):
+        insel.template('a_plus_b.vseit')
+
+
 class TestTemplates(CustomAssertions):
     def test_empty_if(self):
         self.assertEqual(insel.template('empty_if'), [])
