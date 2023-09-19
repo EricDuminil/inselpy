@@ -252,6 +252,14 @@ class TestTemplates(CustomAssertions):
                 self.compareLists(
                     written, [x**2 for x in range(1, 11)], places=5)
 
+    def test_write_block_relative_file_with_long_filename(self):
+        dat_file = Path('./' + 'a' * 50 + '.txt')
+        self.assertFalse(dat_file.exists())
+        model = insel.Template('io/write_params', dat_file=dat_file)
+        model.run()
+        self.assertTrue(dat_file.exists(), "File should have been written")
+        dat_file.unlink()
+
     def test_write_block_fails_if_folder_missing(self):
         filename = r'S:\\missing\\folder.txt' if IS_WINDOWS else '/not/here.txt'
         error_message = rf"(?m)^F05029 Block 00003: Cannot open file: {re.escape(filename)}$"
