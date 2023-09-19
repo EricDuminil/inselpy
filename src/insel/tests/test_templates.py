@@ -34,7 +34,7 @@ class TestBasicTemplates(CustomAssertions):
 
 class TestVseitTemplates(CustomAssertions):
     def test_a_plus_b(self):
-        insel.template('a_plus_b.vseit')
+        insel.template('x_plus_y.vseit')
 
 
 class TestTemplates(CustomAssertions):
