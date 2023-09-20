@@ -253,11 +253,12 @@ class TestTemplates(CustomAssertions):
                     written, [x**2 for x in range(1, 11)], places=5)
 
     def test_write_block_relative_file_with_long_filename(self):
-        dat_file = Path('./' + 'a' * 50 + '.txt')
-        self.assertFalse(dat_file.exists())
-        model = insel.Template('io/write_params', dat_file=dat_file)
-        model.run()
-        self.assertTrue(dat_file.exists(), "File should have been written")
+        """Template file is written in temp folder, in order for INSEL to run
+        It means that relative files will be relative to temp folder"""
+        dat_file = Path(tempfile.gettempdir(), 'a' * 50 + '.txt')
+        dat_file.unlink(missing_ok=True)
+        insel.template('io/write_params', dat_file=dat_file.name)
+        self.assertTrue(dat_file.exists(), f"{dat_file} should have been written")
         dat_file.unlink()
 
     def test_write_block_fails_if_folder_missing(self):
