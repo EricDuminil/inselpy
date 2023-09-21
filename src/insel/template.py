@@ -12,7 +12,7 @@ class Template(TemporaryModel):
     placeholder_pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w \.\*]*))?\$')
     constants_pattern = re.compile(r'^C\s+(\w+)\s+(["\+\-\w \.\']+)(?:% .*)?\n', re.MULTILINE)
 
-    def __init__(self, template_path: Path, **parameters) -> None:
+    def __init__(self, template_path, **parameters) -> None:
         super().__init__()
         template_path = Path(template_path)
         if template_path.suffix == '.vseit':
