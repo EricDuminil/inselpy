@@ -9,7 +9,8 @@ class Template(TemporaryModel):
     # dirname is relative to current working directory.
     # NOTE: It should not be resolved yet, because CWD might change after "import insel"
     dirname: Path = Path('templates')
-    pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
+    placeholder_pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w \.\*]*))?\$')
+    constants_pattern = re.compile(r'^C\s+(\w+)\s+([\-\w \.]*)', re.MULTILINE | re.DOTALL)
 
     def __init__(self, template_path: Path, **parameters) -> None:
         super().__init__()
@@ -65,7 +66,14 @@ class Template(TemporaryModel):
                   encoding='utf-8',
                   errors='backslashreplace') as template:
             content = template.read()
-            content = re.sub(self.__class__.pattern, self.replace, content)
+            content = re.sub(self.__class__.placeholder_pattern, self.replace, content)
+            constants = re.findall(self.__class__.constants_pattern, content)
+            if constants:
+                print()
+                print("#############"*5)
+                print(constants)
+                print("#############"*5)
+                print()
             return content
 
 class VseitTemplate(Template):
