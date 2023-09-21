@@ -16,7 +16,6 @@ class Template(TemporaryModel):
         super().__init__()
         template_path = Path(template_path)
         if template_path.suffix == '.vseit':
-            #TODO: Should probably change replace
             self.template_path: Path = template_path
         else:
             self.template_path: Path = template_path.with_suffix('.insel')
