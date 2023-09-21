@@ -6,7 +6,7 @@ from .insel_error import InselError as InselError
 from .insel import Parameter
 from .existing_model import ExistingModel
 from .one_block_model import OneBlockModel
-from .template import Template
+from .template import Template, VseitTemplate
 
 __version__ = "0.0.7"
 
@@ -55,7 +55,7 @@ def template(template_path, **parameters):
           pv_id='008823', temperature=25, irradiance=1000)
     5.87388
     """
-    return Template(template_path, **parameters).run()
+    return VseitTemplate(template_path, **parameters).run()
 
 
 def run(path):
