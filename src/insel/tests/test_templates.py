@@ -33,8 +33,12 @@ class TestBasicTemplates(CustomAssertions):
 
 
 class TestVseitTemplates(CustomAssertions):
-    def test_a_plus_b(self):
-        insel.template('x_plus_y.vseit')
+    def test_vseit_is_a_template(self):
+        self.assertEqual(3, insel.run('templates/x_plus_y.vseit'))
+        self.assertEqual(3, insel.template('x_plus_y.vseit'))
+
+    def test_setting_constants_in_vseit(self):
+        self.assertEqual(5, insel.template('x_plus_y.vseit', x=3, y=2))
 
 
 class TestTemplates(CustomAssertions):

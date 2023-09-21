@@ -16,9 +16,11 @@ class Template(TemporaryModel):
         super().__init__()
         template_path = Path(template_path)
         if template_path.suffix == '.vseit':
-            raise NotImplementedError
+            pass
+            #TODO: Should probably change replace
+            self.template_path: Path = template_path
         else:
-            self.template_path: Path = Path(template_path).with_suffix('.insel')
+            self.template_path: Path = template_path.with_suffix('.insel')
         self.name: str = self.template_path.stem
         self.parameters: Dict[str, Any] = self.add_defaults_to(parameters)
 
