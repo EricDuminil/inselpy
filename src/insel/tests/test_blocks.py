@@ -559,17 +559,18 @@ class TestGenericExpression(CustomAssertions):
         self.assertAlmostEqual(self.expr('x % y', 111, 7), 6)
 
     def test_nan(self):
-        self.assertNaN(self.expr('0/0'))
+        self.assertNaN(self.expr('nan'))
+        self.assertNaN(self.expr('nan + 2'))
 
     def test_logic(self):
         self.assertEqual(self.expr('or(3 < 1, 2 > 3)'), 0)
         self.assertEqual(self.expr('or(3 < 1, 2 < 3)'), 1)
         self.assertEqual(self.expr('and(3 < 1, 2 < 3)'), 0)
         self.assertEqual(self.expr('and(3 >= 1, 2 < 3)'), 1)
-        self.assertEqual(self.expr('0 || 0'), 0)
-        self.assertEqual(self.expr('1 || 0 || 0'), 1)
-        self.assertEqual(self.expr('1 && 0'), 0)
-        self.assertEqual(self.expr('1 && 1'), 1)
+        self.assertEqual(self.expr('0 | 0'), 0)
+        self.assertEqual(self.expr('1 | 0 | 0'), 1)
+        self.assertEqual(self.expr('1 & 0'), 0)
+        self.assertEqual(self.expr('1 & 1'), 1)
 
     def test_wrong_formulas(self):
         self.assertRaisesRegex(InselError, r" \^ First error is here",
