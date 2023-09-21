@@ -33,6 +33,7 @@ class TestBasicTemplates(CustomAssertions):
 
 class TestVseitTemplates(CustomAssertions):
     def test_vseit_is_a_template(self):
+        # A Vseit template should be a correct INSEL model
         self.assertEqual(3, insel.run('templates/x_plus_y.vseit'))
         self.assertEqual(3, insel.template('x_plus_y.vseit'))
 

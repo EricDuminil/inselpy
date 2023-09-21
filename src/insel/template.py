@@ -11,7 +11,7 @@ class Template(TemporaryModel):
     dirname: Path = Path('templates')
     pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
 
-    def __init__(self, template_path, **parameters) -> None:
+    def __init__(self, template_path: Path, **parameters) -> None:
         super().__init__()
         template_path = Path(template_path)
         if template_path.suffix == '.vseit':
@@ -69,4 +69,8 @@ class Template(TemporaryModel):
             return content
 
 class VseitTemplate(Template):
-    pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w\* \.]*))?\$')
+    pass
+
+class InselTemplate(Template):
+    pass
+
