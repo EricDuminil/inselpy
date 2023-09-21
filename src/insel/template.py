@@ -10,7 +10,7 @@ class Template(TemporaryModel):
     # NOTE: It should not be resolved yet, because CWD might change after "import insel"
     dirname: Path = Path('templates')
     placeholder_pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w \.\*]*))?\$')
-    constants_pattern = re.compile(r'^C\s+(\w+)\s+([\-\w \.]*)', re.MULTILINE | re.DOTALL)
+    constants_pattern = re.compile(r'^C\s+(\w+)\s+(["\+\-\w \.\']+)(?:% .*)?\n', re.MULTILINE)
 
     def __init__(self, template_path: Path, **parameters) -> None:
         super().__init__()
@@ -66,19 +66,13 @@ class Template(TemporaryModel):
                   encoding='utf-8',
                   errors='backslashreplace') as template:
             content = template.read()
-            content = re.sub(self.__class__.placeholder_pattern, self.replace, content)
-            constants = re.findall(self.__class__.constants_pattern, content)
-            if constants:
-                print()
-                print("#############"*5)
-                print(constants)
-                print("#############"*5)
-                print()
+            #TODO: Check placeholder in constant
+            content = re.sub(Template.constants_pattern, self.replace, content)
+            content = re.sub(Template.placeholder_pattern, self.replace, content)
+            # if constants:
+            #     print()
+            #     print("#############"*5)
+            #     print(constants)
+            #     print("#############"*5)
+            #     print()
             return content
-
-class VseitTemplate(Template):
-    pass
-
-class InselTemplate(Template):
-    pass
-

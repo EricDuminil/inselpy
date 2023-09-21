@@ -7,9 +7,9 @@ from .insel_error import InselError as InselError
 from .insel import Parameter
 from .existing_model import ExistingModel
 from .one_block_model import OneBlockModel
-from .template import InselTemplate, VseitTemplate, Template
+from .template import Template
 
-__version__ = "0.0.7"
+__version__ = "0.0.8b"
 
 # TODO: Add gnuplot functions
 
@@ -56,11 +56,7 @@ def template(template_path, **parameters):
           pv_id='008823', temperature=25, irradiance=1000)
     5.87388
     """
-    path = Path(template_path)
-    if path.suffix == '.vseit':
-        return VseitTemplate(template_path, **parameters).run()
-    else:
-        return InselTemplate(template_path, **parameters).run()
+    return Template(template_path, **parameters).run()
 
 
 def run(path):
