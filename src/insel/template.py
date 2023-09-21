@@ -76,7 +76,6 @@ class Template(TemporaryModel):
                   encoding='utf-8',
                   errors='backslashreplace') as template:
             content = template.read()
-            #TODO: Check placeholder in constant
             content = re.sub(Template.constants_pattern, self.replace_constants, content)
             content = re.sub(Template.placeholder_pattern, self.replace_placeholders, content)
             return content

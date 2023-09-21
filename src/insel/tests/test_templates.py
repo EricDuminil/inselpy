@@ -15,7 +15,8 @@ class TestBasicTemplates(CustomAssertions):
     def test_a_times_b(self):
         self.assertAlmostEqual(insel.template('a_times_b'), 9, places=6)
         # NOTE: .insel can be included in template_name, but doesn't have to.
-        self.assertAlmostEqual(insel.template('a_times_b.insel', a=4), 12, places=6)
+        self.assertAlmostEqual(insel.template(
+            'a_times_b.insel', a=4), 12, places=6)
         # NOTE: template path can also be absolute.
         self.assertAlmostEqual(insel.template(SCRIPT_DIR / 'templates' / 'a_times_b.insel',
                                               a=4, b=5),
@@ -33,12 +34,26 @@ class TestBasicTemplates(CustomAssertions):
 
 class TestVseitTemplates(CustomAssertions):
     def test_vseit_is_a_template(self):
-        # A Vseit template should be a correct INSEL model
+        # A Vseit model should be a template with defaults
         self.assertEqual(3, insel.run('templates/x_plus_y.vseit'))
         self.assertEqual(3, insel.template('x_plus_y.vseit'))
 
     def test_setting_constants_in_vseit(self):
-        self.assertEqual(5, insel.template('x_plus_y.vseit', x=3, y=2))
+        self.assertEqual(5, insel.template('x_plus_y.vseit', x=2, y=3))
+        self.assertEqual(4, insel.template('x_plus_y.vseit', x=2))
+        self.assertEqual(4, insel.template('x_plus_y.vseit', y=3))
+
+    def test_setting_string_constants_in_vseit(self):
+        # TODO: String constant
+        pass
+
+    def test_placeholder_over_constant(self):
+        self.assertEqual(12, insel.template('both',
+                                            placeholder_x=5,
+                                            placeholder_y=7))
+        self.assertEqual(12, insel.template('both', placeholder_x=5, placeholder_y=7,
+                                            constant_x=0, constant_y=0))
+        self.assertEqual(5, insel.template('conflict', x=3, y=5))
 
 
 class TestTemplates(CustomAssertions):
@@ -267,7 +282,8 @@ class TestTemplates(CustomAssertions):
         dat_file = Path(tempfile.gettempdir(), 'a' * 50 + '.txt')
         dat_file.unlink(missing_ok=True)
         insel.template('io/write_params', dat_file=dat_file.name)
-        self.assertTrue(dat_file.exists(), f"{dat_file} should have been written")
+        self.assertTrue(dat_file.exists(),
+                        f"{dat_file} should have been written")
         dat_file.unlink()
 
     def test_write_block_fails_if_folder_missing(self):
