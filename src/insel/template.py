@@ -30,7 +30,7 @@ class Template(TemporaryModel):
         else:
             raise FileNotFoundError("No template in %s" % full_path)
 
-    def replace(self, match_object: re.Match) -> str:
+    def replace_placeholders(self, match_object: re.Match) -> str:
         var_name: str
         index: str
         default: str
@@ -51,6 +51,17 @@ class Template(TemporaryModel):
                 "UndefinedValue for '%s' in %s.insel template" %
                 (var_name, self.name))
 
+    def replace_constants(self, match_object: re.Match) -> str:
+        var_name: str
+        default: str
+        var_name, default = match_object.groups()
+        var_name = var_name.strip()
+        if var_name in self.parameters:
+            value =  str(self.parameters[var_name])
+        else:
+            value = default
+        return f"C {var_name} {value}"
+
     def add_defaults_to(self, parameters):
         defaults = {
             'bp_folder': Insel.dirname / "data" / "bp",
@@ -67,12 +78,6 @@ class Template(TemporaryModel):
                   errors='backslashreplace') as template:
             content = template.read()
             #TODO: Check placeholder in constant
-            content = re.sub(Template.constants_pattern, self.replace, content)
-            content = re.sub(Template.placeholder_pattern, self.replace, content)
-            # if constants:
-            #     print()
-            #     print("#############"*5)
-            #     print(constants)
-            #     print("#############"*5)
-            #     print()
+            content = re.sub(Template.constants_pattern, self.replace_constants, content)
+            content = re.sub(Template.placeholder_pattern, self.replace_placeholders, content)
             return content
