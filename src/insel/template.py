@@ -6,6 +6,9 @@ from .insel import Insel
 
 
 class Template(TemporaryModel):
+    """
+    TODO: Document
+    """
     # dirname is relative to current working directory.
     # NOTE: It should not be resolved yet, because CWD might change after "import insel"
     dirname: Path = Path('templates')
@@ -78,4 +81,5 @@ class Template(TemporaryModel):
             content = template.read()
             content = re.sub(Template.constants_pattern, self.replace_constants, content)
             content = re.sub(Template.placeholder_pattern, self.replace_placeholders, content)
+            #NOTE: Test if variable hasn't been used?
             return content
