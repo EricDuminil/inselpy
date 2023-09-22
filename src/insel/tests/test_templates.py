@@ -47,6 +47,8 @@ class TestVseitTemplates(CustomAssertions):
         # TODO: String constant
         pass
 
+    #TODO: gengt_monthly_averages.insel with different coordinates
+
     def test_placeholder_over_constant(self):
         self.assertEqual(12, insel.template('both',
                                             placeholder_x=5,
