@@ -1,5 +1,4 @@
 from typing import List
-from pathlib import Path
 #  To allow from insel import Insel, InselError in tests:
 from .insel import Insel as Insel
 from .insel_error import InselError as InselError
