@@ -65,6 +65,7 @@ class Template(TemporaryModel):
         return f"C {var_name} {value}"
 
     def add_defaults_to(self, parameters):
+        #TODO: Add the possibility to disable PLOT?
         defaults = {
             'bp_folder': Insel.dirname / "data" / "bp",
             'data_folder': Template.dirname.parent / "data",
