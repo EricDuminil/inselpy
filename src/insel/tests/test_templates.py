@@ -35,13 +35,13 @@ class TestBasicTemplates(CustomAssertions):
 class TestVseitTemplates(CustomAssertions):
     def test_vseit_is_a_template(self):
         # A Vseit model should be a template with defaults
-        self.assertEqual(3, insel.run('templates/x_plus_y.vseit'))
-        self.assertEqual(3, insel.template('x_plus_y.vseit'))
+        self.assertEqual(3, insel.run('templates/constants/x_plus_y.vseit'))
+        self.assertEqual(3, insel.template('constants/x_plus_y.vseit'))
 
     def test_setting_constants_in_vseit(self):
-        self.assertEqual(5, insel.template('x_plus_y.vseit', x=2, y=3))
-        self.assertEqual(4, insel.template('x_plus_y.vseit', x=2))
-        self.assertEqual(4, insel.template('x_plus_y.vseit', y=3))
+        self.assertEqual(5, insel.template('constants/x_plus_y.vseit', x=2, y=3))
+        self.assertEqual(4, insel.template('constants/x_plus_y.vseit', x=2))
+        self.assertEqual(4, insel.template('constants/x_plus_y.vseit', y=3))
 
     def test_setting_string_constants_in_vseit(self):
         # TODO: String constant
@@ -50,12 +50,15 @@ class TestVseitTemplates(CustomAssertions):
     #TODO: gengt_monthly_averages.insel with different coordinates
 
     def test_placeholder_over_constant(self):
-        self.assertEqual(12, insel.template('both',
+        self.assertEqual(12, insel.template('constants/both',
                                             placeholder_x=5,
                                             placeholder_y=7))
-        self.assertEqual(12, insel.template('both', placeholder_x=5, placeholder_y=7,
+        self.assertEqual(12, insel.template('constants/both', placeholder_x=5, placeholder_y=7,
                                             constant_x=0, constant_y=0))
-        self.assertEqual(5, insel.template('conflict', x=3, y=5))
+        self.assertEqual(5, insel.template('constants/conflict', x=3, y=5))
+
+    def test_both_placeholder_and_constant(self):
+        self.assertEqual(3.7, insel.template('constants/same', x=1.2))
 
 
 class TestTemplates(CustomAssertions):
