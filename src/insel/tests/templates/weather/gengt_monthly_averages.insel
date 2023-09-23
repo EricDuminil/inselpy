@@ -70,8 +70,6 @@ C   Timezone
     +1              % Define global constant: 9
 C   Latitude
     48.77           % Define global constant: 10
-C   Just_A_Test
-    "content_to_be_replaced"
 
 B 12 MAXX
     4.1

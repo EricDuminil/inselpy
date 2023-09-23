@@ -32,9 +32,9 @@ class TestBasicTemplates(CustomAssertions):
             'array_parameters', x={0: 1, 1: 3, 2: 2}))
 
 
-class TestVseitTemplates(CustomAssertions):
+class TestTemplatesWithConstants(CustomAssertions):
     def test_vseit_is_a_template(self):
-        # A Vseit model should be a template with defaults
+        # A Vseit model should be a template with default values
         self.assertEqual(3, insel.run('templates/constants/x_plus_y.vseit'))
         self.assertEqual(3, insel.template('constants/x_plus_y.vseit'))
 
@@ -47,7 +47,7 @@ class TestVseitTemplates(CustomAssertions):
         # TODO: String constant
         pass
 
-    #TODO: gengt_monthly_averages.insel with different coordinates
+    #TODO: Test an example model, with different constants
 
     def test_placeholder_over_constant(self):
         self.assertEqual(12, insel.template('constants/both',
