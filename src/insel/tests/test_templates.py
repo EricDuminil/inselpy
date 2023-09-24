@@ -51,7 +51,6 @@ class TestTemplatesWithConstants(CustomAssertions):
                              insel.template('constants/string_constant', location_name='Perth'))
 
     def test_example_vseit(self):
-        # TODO: Disable GNUPLOT!
         # PV in Nurnberg:
         self.compareLists([3866, 3652],
                           insel.template('constants/nurnberg.vseit'), places=0)

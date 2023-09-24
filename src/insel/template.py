@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Dict, Any
 import re
+import tempfile
 from .temporary_model import TemporaryModel
 from .insel import Insel
 
@@ -16,6 +17,10 @@ class Template(TemporaryModel):
     placeholder_pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w \.\*]*))?\$')
     # C constant_example 1.234
     constants_pattern = re.compile(r'^C\s+(\w+)\s+(["\+\-\w \.\']+)(?:% .*)?\n', re.MULTILINE)
+    # PLOT and PLOT2 gnuplot filenames
+    gnuplot_pattern = re.compile(r'(?:advanced_plot|insel)\.gnu')
+    # Will be used to disable gnuplot
+    empty_gnuplot = Path(tempfile.gettempdir()) / 'empty.gnuplot'
 
     def __init__(self, template_path, **parameters) -> None:
         super().__init__()
@@ -66,12 +71,20 @@ class Template(TemporaryModel):
             value = default
         return f"C {var_name} {value}"
 
+    def disable_gnuplot(self, content):
+        print(content)
+        content, count = re.subn(Template.gnuplot_pattern, str(Template.empty_gnuplot), content)
+        if count:
+            with open(Template.empty_gnuplot, 'w') as tmp_gnuplot:
+                tmp_gnuplot.write("exit\n")
+        return content
+
     def add_defaults_to(self, parameters):
-        #TODO: Add the possibility to disable PLOT?
         defaults = {
             'bp_folder': Insel.dirname / "data" / "bp",
             'data_folder': Template.dirname.parent / "data",
-            'template_folder': Template.dirname
+            'template_folder': Template.dirname,
+            'gnuplot': False
         }
         defaults.update(parameters)
         return defaults
@@ -84,5 +97,7 @@ class Template(TemporaryModel):
             content = template.read()
             content = re.sub(Template.constants_pattern, self.replace_constants, content)
             content = re.sub(Template.placeholder_pattern, self.replace_placeholders, content)
+            if not self.parameters['gnuplot']:
+                content = self.disable_gnuplot(content)
             #NOTE: Test if variable hasn't been used?
             return content
