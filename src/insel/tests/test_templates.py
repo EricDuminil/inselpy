@@ -39,23 +39,30 @@ class TestTemplatesWithConstants(CustomAssertions):
         self.assertEqual(3, insel.template('constants/x_plus_y.vseit'))
 
     def test_setting_constants_in_vseit(self):
-        self.assertEqual(5, insel.template('constants/x_plus_y.vseit', x=2, y=3))
+        self.assertEqual(5, insel.template(
+            'constants/x_plus_y.vseit', x=2, y=3))
         self.assertEqual(4, insel.template('constants/x_plus_y.vseit', x=2))
         self.assertEqual(4, insel.template('constants/x_plus_y.vseit', y=3))
 
     def test_setting_string_constants_in_vseit(self):
-        self.assertListEqual([ 72, 109, 173, 227, 257, 279, 301, 270, 200, 132, 83, 74 ],
+        self.assertListEqual([72, 109, 173, 227, 257, 279, 301, 270, 200, 132, 83, 74],
                              insel.template('constants/string_constant'))
-        self.assertListEqual([ 326, 300, 250, 168, 122, 101, 107, 141, 198, 244, 302, 335],
-                             insel.template('constants/string_constant', location_name = 'Perth'))
+        self.assertListEqual([326, 300, 250, 168, 122, 101, 107, 141, 198, 244, 302, 335],
+                             insel.template('constants/string_constant', location_name='Perth'))
 
     def test_example_vseit(self):
-        #TODO: Disable GNUPLOT!
-        # Standard Nurnberg:
-        self.compareLists([3866, 3652], insel.template('constants/nurnberg.vseit'), places=0)
-        # Phoenix
-        self.compareLists([6560, 6260], insel.template('constants/nurnberg.vseit', Latitude=33, Longitude=-112, Tilt=10, Timezone=-7), places=-1)
-
+        # TODO: Disable GNUPLOT!
+        # PV in Nurnberg:
+        self.compareLists([3866, 3652],
+                          insel.template('constants/nurnberg.vseit'), places=0)
+        # PV in Phoenix
+        self.compareLists([6560, 6260],
+                          insel.template('constants/nurnberg.vseit',
+                                         Latitude=33,
+                                         Longitude=-112,
+                                         Tilt=10,
+                                         Timezone=-7),
+                          places=-1)
 
     def test_placeholder_over_constant(self):
         self.assertEqual(12, insel.template('constants/both',

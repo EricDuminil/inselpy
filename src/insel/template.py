@@ -12,7 +12,9 @@ class Template(TemporaryModel):
     # dirname is relative to current working directory.
     # NOTE: It should not be resolved yet, because CWD might change after "import insel"
     dirname: Path = Path('templates')
+    # $ placeholder_example || 1.234 $
     placeholder_pattern = re.compile(r'\$([\w ]+)(?:\[(\d+)\] *)?(?:\|\|([\-\w \.\*]*))?\$')
+    # C constant_example 1.234
     constants_pattern = re.compile(r'^C\s+(\w+)\s+(["\+\-\w \.\']+)(?:% .*)?\n', re.MULTILINE)
 
     def __init__(self, template_path, **parameters) -> None:
