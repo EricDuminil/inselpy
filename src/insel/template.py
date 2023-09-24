@@ -59,7 +59,7 @@ class Template(TemporaryModel):
         var_name, default = match_object.groups()
         var_name = var_name.strip()
         if var_name in self.parameters:
-            value =  str(self.parameters[var_name])
+            value =  repr(self.parameters[var_name])
         else:
             value = default
         return f"C {var_name} {value}"

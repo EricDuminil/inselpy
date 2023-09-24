@@ -1,0 +1,17 @@
+b 1 MTM2  3.1
+p 1
+    location_name
+b 2 SCREEN  1.1
+p 2
+    format
+b 3 DO
+p 3
+                    1
+                   12
+                    1
+
+C location_name
+'Madrid'
+
+C format
+'*'

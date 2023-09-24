@@ -44,8 +44,10 @@ class TestTemplatesWithConstants(CustomAssertions):
         self.assertEqual(4, insel.template('constants/x_plus_y.vseit', y=3))
 
     def test_setting_string_constants_in_vseit(self):
-        # TODO: String constant
-        pass
+        self.assertListEqual([ 72, 109, 173, 227, 257, 279, 301, 270, 200, 132, 83, 74 ],
+                             insel.template('constants/string_constant'))
+        self.assertListEqual([ 326, 300, 250, 168, 122, 101, 107, 141, 198, 244, 302, 335],
+                             insel.template('constants/string_constant', location_name = 'Perth'))
 
     #TODO: Test an example model, with different constants
 
