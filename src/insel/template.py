@@ -72,7 +72,6 @@ class Template(TemporaryModel):
         return f"C {var_name} {value}"
 
     def disable_gnuplot(self, content):
-        print(content)
         content, count = re.subn(Template.gnuplot_pattern, str(Template.empty_gnuplot), content)
         if count:
             with open(Template.empty_gnuplot, 'w') as tmp_gnuplot:
