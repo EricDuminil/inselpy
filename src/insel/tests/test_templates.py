@@ -49,7 +49,13 @@ class TestTemplatesWithConstants(CustomAssertions):
         self.assertListEqual([ 326, 300, 250, 168, 122, 101, 107, 141, 198, 244, 302, 335],
                              insel.template('constants/string_constant', location_name = 'Perth'))
 
-    #TODO: Test an example model, with different constants
+    def test_example_vseit(self):
+        #TODO: Disable GNUPLOT!
+        # Standard Nurnberg:
+        self.compareLists([3866, 3652], insel.template('constants/nurnberg.vseit'), places=0)
+        # Phoenix
+        self.compareLists([6560, 6260], insel.template('constants/nurnberg.vseit', Latitude=33, Longitude=-112, Tilt=10, Timezone=-7), places=-1)
+
 
     def test_placeholder_over_constant(self):
         self.assertEqual(12, insel.template('constants/both',

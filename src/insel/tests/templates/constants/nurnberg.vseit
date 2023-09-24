@@ -1,0 +1,979 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- XML for representing entities of a VSEit Network with their attributes and relationships-->
+
+<vseit-network xmlns:xlink="http://www.w3.org/1999/xlink" client-class="eu.insel.vseit.InselVseit" client-class-version="9" first-id="0" entity-count="109">
+<entity id="_0" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_60</to></ref>
+<ref name="portOf"><to>_97</to></ref>
+</entity>
+<entity id="_1" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_47</to><to>_66</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_2" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_105</to></ref>
+</entity>
+<entity id="_3" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_59</to><to>_79</to></ref>
+<ref name="portOf"><to>_88</to></ref>
+</entity>
+<entity id="_4" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_65</to><to>_52</to><to>_57</to></ref>
+<ref name="portOf"><to>_95</to></ref>
+</entity>
+<entity id="_5" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_67</to></ref>
+<ref name="portOf"><to>_86</to></ref>
+</entity>
+<entity id="_6" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_55</to></ref>
+<ref name="portOf"><to>_101</to></ref>
+</entity>
+<entity id="_7" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_73</to></ref>
+<ref name="portOf"><to>_105</to></ref>
+</entity>
+<entity id="_8" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_63</to></ref>
+<ref name="portOf"><to>_87</to></ref>
+</entity>
+<entity id="_9" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_51</to></ref>
+<ref name="portOf"><to>_85</to></ref>
+</entity>
+<entity id="_10" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_62</to><to>_38</to><to>_50</to><to>_64</to></ref>
+<ref name="portOf"><to>_104</to></ref>
+</entity>
+<entity id="_11" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_37</to></ref>
+<ref name="portOf"><to>_99</to></ref>
+</entity>
+<entity id="_12" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_72</to><to>_36</to><to>_39</to><to>_46</to></ref>
+<ref name="portOf"><to>_104</to></ref>
+</entity>
+<entity id="_13" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_14" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_54</to></ref>
+<ref name="portOf"><to>_95</to></ref>
+</entity>
+<entity id="_15" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_58</to></ref>
+<ref name="portOf"><to>_84</to></ref>
+</entity>
+<entity id="_16" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_56</to><to>_35</to><to>_77</to><to>_40</to><to>_81</to></ref>
+<ref name="portOf"><to>_104</to></ref>
+</entity>
+<entity id="_17" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_18" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_102</to></ref>
+</entity>
+<entity id="_19" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_61</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_20" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_68</to><to>_80</to></ref>
+<ref name="portOf"><to>_88</to></ref>
+</entity>
+<entity id="_21" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_53</to><to>_44</to></ref>
+<ref name="portOf"><to>_102</to></ref>
+</entity>
+<entity id="_22" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_48</to><to>_42</to><to>_43</to><to>_75</to></ref>
+<ref name="portOf"><to>_104</to></ref>
+</entity>
+<entity id="_23" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_78</to></ref>
+<ref name="portOf"><to>_83</to></ref>
+</entity>
+<entity id="_24" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_25" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_69</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_26" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_45</to></ref>
+<ref name="portOf"><to>_101</to></ref>
+</entity>
+<entity id="_27" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_70</to></ref>
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_28" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_29" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_74</to></ref>
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_30" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_76</to></ref>
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_31" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_49</to></ref>
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_32" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_33" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_71</to></ref>
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_34" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_41</to></ref>
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_35" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_16</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_36" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_12</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_37" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_11</to></ref>
+<ref name="portOf"><to>_105</to></ref>
+</entity>
+<entity id="_38" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_10</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_39" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_12</to></ref>
+<ref name="portOf"><to>_87</to></ref>
+</entity>
+<entity id="_40" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_16</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_41" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_34</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_42" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_22</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_43" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_22</to></ref>
+<ref name="portOf"><to>_87</to></ref>
+</entity>
+<entity id="_44" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_21</to></ref>
+<ref name="portOf"><to>_101</to></ref>
+</entity>
+<entity id="_45" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_26</to></ref>
+<ref name="portOf"><to>_88</to></ref>
+</entity>
+<entity id="_46" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_12</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_47" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_1</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_48" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_22</to></ref>
+<ref name="portOf"><to>_97</to></ref>
+</entity>
+<entity id="_49" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_31</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_50" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_10</to></ref>
+<ref name="portOf"><to>_87</to></ref>
+</entity>
+<entity id="_51" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_9</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_52" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_4</to></ref>
+<ref name="portOf"><to>_102</to></ref>
+</entity>
+<entity id="_53" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_21</to></ref>
+<ref name="portOf"><to>_82</to></ref>
+</entity>
+<entity id="_54" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_14</to></ref>
+<ref name="portOf"><to>_99</to></ref>
+</entity>
+<entity id="_55" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_6</to></ref>
+<ref name="portOf"><to>_88</to></ref>
+</entity>
+<entity id="_56" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_16</to></ref>
+<ref name="portOf"><to>_97</to></ref>
+</entity>
+<entity id="_57" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_4</to></ref>
+<ref name="portOf"><to>_101</to></ref>
+</entity>
+<entity id="_58" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_15</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_59" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_3</to></ref>
+<ref name="portOf"><to>_103</to></ref>
+</entity>
+<entity id="_60" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_0</to></ref>
+<ref name="portOf"><to>_82</to></ref>
+</entity>
+<entity id="_61" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_19</to></ref>
+<ref name="portOf"><to>_105</to></ref>
+</entity>
+<entity id="_62" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_10</to></ref>
+<ref name="portOf"><to>_97</to></ref>
+</entity>
+<entity id="_63" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_8</to></ref>
+<ref name="portOf"><to>_83</to></ref>
+</entity>
+<entity id="_64" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_10</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_65" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_4</to></ref>
+<ref name="portOf"><to>_82</to></ref>
+</entity>
+<entity id="_66" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_1</to></ref>
+<ref name="portOf"><to>_83</to></ref>
+</entity>
+<entity id="_67" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_5</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_68" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_20</to></ref>
+<ref name="portOf"><to>_103</to></ref>
+</entity>
+<entity id="_69" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_25</to></ref>
+<ref name="portOf"><to>_105</to></ref>
+</entity>
+<entity id="_70" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_27</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_71" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_33</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_72" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_12</to></ref>
+<ref name="portOf"><to>_97</to></ref>
+</entity>
+<entity id="_73" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_7</to></ref>
+<ref name="portOf"><to>_95</to></ref>
+</entity>
+<entity id="_74" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_29</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_75" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_22</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_76" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_30</to></ref>
+<ref name="portOf"><to>_96</to></ref>
+</entity>
+<entity id="_77" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_16</to></ref>
+<ref name="portOf"><to>_87</to></ref>
+</entity>
+<entity id="_78" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_23</to></ref>
+<ref name="portOf"><to>_98</to></ref>
+</entity>
+<entity id="_79" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_3</to></ref>
+<ref name="portOf"><to>_106</to></ref>
+</entity>
+<entity id="_80" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_20</to></ref>
+<ref name="portOf"><to>_107</to></ref>
+</entity>
+<entity id="_81" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_16</to></ref>
+<ref name="portOf"><to>_108</to></ref>
+</entity>
+<entity id="_82" class="eu.insel.block.PLOT">
+<ref name="inPorts"><to>_60</to><to>_65</to><to>_53</to></ref>
+<attr name="blockName"><string>PLOT</string></attr>
+<attr name="blockFunction"><string>fb0044</string></attr>
+<attr name="userBlockNumber"><int>1</int></attr>
+<attr name="inputPortsCount"><int>3</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="title"><string>3kW_p PV in Nürenberg</string></attr>
+<attr name="terminal"><enum>Window</enum></attr>
+<attr name="width"><string>1024</string></attr>
+<attr name="height"><string>768</string></attr>
+<attr name="font"><font>Calibri-plain-18</font></attr>
+<attr name="grid"><bool>false</bool></attr>
+<attr name="axisThickness"><string>1</string></attr>
+<attr name="xLabel"><string>Time</string></attr>
+<attr name="xUnit"><string>HOY</string></attr>
+<attr name="yLabel"><string>Power</string></attr>
+<attr name="yUnit"><string>W</string></attr>
+<attr name="sp1"><string>advanced_plot.gnu</string></attr>
+<attr name="style"><enum>Lines</enum></attr>
+<attr name="curveName1"><string>AC</string></attr>
+<attr name="curveName2"><string>DC</string></attr>
+<attr name="curveName3"><string>#3</string></attr>
+<attr name="curveName4"><string>#4</string></attr>
+<attr name="curveThickness"><string>2</string></attr>
+<attr name="curveColor1"><color>0072bd</color></attr>
+<attr name="curveColor2"><color>d95319</color></attr>
+<attr name="curveColor3"><color>edb120</color></attr>
+<attr name="curveColor4"><color>7e2f8e</color></attr>
+<attr name="curve1YAxis"><enum>Y1</enum></attr>
+<attr name="curve2YAxis"><enum>Y1</enum></attr>
+<attr name="curve3YAxis"><enum>Y1</enum></attr>
+<attr name="curve4YAxis"><enum>Y1</enum></attr>
+<attr name="polar"><bool>false</bool></attr>
+<attr name="logscaleX"><bool>false</bool></attr>
+<attr name="logscaleY"><bool>false</bool></attr>
+</entity>
+<entity id="_83" class="eu.insel.block.G2GDH">
+<ref name="inPorts"><to>_66</to><to>_63</to></ref>
+<ref name="outPorts"><to>_23</to></ref>
+<attr name="blockName"><string>G2GDH</string></attr>
+<attr name="blockFunction"><string>em0009</string></attr>
+<attr name="userBlockNumber"><int>2</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><enum>Orgill</enum></attr>
+</entity>
+<entity id="_84" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_15</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>3</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Azimuth</string></attr>
+</entity>
+<entity id="_85" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_9</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>4</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Albedo</string></attr>
+</entity>
+<entity id="_86" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_5</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>5</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Tilt</string></attr>
+</entity>
+<entity id="_87" class="eu.insel.block.GOH2">
+<ref name="inPorts"><to>_43</to><to>_77</to><to>_39</to><to>_50</to></ref>
+<ref name="outPorts"><to>_8</to></ref>
+<attr name="blockName"><string>GOH2</string></attr>
+<attr name="blockFunction"><string>em0112</string></attr>
+<attr name="userBlockNumber"><int>6</int></attr>
+<attr name="inputPortsCount"><int>4</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Latitude</string></attr>
+<attr name="bp2"><string>Longitude</string></attr>
+<attr name="bp3"><string>Timezone</string></attr>
+</entity>
+<entity id="_88" class="eu.insel.block.ATT">
+<ref name="inPorts"><to>_45</to><to>_55</to></ref>
+<ref name="outPorts"><to>_3</to><to>_20</to></ref>
+<attr name="blockName"><string>ATT</string></attr>
+<attr name="blockFunction"><string>fb0006</string></attr>
+<attr name="userBlockNumber"><int>7</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><string>1000</string></attr>
+</entity>
+<entity id="_89" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>8</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Latitude</string></attr>
+<attr name="constValue"><string>49.5</string></attr>
+</entity>
+<entity id="_90" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>9</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Longitude</string></attr>
+<attr name="constValue"><string>11.08</string></attr>
+</entity>
+<entity id="_91" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>10</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Timezone</string></attr>
+<attr name="constValue"><string>+1</string></attr>
+</entity>
+<entity id="_92" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>11</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Albedo</string></attr>
+<attr name="constValue"><string>0.2</string></attr>
+</entity>
+<entity id="_93" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>12</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Tilt</string></attr>
+<attr name="constValue"><string>30</string></attr>
+</entity>
+<entity id="_94" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>13</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Azimuth</string></attr>
+<attr name="constValue"><string>180</string></attr>
+</entity>
+<entity id="_95" class="eu.insel.block.MPP">
+<ref name="inPorts"><to>_73</to></ref>
+<ref name="outPorts"><to>_14</to><to>_4</to></ref>
+<attr name="blockName"><string>MPP</string></attr>
+<attr name="blockFunction"><string>fb0057</string></attr>
+<attr name="userBlockNumber"><int>14</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><string>0</string></attr>
+<attr name="bp2"><string>800</string></attr>
+<attr name="bp3"><string>0.1</string></attr>
+</entity>
+<entity id="_96" class="eu.insel.block.GENGT2">
+<ref name="inPorts"><to>_70</to><to>_74</to><to>_76</to><to>_49</to><to>_71</to><to>_41</to><to>_75</to><to>_40</to><to>_46</to><to>_64</to></ref>
+<ref name="outPorts"><to>_1</to><to>_19</to></ref>
+<attr name="blockName"><string>GENGT2</string></attr>
+<attr name="blockFunction"><string>em0122</string></attr>
+<attr name="userBlockNumber"><int>15</int></attr>
+<attr name="inputPortsCount"><int>10</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><string>Latitude</string></attr>
+<attr name="bp2"><string>Longitude</string></attr>
+<attr name="bp3"><string>Timezone</string></attr>
+<attr name="bp4"><string>1</string></attr>
+<attr name="bp5"><string>0.0</string></attr>
+<attr name="bp6"><string>0.3</string></attr>
+<attr name="bp7"><string>0.171</string></attr>
+<attr name="bp8"><string>4711</string></attr>
+<attr name="bp9"><string>0.1</string></attr>
+<attr name="bp10"><string>2000</string></attr>
+</entity>
+<entity id="_97" class="eu.insel.block.HOY">
+<ref name="inPorts"><to>_48</to><to>_56</to><to>_72</to><to>_62</to></ref>
+<ref name="outPorts"><to>_0</to></ref>
+<attr name="blockName"><string>HOY</string></attr>
+<attr name="blockFunction"><string>fb0023</string></attr>
+<attr name="userBlockNumber"><int>16</int></attr>
+<attr name="inputPortsCount"><int>4</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+</entity>
+<entity id="_98" class="eu.insel.block.GH2GT2">
+<ref name="inPorts"><to>_47</to><to>_78</to><to>_67</to><to>_58</to><to>_51</to><to>_42</to><to>_35</to><to>_36</to><to>_38</to></ref>
+<ref name="outPorts"><to>_25</to><to>_24</to><to>_13</to><to>_17</to></ref>
+<attr name="blockName"><string>GH2GT2</string></attr>
+<attr name="blockFunction"><string>em0108</string></attr>
+<attr name="userBlockNumber"><int>17</int></attr>
+<attr name="inputPortsCount"><int>9</int></attr>
+<attr name="outputPortsCount"><int>4</int></attr>
+<attr name="bp1"><enum>Hay</enum></attr>
+<attr name="bp2"><string>Latitude</string></attr>
+<attr name="bp3"><string>Longitude</string></attr>
+<attr name="bp4"><string>Timezone</string></attr>
+</entity>
+<entity id="_99" class="eu.insel.block.TOL">
+<ref name="inPorts"><to>_54</to></ref>
+<ref name="outPorts"><to>_11</to></ref>
+<attr name="blockName"><string>TOL</string></attr>
+<attr name="blockFunction"><string>fb0056</string></attr>
+<attr name="userBlockNumber"><int>18</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+</entity>
+<entity id="_100" class="eu.insel.graphics.Text">
+<attr name="width"><int>110</int></attr>
+<attr name="height"><int>29</int></attr>
+<attr name="keepRatio"><bool>false</bool></attr>
+<attr name="borderWidth"><float>1.0</float></attr>
+<attr name="borderColor"><color>black</color></attr>
+<attr name="text"><string>Nurenberg</string></attr>
+</entity>
+<entity id="_101" class="eu.insel.block.CUM">
+<ref name="inPorts"><to>_57</to><to>_44</to></ref>
+<ref name="outPorts"><to>_26</to><to>_6</to></ref>
+<attr name="blockName"><string>CUM</string></attr>
+<attr name="blockFunction"><string>fb0021</string></attr>
+<attr name="userBlockNumber"><int>19</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+</entity>
+<entity id="_102" class="eu.insel.block.IVP">
+<ref name="inPorts"><to>_52</to></ref>
+<ref name="outPorts"><to>_21</to><to>_18</to></ref>
+<attr name="blockName"><string>IVP</string></attr>
+<attr name="blockFunction"><string>se0008</string></attr>
+<attr name="userBlockNumber"><int>20</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><string>4400</string></attr>
+<attr name="bp2"><string>0.00820294</string></attr>
+<attr name="bp3"><string>0.00343103</string></attr>
+<attr name="bp4"><string>0.04632860</string></attr>
+<attr name="sp1"><string>000000</string></attr>
+</entity>
+<entity id="_103" class="eu.insel.block.SCREEN">
+<ref name="inPorts"><to>_59</to><to>_68</to></ref>
+<attr name="blockName"><string>SCREEN</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>21</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="sp1"><string>*</string></attr>
+</entity>
+<entity id="_104" class="eu.insel.block.CLOCK">
+<ref name="outPorts"><to>_22</to><to>_16</to><to>_12</to><to>_10</to></ref>
+<attr name="blockName"><string>CLOCK</string></attr>
+<attr name="blockFunction"><string>fb0024</string></attr>
+<attr name="userBlockNumber"><int>22</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>4</int></attr>
+<attr name="bp1"><string>2002</string></attr>
+<attr name="bp2"><string>1</string></attr>
+<attr name="bp3"><string>1</string></attr>
+<attr name="bp4"><string>0</string></attr>
+<attr name="bp5"><string>0</string></attr>
+<attr name="bp6"><string>0</string></attr>
+<attr name="bp7"><string>2002</string></attr>
+<attr name="bp8"><string>12</string></attr>
+<attr name="bp9"><string>31</string></attr>
+<attr name="bp10"><string>24</string></attr>
+<attr name="bp11"><string>0</string></attr>
+<attr name="bp12"><string>0</string></attr>
+<attr name="bp13"><string>1</string></attr>
+<attr name="sp1"><string>h</string></attr>
+</entity>
+<entity id="_105" class="eu.insel.block.PVI">
+<ref name="inPorts"><to>_37</to><to>_69</to><to>_61</to></ref>
+<ref name="outPorts"><to>_7</to><to>_2</to></ref>
+<attr name="blockName"><string>PVI</string></attr>
+<attr name="blockFunction"><string>se0001</string></attr>
+<attr name="userBlockNumber"><int>23</int></attr>
+<attr name="editorTitle"><string>aleo S 16 175</string></attr>
+<attr name="inputPortsCount"><int>3</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><enum>NoctMode</enum></attr>
+<attr name="bp2"><string>50</string></attr>
+<attr name="bp3"><string>1</string></attr>
+<attr name="bp4"><string>19</string></attr>
+<attr name="bp5"><string>1</string></attr>
+<attr name="bp6"><string>.0276</string></attr>
+<attr name="bp7"><string>1.378</string></attr>
+<attr name="bp8"><string>1.12</string></attr>
+<attr name="bp9"><string>.2939</string></attr>
+<attr name="bp10"><string>.118E-06</string></attr>
+<attr name="bp11"><string>.807941E+04</string></attr>
+<attr name="bp12"><string>0</string></attr>
+<attr name="bp13"><string>.00019441</string></attr>
+<attr name="bp14"><string>.04394167</string></attr>
+<attr name="bp15"><string>1.0160430</string></attr>
+<attr name="bp16"><string>2</string></attr>
+<attr name="bp17"><string>0</string></attr>
+<attr name="bp18"><string>0</string></attr>
+<attr name="bp19"><string>0</string></attr>
+<attr name="bp20"><string>3.0</string></attr>
+<attr name="bp21"><string>-3.0</string></attr>
+<attr name="bp22"><string>1.660</string></attr>
+<attr name="bp23"><string>17.000</string></attr>
+<attr name="bp24"><string>.70</string></attr>
+<attr name="bp25"><string>.85</string></attr>
+<attr name="bp26"><string>900.0</string></attr>
+<attr name="bp27"><string>47.0</string></attr>
+<attr name="bp28"><string>25</string></attr>
+<attr name="bp29"><string>1E-5</string></attr>
+<attr name="bp30"><string>100</string></attr>
+<attr name="sp1"><string>000000</string></attr>
+</entity>
+<entity id="_106" class="eu.insel.block.SCREEN1G">
+<ref name="inPorts"><to>_79</to></ref>
+<attr name="blockName"><string>SCREEN1G</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>24</int></attr>
+<attr name="editorTitle"><string>AC yield [kWh / a]</string></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+</entity>
+<entity id="_107" class="eu.insel.block.SCREEN1G">
+<ref name="inPorts"><to>_80</to></ref>
+<attr name="blockName"><string>SCREEN1G</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>25</int></attr>
+<attr name="editorTitle"><string>DC yield [kWh / a]</string></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+</entity>
+<entity id="_108" class="eu.insel.block.MTMLALO2">
+<ref name="inPorts"><to>_81</to></ref>
+<ref name="outPorts"><to>_27</to><to>_28</to><to>_29</to><to>_30</to><to>_31</to><to>_32</to><to>_33</to><to>_34</to></ref>
+<attr name="blockName"><string>MTMLALO2</string></attr>
+<attr name="blockFunction"><string>em0118</string></attr>
+<attr name="userBlockNumber"><int>26</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>8</int></attr>
+<attr name="bp1"><string>Latitude</string></attr>
+<attr name="bp2"><string>Longitude</string></attr>
+</entity>
+
+<!-- One or more layouts of the VSEit Network above -->
+<layout name="Global Perspective" show-name="false" routing-policy="de.vseit.network.routing.RoutingPolicyOrthogonal" background-color="none" auto-display-new="true">
+<geom node="_92"><layer>1</layer><x>396</x><y>531</y><w>70</w><h>34</h></geom>
+<geom node="_94"><layer>1</layer><x>324</x><y>531</y><w>70</w><h>34</h></geom>
+<geom node="_93"><layer>1</layer><x>252</x><y>531</y><w>70</w><h>34</h></geom>
+<geom node="_34"><layer>1</layer><x>134</x><y>226</y><w>2</w><h>6</h></geom>
+<geom node="_33"><layer>1</layer><x>134</x><y>217</y><w>2</w><h>6</h></geom>
+<geom node="_32"><layer>1</layer><x>134</x><y>208</y><w>2</w><h>6</h></geom>
+<geom node="_31"><layer>1</layer><x>134</x><y>199</y><w>2</w><h>6</h></geom>
+<geom node="_30"><layer>1</layer><x>134</x><y>190</y><w>2</w><h>6</h></geom>
+<geom node="_29"><layer>1</layer><x>134</x><y>181</y><w>2</w><h>6</h></geom>
+<geom node="_28"><layer>1</layer><x>134</x><y>172</y><w>2</w><h>6</h></geom>
+<geom node="_27"><layer>1</layer><x>134</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_81"><layer>1</layer><x>96</x><y>190</y><w>2</w><h>6</h></geom>
+<geom node="_108"><layer>1</layer><x>99</x><y>162</y><w>34</w><h>72</h></geom>
+<geom node="_80"><layer>1</layer><x>771</x><y>334</y><w>2</w><h>6</h></geom>
+<geom node="_107"><layer>1</layer><x>774</x><y>324</y><w>250</w><h>34</h></geom>
+<geom node="_79"><layer>1</layer><x>771</x><y>226</y><w>2</w><h>6</h></geom>
+<geom node="_106"><layer>1</layer><x>774</x><y>216</y><w>250</w><h>34</h></geom>
+<geom node="_91"><layer>1</layer><x>396</x><y>495</y><w>70</w><h>34</h></geom>
+<geom node="_90"><layer>1</layer><x>324</x><y>495</y><w>70</w><h>34</h></geom>
+<geom node="_89"><layer>1</layer><x>252</x><y>495</y><w>70</w><h>34</h></geom>
+<geom node="_68"><layer>1</layer><x>771</x><y>289</y><w>2</w><h>6</h></geom>
+<geom node="_59"><layer>1</layer><x>771</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_103"><layer>1</layer><x>774</x><y>270</y><w>34</w><h>34</h></geom>
+<geom node="_20"><layer>1</layer><x>737</x><y>289</y><w>2</w><h>6</h></geom>
+<geom node="_55"><layer>1</layer><x>699</x><y>289</y><w>2</w><h>6</h></geom>
+<geom node="_3"><layer>1</layer><x>737</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_45"><layer>1</layer><x>699</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_88"><layer>1</layer><x>702</x><y>270</y><w>34</w><h>34</h></geom>
+<geom node="_6"><layer>1</layer><x>674</x><y>289</y><w>2</w><h>6</h></geom>
+<geom node="_44"><layer>1</layer><x>636</x><y>289</y><w>2</w><h>6</h></geom>
+<geom node="_26"><layer>1</layer><x>674</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_57"><layer>1</layer><x>636</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_101"><layer>1</layer><x>639</x><y>270</y><w>34</w><h>34</h></geom>
+<geom node="_100"><layer>1</layer><x>307</x><y>463</y><w>110</w><h>29</h></geom>
+<geom node="_48"><layer>1</layer><x>114</x><y>64</y><w>2</w><h>6</h></geom>
+<geom node="_56"><layer>1</layer><x>114</x><y>73</y><w>2</w><h>6</h></geom>
+<geom node="_72"><layer>1</layer><x>114</x><y>82</y><w>2</w><h>6</h></geom>
+<geom node="_62"><layer>1</layer><x>114</x><y>91</y><w>2</w><h>6</h></geom>
+<geom node="_0"><layer>1</layer><x>152</x><y>73</y><w>2</w><h>6</h></geom>
+<geom node="_97"><layer>1</layer><x>117</x><y>63</y><w>34</w><h>36</h></geom>
+<geom node="_73"><layer>1</layer><x>519</x><y>136</y><w>2</w><h>6</h></geom>
+<geom node="_14"><layer>1</layer><x>557</x><y>127</y><w>2</w><h>6</h></geom>
+<geom node="_4"><layer>1</layer><x>557</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_95"><layer>1</layer><x>522</x><y>126</y><w>34</w><h>34</h></geom>
+<geom node="_5"><layer>1</layer><x>368</x><y>262</y><w>2</w><h>6</h></geom>
+<geom node="_86"><layer>1</layer><x>333</x><y>261</y><w>34</w><h>16</h></geom>
+<geom node="_22"><layer>1</layer><x>53</x><y>64</y><w>2</w><h>6</h></geom>
+<geom node="_16"><layer>1</layer><x>53</x><y>73</y><w>2</w><h>6</h></geom>
+<geom node="_12"><layer>1</layer><x>53</x><y>82</y><w>2</w><h>6</h></geom>
+<geom node="_10"><layer>1</layer><x>53</x><y>91</y><w>2</w><h>6</h></geom>
+<geom node="_104"><layer>1</layer><x>18</x><y>63</y><w>34</w><h>36</h></geom>
+<geom node="_37"><layer>1</layer><x>447</x><y>136</y><w>2</w><h>6</h></geom>
+<geom node="_69"><layer>1</layer><x>447</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_61"><layer>1</layer><x>447</x><y>154</y><w>2</w><h>6</h></geom>
+<geom node="_7"><layer>1</layer><x>485</x><y>136</y><w>2</w><h>6</h></geom>
+<geom node="_2"><layer>1</layer><x>485</x><y>154</y><w>2</w><h>6</h></geom>
+<geom node="_105"><layer>1</layer><x>450</x><y>135</y><w>34</w><h>34</h></geom>
+<geom node="_60"><layer>1</layer><x>789</x><y>73</y><w>2</w><h>6</h></geom>
+<geom node="_65"><layer>1</layer><x>789</x><y>82</y><w>2</w><h>6</h></geom>
+<geom node="_53"><layer>1</layer><x>789</x><y>91</y><w>2</w><h>6</h></geom>
+<geom node="_82"><layer>1</layer><x>792</x><y>72</y><w>34</w><h>34</h></geom>
+<geom node="_15"><layer>1</layer><x>386</x><y>280</y><w>2</w><h>6</h></geom>
+<geom node="_84"><layer>1</layer><x>333</x><y>279</y><w>52</w><h>16</h></geom>
+<geom node="_9"><layer>1</layer><x>386</x><y>298</y><w>2</w><h>6</h></geom>
+<geom node="_85"><layer>1</layer><x>333</x><y>297</y><w>52</w><h>16</h></geom>
+<geom node="_54"><layer>1</layer><x>357</x><y>136</y><w>2</w><h>6</h></geom>
+<geom node="_11"><layer>1</layer><x>395</x><y>136</y><w>2</w><h>6</h></geom>
+<geom node="_99"><layer>1</layer><x>360</x><y>126</y><w>34</w><h>34</h></geom>
+<geom node="_70"><layer>1</layer><x>213</x><y>181</y><w>2</w><h>6</h></geom>
+<geom node="_74"><layer>1</layer><x>213</x><y>190</y><w>2</w><h>6</h></geom>
+<geom node="_76"><layer>1</layer><x>213</x><y>199</y><w>2</w><h>6</h></geom>
+<geom node="_49"><layer>1</layer><x>213</x><y>208</y><w>2</w><h>6</h></geom>
+<geom node="_71"><layer>1</layer><x>213</x><y>217</y><w>2</w><h>6</h></geom>
+<geom node="_41"><layer>1</layer><x>213</x><y>226</y><w>2</w><h>6</h></geom>
+<geom node="_75"><layer>1</layer><x>213</x><y>235</y><w>2</w><h>6</h></geom>
+<geom node="_40"><layer>1</layer><x>213</x><y>244</y><w>2</w><h>6</h></geom>
+<geom node="_46"><layer>1</layer><x>213</x><y>253</y><w>2</w><h>6</h></geom>
+<geom node="_64"><layer>1</layer><x>213</x><y>262</y><w>2</w><h>6</h></geom>
+<geom node="_1"><layer>1</layer><x>251</x><y>208</y><w>2</w><h>6</h></geom>
+<geom node="_19"><layer>1</layer><x>251</x><y>235</y><w>2</w><h>6</h></geom>
+<geom node="_96"><layer>1</layer><x>216</x><y>180</y><w>34</w><h>90</h></geom>
+<geom node="_52"><layer>1</layer><x>618</x><y>199</y><w>2</w><h>6</h></geom>
+<geom node="_21"><layer>1</layer><x>656</x><y>190</y><w>2</w><h>6</h></geom>
+<geom node="_18"><layer>1</layer><x>656</x><y>208</y><w>2</w><h>6</h></geom>
+<geom node="_102"><layer>1</layer><x>621</x><y>189</y><w>34</w><h>34</h></geom>
+<geom node="_43"><layer>1</layer><x>213</x><y>298</y><w>2</w><h>6</h></geom>
+<geom node="_77"><layer>1</layer><x>213</x><y>307</y><w>2</w><h>6</h></geom>
+<geom node="_39"><layer>1</layer><x>213</x><y>316</y><w>2</w><h>6</h></geom>
+<geom node="_50"><layer>1</layer><x>213</x><y>325</y><w>2</w><h>6</h></geom>
+<geom node="_8"><layer>1</layer><x>251</x><y>307</y><w>2</w><h>6</h></geom>
+<geom node="_87"><layer>1</layer><x>216</x><y>297</y><w>34</w><h>36</h></geom>
+<geom node="_66"><layer>1</layer><x>339</x><y>217</y><w>2</w><h>6</h></geom>
+<geom node="_63"><layer>1</layer><x>339</x><y>235</y><w>2</w><h>6</h></geom>
+<geom node="_23"><layer>1</layer><x>377</x><y>226</y><w>2</w><h>6</h></geom>
+<geom node="_83"><layer>1</layer><x>342</x><y>216</y><w>34</w><h>34</h></geom>
+<geom node="_47"><layer>1</layer><x>510</x><y>217</y><w>2</w><h>6</h></geom>
+<geom node="_78"><layer>1</layer><x>510</x><y>226</y><w>2</w><h>6</h></geom>
+<geom node="_67"><layer>1</layer><x>510</x><y>235</y><w>2</w><h>6</h></geom>
+<geom node="_58"><layer>1</layer><x>510</x><y>244</y><w>2</w><h>6</h></geom>
+<geom node="_51"><layer>1</layer><x>510</x><y>253</y><w>2</w><h>6</h></geom>
+<geom node="_42"><layer>1</layer><x>510</x><y>262</y><w>2</w><h>6</h></geom>
+<geom node="_35"><layer>1</layer><x>510</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_36"><layer>1</layer><x>510</x><y>280</y><w>2</w><h>6</h></geom>
+<geom node="_38"><layer>1</layer><x>510</x><y>289</y><w>2</w><h>6</h></geom>
+<geom node="_25"><layer>1</layer><x>548</x><y>217</y><w>2</w><h>6</h></geom>
+<geom node="_24"><layer>1</layer><x>548</x><y>226</y><w>2</w><h>6</h></geom>
+<geom node="_13"><layer>1</layer><x>548</x><y>235</y><w>2</w><h>6</h></geom>
+<geom node="_17"><layer>1</layer><x>548</x><y>244</y><w>2</w><h>6</h></geom>
+<geom node="_98"><layer>1</layer><x>513</x><y>216</y><w>34</w><h>81</h></geom>
+</layout>
+<insel-file><![CDATA[
+B 1 PLOT
+   16.1
+   14.2
+   20.1
+P 1
+    'advanced_plot.gnu' % Gnuplot file name
+
+B 2 G2GDH
+   15.1
+    6.1
+P 2
+    0               % Model
+
+B 3 CONST
+P 3
+    Azimuth         % Constant value
+
+B 4 CONST
+P 4
+    Albedo          % Constant value
+
+B 5 CONST
+P 5
+    Tilt            % Constant value
+
+B 6 GOH2
+   22.1
+   22.2
+   22.3
+   22.4
+P 6
+    Latitude        % Latitude
+    Longitude       % Longitude
+    Timezone        % UTC Time zone
+
+B 7 ATT
+   19.1
+   19.2
+P 7
+    1000            % Attenuation factor a
+
+C   Latitude
+    49.5            % Define global constant -- Block number : 8
+C   Longitude
+    11.08           % Define global constant -- Block number : 9
+C   Timezone
+    +1              % Define global constant -- Block number : 10
+C   Albedo
+    0.2             % Define global constant -- Block number : 11
+C   Tilt
+    30              % Define global constant -- Block number : 12
+C   Azimuth
+    180             % Define global constant -- Block number : 13
+B 14 MPP
+   23.1
+P 14
+    0               % Lower limit
+    800             % Upper limit
+    0.1             % Error tolerance
+
+B 15 GENGT2
+   26.1
+   26.3
+   26.4
+   26.5
+   26.7
+   26.8
+   22.1
+   22.2
+   22.3
+   22.4
+P 15
+    Latitude        % Latitude
+    Longitude       % Longitude
+    Timezone        % UTC Time zone
+    1               % Variance factor of the Gordon Reddy correlation
+    0.0             % Year-to-year variability
+    0.3             % Autocorrelation coefficient lag one
+    0.171           % Autocorrelation coefficient lag two
+    4711            % Initialisation of random number generator
+    0.1             % Maximum allowed mean temperature deviation
+    2000            % Maximum number of iterations
+
+B 16 HOY
+   22.1
+   22.2
+   22.3
+   22.4
+
+B 17 GH2GT2
+   15.1
+    2.1
+    5.1
+    3.1
+    4.1
+   22.1
+   22.2
+   22.3
+   22.4
+P 17
+    4               % Model
+    Latitude        % Latitude
+    Longitude       % Longitude
+    Timezone        % UTC Time zone
+
+B 18 TOL
+   14.1
+
+B 19 CUM
+   14.2
+   20.1
+
+B 20 IVP
+   14.2
+P 20
+    4400            % Nominal DC power
+    0.00820294      % Normalized self consumption
+    0.00343103      % Normalized voltage losses
+    0.04632860      % Normalized ohmic losses
+    '000000'        % Inverter ID
+
+B 21 SCREEN
+    7.1
+    7.2
+P 21
+    '*'             % Format
+
+B 22 CLOCK
+P 22
+    2002            % Start year
+    1               % Start month
+    1               % Start day
+    0               % Start hour
+    0               % Start minute
+    0               % Start second
+    2002            % End year
+    12              % End month
+    31              % End day
+    24              % End hour
+    0               % End minute
+    0               % End second
+    1               % Increment
+    'h'             % Unit
+
+B 23 PVI             % aleo S 16 175
+   18.1
+   17.1
+   15.2
+P 23
+    2               % Module temperature is
+    50              % Number of cells in series per module
+    1               % Number of cells in parallel per module
+    19              % Number of modules in series
+    1               % Number of modules in parallel
+    .0276           % Single cell area
+    1.378           % Single module area
+    1.12            % Band gap
+    .2939           % Coefficient of short-circuit current density
+    .118E-06        % Temperature coefficient of short-circuit current
+    .807941E+04     % Coefficient of saturation current density (Shockley diode)
+    0               % Coefficient of saturation current density (Recombination diode)
+    .00019441       % Series resistance
+    .04394167       % Parallel resistance
+    1.0160430       % Diode ideality factor alpha
+    2               % Diode ideality factor beta
+    0               % Bishop parameter a
+    0               % Bishop parameter M
+    0               % Bishop parameter Vbr
+    3.0             % Module tolerance plus
+    -3.0            % Module tolerance minus
+    1.660           % Characteristic module length
+    17.000          % Module weight
+    .70             % Absorption coefficient
+    .85             % Emission factor
+    900.0           % Specific heat of a module
+    47.0            % Nominal operating cell temperature
+    25              % Initial cell temperature
+    1E-5            % Single cell voltage error tolerance
+    100             % Maximum number of iterations
+    '000000'        % Product ID
+
+B 24 SCREEN1G        % AC yield [kWh / a]
+    7.1
+
+B 25 SCREEN1G        % DC yield [kWh / a]
+    7.2
+
+B 26 MTMLALO2
+   22.2
+P 26
+    Latitude        % Latitude
+    Longitude       % Longitude
+
+]]>
+</insel-file>
+</vseit-network>
