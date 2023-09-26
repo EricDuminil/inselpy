@@ -49,6 +49,8 @@ class TestTemplatesWithConstants(CustomAssertions):
                              insel.template('constants/string_constant'))
         self.assertListEqual([326, 300, 250, 168, 122, 101, 107, 141, 198, 244, 302, 335],
                              insel.template('constants/string_constant', location_name='Perth'))
+        self.assertRaisesRegex(InselError, 'Location not found', insel.template,
+                               'constants/string_constant', location_name='NotACity')
 
     def test_example_vseit(self):
         # PV in Nurnberg:
