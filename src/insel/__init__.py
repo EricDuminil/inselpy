@@ -48,12 +48,27 @@ def template(template_path, **parameters):
     If template_path is an absolute path, the corresponding template will be used.
     If template_path is a relative path, the template will be searched in templates/ folder.
 
+    Templates can either be .insel or .vseit files.
+    If template_path has no extension, '.insel' will be appended by default.
+
+    Parameters can either be:
+        * INSEL C constants ("C XYZ 123")
+        * Vseit constants ("Define global constant")
+        * $ XYZ || 123 $ placeholders.
+
+    Values can either be:
+        * integers
+        * floats
+        * strings
+        * lists
 
     >>> insel.template('a_times_b', a=7, b=3)
     21.0
     >>> insel.template('photovoltaic/i_sc',
           pv_id='008823', temperature=25, irradiance=1000)
     5.87388
+    >>> insel.template('constants/x_plus_y.vseit', x=5, y=5)
+    10.0
     """
     return Template(template_path, **parameters).run()
 

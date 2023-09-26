@@ -8,7 +8,21 @@ from .insel import Insel
 
 class Template(TemporaryModel):
     """
-    TODO: Document
+    Allows to modify parameters inside an INSEL or Vseit model, run the model,
+    and return the results. It can be convenient for parametric analyses.
+
+    If template_path is an absolute path, the corresponding template will be used.
+    If template_path is a relative path, the template will be searched in templates/ folder.
+
+    Templates can either be .insel or .vseit files.
+    If template_path has no extension, '.insel' will be appended by default.
+
+    Parameters can either be:
+        * INSEL C constants ("C XYZ 123")
+        * Vseit constants ("Define global constant")
+        * $ XYZ || 123 $ placeholders.
+
+    Values can either be integers, floats, strings or lists.
     """
     # dirname is relative to current working directory.
     # NOTE: It should not be resolved yet, because CWD might change after "import insel"
