@@ -15,8 +15,8 @@ coverage: ## Check tests coverage
 
 clean: ## Remove pyc and pycache
 	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
-	find dist -type f -name '*.tar.gz' -delete
-	find dist -type f -name '*.whl' -delete
+	rm -f dist/*.tar.gz
+	rm -f dist/*.whl
 	#NOTE: .egg-info holds too much information
 	rm -rf src/insel.egg-info/
 
