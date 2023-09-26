@@ -70,6 +70,22 @@ print((insel.template('weather/average_irradiance_on_tilted_surface',
                       timezone=timezone)))
 # => 195.8578
 ```
+## Vseit models
+
+Insel graphical models (Vseit) are valid templates. Constants defined by `Define global constant` block can be modified in Python.
+
+If no value is specified in Python, the value defined in the block will be used by default.
+
+```
+>>> insel.template('constants/x_plus_y.vseit')
+3.0
+>>> insel.template('constants/x_plus_y.vseit', x=5)
+7.0
+>>> insel.template('constants/x_plus_y.vseit', x=5, y=5)
+10.0
+```
+
+If the Vseit model contains a PLOT block, it will be deactivated by default. In order to launch gnuplot anyway, `insel.template('model.vseit', gnuplot=True)` can be used.
 
 ## INSEL models
 
