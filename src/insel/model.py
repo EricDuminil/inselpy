@@ -39,8 +39,8 @@ class Model(object):
                         table.append(values)
             return self.extract(table)
         else:
-            raise InselError("Problem with INSEL\n%s\n%s\n%s\n" %
-                             ('#' * 30, raw, '#' * 30))
+            line = '#' * 30
+            raise InselError(f"Problem with INSEL\n{line}\n{raw}\n{line}\n")
 
     def parse_line(self, line: str) -> Optional[Union[Row, float]]:
         if Insel.warning.search(line):
