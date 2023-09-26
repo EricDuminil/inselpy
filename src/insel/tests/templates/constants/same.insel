@@ -1,0 +1,20 @@
+C   x
+    $ x $               % Define global constant -- Block number : 1
+C   y
+    $ y || 2.5 $          % Define global constant -- Block number : 2
+B 3 CONST
+P 3
+    x               % Constant value
+
+B 4 CONST
+P 4
+    y               % Constant value
+
+B 5 SUM
+    3.1
+    4.1
+
+B 6 SCREEN
+    5.1
+P 6
+    '*'             % Format

@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- XML for representing entities of a VSEit Network with their attributes and relationships-->
+
+<vseit-network xmlns:xlink="http://www.w3.org/1999/xlink" client-class="eu.insel.vseit.InselVseit" client-class-version="9" first-id="0" entity-count="12">
+<entity id="_0" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>1</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>x</string></attr>
+<attr name="constValue"><string>1</string></attr>
+</entity>
+<entity id="_1" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>2</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>y</string></attr>
+<attr name="constValue"><string>2</string></attr>
+</entity>
+<entity id="_2" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_5</to></ref>
+<ref name="portOf"><to>_10</to></ref>
+</entity>
+<entity id="_3" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_6</to></ref>
+<ref name="portOf"><to>_10</to></ref>
+</entity>
+<entity id="_4" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_7</to></ref>
+<ref name="portOf"><to>_11</to></ref>
+</entity>
+<entity id="_5" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_2</to></ref>
+<ref name="portOf"><to>_8</to></ref>
+</entity>
+<entity id="_6" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_3</to></ref>
+<ref name="portOf"><to>_9</to></ref>
+</entity>
+<entity id="_7" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_4</to></ref>
+<ref name="portOf"><to>_10</to></ref>
+</entity>
+<entity id="_8" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_5</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>3</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>x</string></attr>
+</entity>
+<entity id="_9" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_6</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>4</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>y</string></attr>
+</entity>
+<entity id="_10" class="eu.insel.block.SUM">
+<ref name="inPorts"><to>_2</to><to>_3</to></ref>
+<ref name="outPorts"><to>_7</to></ref>
+<attr name="blockName"><string>SUM</string></attr>
+<attr name="blockFunction"><string>fb0002</string></attr>
+<attr name="userBlockNumber"><int>5</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+</entity>
+<entity id="_11" class="eu.insel.block.SCREEN">
+<ref name="inPorts"><to>_4</to></ref>
+<attr name="blockName"><string>SCREEN</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>6</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="sp1"><string>*</string></attr>
+</entity>
+
+<!-- One or more layouts of the VSEit Network above -->
+<layout name="Default" show-name="false" routing-policy="de.vseit.network.routing.RoutingPolicyOrthogonal" background-color="none" auto-display-new="true">
+<geom node="_4"><layer>1</layer><x>357</x><y>73</y><w>2</w><h>6</h></geom>
+<geom node="_11"><layer>1</layer><x>360</x><y>63</y><w>34</w><h>34</h></geom>
+<geom node="_7"><layer>1</layer><x>332</x><y>73</y><w>2</w><h>6</h></geom>
+<geom node="_3"><layer>1</layer><x>294</x><y>82</y><w>2</w><h>6</h></geom>
+<geom node="_2"><layer>1</layer><x>294</x><y>64</y><w>2</w><h>6</h></geom>
+<geom node="_10"><layer>1</layer><x>297</x><y>63</y><w>34</w><h>34</h></geom>
+<geom node="_6"><layer>1</layer><x>269</x><y>91</y><w>2</w><h>6</h></geom>
+<geom node="_9"><layer>1</layer><x>234</x><y>90</y><w>34</w><h>16</h></geom>
+<geom node="_5"><layer>1</layer><x>269</x><y>55</y><w>2</w><h>6</h></geom>
+<geom node="_8"><layer>1</layer><x>234</x><y>54</y><w>34</w><h>16</h></geom>
+<geom node="_1"><layer>1</layer><x>315</x><y>153</y><w>70</w><h>34</h></geom>
+<geom node="_0"><layer>1</layer><x>216</x><y>153</y><w>70</w><h>34</h></geom>
+</layout>
+<insel-file><![CDATA[
+C   x
+    1               % Define global constant -- Block number : 1
+C   y
+    2               % Define global constant -- Block number : 2
+B 3 CONST
+P 3
+    x               % Constant value
+
+B 4 CONST
+P 4
+    y               % Constant value
+
+B 5 SUM
+    3.1
+    4.1
+
+B 6 SCREEN
+    5.1
+P 6
+    '*'             % Format
+
+]]>
+</insel-file>
+</vseit-network>

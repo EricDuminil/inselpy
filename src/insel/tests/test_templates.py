@@ -32,6 +32,49 @@ class TestBasicTemplates(CustomAssertions):
             'array_parameters', x={0: 1, 1: 3, 2: 2}))
 
 
+class TestTemplatesWithConstants(CustomAssertions):
+    def test_vseit_is_a_template(self):
+        # A Vseit model should be a template with default values
+        self.assertEqual(3, insel.run('templates/constants/x_plus_y.vseit'))
+        self.assertEqual(3, insel.template('constants/x_plus_y.vseit'))
+
+    def test_setting_constants_in_vseit(self):
+        self.assertEqual(5, insel.template(
+            'constants/x_plus_y.vseit', x=2, y=3))
+        self.assertEqual(4, insel.template('constants/x_plus_y.vseit', x=2))
+        self.assertEqual(4, insel.template('constants/x_plus_y.vseit', y=3))
+
+    def test_setting_string_constants_in_vseit(self):
+        self.assertListEqual([72, 109, 173, 227, 257, 279, 301, 270, 200, 132, 83, 74],
+                             insel.template('constants/string_constant'))
+        self.assertListEqual([326, 300, 250, 168, 122, 101, 107, 141, 198, 244, 302, 335],
+                             insel.template('constants/string_constant', location_name='Perth'))
+
+    def test_example_vseit(self):
+        # PV in Nurnberg:
+        self.compareLists([3866, 3652],
+                          insel.template('constants/nurnberg.vseit'), places=0)
+        # PV in Phoenix
+        self.compareLists([6560, 6260],
+                          insel.template('constants/nurnberg.vseit',
+                                         Latitude=33,
+                                         Longitude=-112,
+                                         Tilt=10,
+                                         Timezone=-7),
+                          places=-1)
+
+    def test_placeholder_over_constant(self):
+        self.assertEqual(12, insel.template('constants/both',
+                                            placeholder_x=5,
+                                            placeholder_y=7))
+        self.assertEqual(12, insel.template('constants/both', placeholder_x=5, placeholder_y=7,
+                                            constant_x=0, constant_y=0))
+        self.assertEqual(5, insel.template('constants/conflict', x=3, y=5))
+
+    def test_both_placeholder_and_constant(self):
+        self.assertEqual(3.7, insel.template('constants/same', x=1.2))
+
+
 class TestTemplates(CustomAssertions):
     def test_empty_if(self):
         self.assertEqual(insel.template('empty_if'), [])
@@ -258,7 +301,8 @@ class TestTemplates(CustomAssertions):
         dat_file = Path(tempfile.gettempdir(), 'a' * 50 + '.txt')
         dat_file.unlink(missing_ok=True)
         insel.template('io/write_params', dat_file=dat_file.name)
-        self.assertTrue(dat_file.exists(), f"{dat_file} should have been written")
+        self.assertTrue(dat_file.exists(),
+                        f"{dat_file} should have been written")
         dat_file.unlink()
 
     def test_write_block_fails_if_folder_missing(self):

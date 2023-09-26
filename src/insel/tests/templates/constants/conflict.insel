@@ -1,0 +1,14 @@
+C   x
+    $ y || 1 $
+C   y
+    $ x || 2 $
+B 3 CONST
+P 3
+    x
+B 4 CONST
+P 4
+    y
+B 6 SCREEN
+    3.1 % x Constant, y placeholder
+P 6
+    '*'             % Format
