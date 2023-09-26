@@ -4,8 +4,9 @@ from .model import Model
 from .insel import Insel
 
 
-# NOTE: Abstract class
 class TemporaryModel(Model):
+    """Abstract class, e.g. for OneBlockModel or Template"""
+
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
             mode='w+', suffix=Insel.extension, prefix=f'python_{self.name}_',
@@ -21,4 +22,5 @@ class TemporaryModel(Model):
             os.remove(self.path)
 
     def content(self) -> str:
-        raise NotImplementedError(f"Implement {self.__class__.__name__}.content() !")
+        raise NotImplementedError(
+            f"Implement {self.__class__.__name__}.content() !")

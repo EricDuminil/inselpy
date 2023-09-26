@@ -4,6 +4,11 @@ from .insel import Insel
 
 
 class ExistingModel(Model):
+    """
+    Existing INSEL or Vseit models.
+    Additional flags can be passed as params.
+    """
+
     def __init__(self, *params):
         super().__init__()
         self.params = list(params)

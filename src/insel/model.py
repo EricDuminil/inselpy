@@ -10,7 +10,10 @@ Table = List[Union[float, Row]]
 
 
 class Model(object):
-    """Abstract class"""
+    """Abstract class
+
+    describes a runnable INSEL model. Its content can be generated dynamically,
+    read from a file, or modified from a template."""
 
     def __init__(self) -> None:
         self.warnings: List[str] = []
@@ -34,7 +37,8 @@ class Model(object):
             line: str
             for line in output.split("\n"):
                 if line:
-                    values: Optional[Union[float, List[float]]] = self.parse_line(line)
+                    values: Optional[Union[float, List[float]]
+                                     ] = self.parse_line(line)
                     if values is not None:
                         table.append(values)
             return self.extract(table)
