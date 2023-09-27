@@ -75,6 +75,7 @@ def template(template_path: str | Path, **parameters):
     """
     return Template(template_path, **parameters).run()
 
+
 def plot(template_path, **parameters):
     return Plot(template_path, **parameters).run()
 
