@@ -18,7 +18,7 @@ class OneBlockModel(TemporaryModel):
                  parameters: List[Parameter] = None, outputs: int = 1):
         super().__init__()
         self.name = name
-        self.parameters: List[str] = ["'%s'" % p if isinstance(p, str)
+        self.parameters: List[str] = [f"'{p!s}'" if isinstance(p, str)
                                       else str(p) for p in parameters]
         self.inputs: Sequence[float] = inputs
         self.n_in: int = len(inputs)
@@ -31,26 +31,25 @@ class OneBlockModel(TemporaryModel):
         screen_id: int = self.n_in + 2
 
         for i, arg in enumerate(self.inputs, 1):
-            input_ids.append("%s.1" % i)
+            input_ids.append(f"{i:d}.1")
             if math.isnan(arg):
-                lines.append("s %d NAN" % i)
+                lines.append(f"s {i:d} NAN")
             elif math.isinf(arg):
                 if arg > 0:
-                    lines.append("s %d INFINITY" % i)
+                    lines.append(f"s {i:d} INFINITY")
                 else:
-                    lines.append("s %d INFINITY" % (1000 + i))
-                    lines.append("s %d CHS %d" % (i, 1000 + i))
+                    lines.append(f"s {1000 + i:d} INFINITY")
+                    lines.append(f"s {i:d} CHS {1000 + i:d}")
             else:
-                lines.append("s %d CONST" % i)
-                lines.append("p %d" % i)
-                lines.append("\t%r" % arg)
+                lines.append(f"s {i:d} CONST")
+                lines.append(f"p {i:d}")
+                lines.append(f"\t{arg!r}")
 
-        lines.append("s %d %s %s" %
-                     (block_id, self.name.upper(), " ".join(input_ids)))
+        lines.append(f"s {block_id:d} {self.name.upper()} {' '.join(input_ids)}")
         if self.parameters:
-            lines.append("p %d %s" % (block_id, " ".join(self.parameters)))
+            lines.append(f"p {block_id:d} {' '.join(self.parameters)}")
 
-        lines.append(("s %d SCREEN " % screen_id) +
-                     ' '.join("%d.%d" % (block_id, i + 1) for i in range(self.n_out)))
+        screen_inputs = ' '.join(f"{block_id:d}.{i + 1:d}" for i in range(self.n_out))
+        lines.append(f"s {screen_id:d} SCREEN {screen_inputs}")
 
         return "\n".join(lines)
