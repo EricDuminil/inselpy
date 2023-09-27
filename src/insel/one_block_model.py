@@ -5,6 +5,15 @@ from .insel import Parameter
 
 
 class OneBlockModel(TemporaryModel):
+    """This model is used to calculate the output of one specific block.
+
+    In order to get the block's output, the inputs need to be defined as constants,
+    and a SCREEN block needs to display the output.
+
+    The inputs might be floats, infinity or NaN.
+
+    By default, only one output is shown.
+    """
     def __init__(self, name: str = '', inputs: Sequence[float] = None,
                  parameters: List[Parameter] = None, outputs: int = 1):
         super().__init__()

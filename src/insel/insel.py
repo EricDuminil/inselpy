@@ -29,6 +29,7 @@ def get_config():
 
 
 class Insel(object):
+    """Utility class, containing config, warnings and outputs"""
     calls: int = 0
     config = get_config()
     dirname: Path = Path(os.environ.get('INSEL_HOME', config['dirname']))

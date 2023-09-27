@@ -1,2 +1,2 @@
 class InselError(Exception):
-    pass
+    """Any Error thrown by INSEL"""
