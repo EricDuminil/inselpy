@@ -8,4 +8,4 @@ os.chdir(SCRIPT_DIR)
 
 class TestBasicPlots(CustomAssertions):
     def test_plot_sin(self):
-        insel.plot('plots/sine')
+        insel.plot('plots/sine', x_max=720)

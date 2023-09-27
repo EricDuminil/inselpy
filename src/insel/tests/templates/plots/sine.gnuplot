@@ -11,4 +11,4 @@ set ytics nomirror
 set xtics nomirror
 set output '$plot_folder$/sine.png'
 set terminal pngcairo font 'Calibri, 16' size 1400, 800
-plot "$result_folder$/insel.gpl" title "My Sine"
+plot "$result_folder$/insel.gpl" title "My $ template_name $"

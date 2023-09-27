@@ -26,7 +26,7 @@ class Plot(Template):
     def add_defaults_to(self, parameters):
         parameters = super().add_defaults_to(parameters)
         defaults = {
-            'plot_folder': Path('.'),
+            'plot_folder': Path('plots/'),
             'result_folder': (Path(os.getenv('APPDATA')) / 'INSEL_8_3/tmp').as_posix()
         }
         defaults.update(parameters)
