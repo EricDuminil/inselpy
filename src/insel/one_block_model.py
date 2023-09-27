@@ -18,7 +18,7 @@ class OneBlockModel(TemporaryModel):
                  parameters: List[Parameter] = None, outputs: int = 1):
         super().__init__()
         self.name = name
-        self.parameters: List[str] = [f"'{p!s}'" if isinstance(p, str)
+        self.parameters: List[str] = [f"'{p}'" if isinstance(p, str)
                                       else str(p) for p in parameters]
         self.inputs: Sequence[float] = inputs
         self.n_in: int = len(inputs)
@@ -31,25 +31,25 @@ class OneBlockModel(TemporaryModel):
         screen_id: int = self.n_in + 2
 
         for i, arg in enumerate(self.inputs, 1):
-            input_ids.append(f"{i:d}.1")
+            input_ids.append(f"{i}.1")
             if math.isnan(arg):
-                lines.append(f"s {i:d} NAN")
+                lines.append(f"s {i} NAN")
             elif math.isinf(arg):
                 if arg > 0:
-                    lines.append(f"s {i:d} INFINITY")
+                    lines.append(f"s {i} INFINITY")
                 else:
-                    lines.append(f"s {1000 + i:d} INFINITY")
-                    lines.append(f"s {i:d} CHS {1000 + i:d}")
+                    lines.append(f"s {1000 + i} INFINITY")
+                    lines.append(f"s {i} CHS {1000 + i}")
             else:
-                lines.append(f"s {i:d} CONST")
-                lines.append(f"p {i:d}")
+                lines.append(f"s {i} CONST")
+                lines.append(f"p {i}")
                 lines.append(f"\t{arg!r}")
 
-        lines.append(f"s {block_id:d} {self.name.upper()} {' '.join(input_ids)}")
+        lines.append(f"s {block_id} {self.name.upper()} {' '.join(input_ids)}")
         if self.parameters:
-            lines.append(f"p {block_id:d} {' '.join(self.parameters)}")
+            lines.append(f"p {block_id} {' '.join(self.parameters)}")
 
-        screen_inputs = ' '.join(f"{block_id:d}.{i + 1:d}" for i in range(self.n_out))
-        lines.append(f"s {screen_id:d} SCREEN {screen_inputs}")
+        screen_inputs = ' '.join(f"{block_id}.{i + 1}" for i in range(self.n_out))
+        lines.append(f"s {screen_id} SCREEN {screen_inputs}")
 
         return "\n".join(lines)
