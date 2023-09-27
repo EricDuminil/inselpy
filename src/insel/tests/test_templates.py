@@ -69,7 +69,8 @@ class TestTemplatesWithConstants(CustomAssertions):
         self.assertEqual(12, insel.template('constants/placeholder_too',
                                             placeholder_x=5,
                                             placeholder_y=7))
-        self.assertEqual(12, insel.template('constants/placeholder_too', placeholder_x=5, placeholder_y=7,
+        self.assertEqual(12, insel.template('constants/placeholder_too',
+                                            placeholder_x=5, placeholder_y=7,
                                             constant_x=0, constant_y=0))
         self.assertEqual(5, insel.template('constants/conflict', x=3, y=5))
 
