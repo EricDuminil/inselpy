@@ -6,6 +6,7 @@ from typing import Union
 import subprocess
 from .template import Template
 from .model import Row, Table
+from .insel import Insel
 
 COMMAND = 'gnuplot'
 EXT = '.gnuplot'
@@ -27,7 +28,7 @@ class Plot(Template):
         parameters = super().add_defaults_to(parameters)
         defaults = {
             'plot_folder': Path('plots/'),
-            'result_folder': (Path(os.getenv('APPDATA')) / 'INSEL_8_3/tmp').as_posix()
+            'result_folder': Insel.plot_path
         }
         defaults.update(parameters)
         return defaults

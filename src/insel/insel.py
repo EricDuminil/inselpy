@@ -19,11 +19,11 @@ def get_config():
     system = platform.system().lower()
 
     default_configs = {
-        'linux': {'dirname': "/usr/local/insel/", 'command': 'insel'},
+        'linux': {'dirname': "/usr/local/insel/", 'command': 'insel', 'plot_path': Path.home() / '.insel_8_3' / 'tmp'},
         'windows': {'dirname': Path(os.getenv('ProgramFiles', '')) / 'insel',
+                    'plot_path': Path(os.getenv('APPDATA', '')) / 'INSEL_8_3' / 'tmp',
                     'command': 'insel.exe'},
-        'darwin': {'dirname': "/usr/local/insel/", 'command': 'insel'}
-        #TODO: Add gnuplot path here
+        'darwin': {'dirname': "/usr/local/insel/", 'command': 'insel', 'plot_path': Path.home() / '.insel_8_3' / 'tmp'}
     }
 
     return default_configs[system]
@@ -34,6 +34,7 @@ class Insel(object):
     calls: int = 0
     config = get_config()
     dirname: Path = Path(os.environ.get('INSEL_HOME', config['dirname']))
+    plot_path: Path =  config['plot_path']
     command = config['command']
     if shutil.which(command) is None:
         # If insel is not in PATH, use absolute path.
