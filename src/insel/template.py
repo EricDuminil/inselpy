@@ -106,6 +106,7 @@ class Template(TemporaryModel):
             "data_folder": Template.dirname.parent / "data",
             "template_folder": Template.dirname,
             "gnuplot": False,
+            "template_name": self.name,
         }
         defaults.update(parameters)
         return defaults

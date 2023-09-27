@@ -1,6 +1,7 @@
 import os
 import re
 import tempfile
+from pathlib import Path
 from typing import Union
 import subprocess
 from .template import Template
@@ -21,6 +22,15 @@ class Plot(Template):
         result = super().run()
         self._plot()
         return result
+
+    def add_defaults_to(self, parameters):
+        parameters = super().add_defaults_to(parameters)
+        defaults = {
+            'plot_folder': Path('.'),
+            'result_folder': (Path(os.getenv('APPDATA')) / 'INSEL_8_3/tmp').as_posix()
+        }
+        defaults.update(parameters)
+        return defaults
 
     def _plot_content(self):
         with open(self.gnuplot_path,
