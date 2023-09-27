@@ -9,10 +9,9 @@ from .insel import Parameter
 from .insel_error import InselError as InselError
 from .one_block_model import OneBlockModel
 from .template import Template
+from .plot import Plot
 
-__version__ = "0.0.8"
-
-# TODO: Add gnuplot functions
+__version__ = "0.0.9b"
 
 
 def block(
@@ -75,6 +74,9 @@ def template(template_path: str | Path, **parameters):
     10.0
     """
     return Template(template_path, **parameters).run()
+
+def plot(template_path, **parameters):
+    return Plot(template_path, **parameters).run()
 
 
 def run(path: Path):
