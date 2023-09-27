@@ -37,19 +37,19 @@ class TestExistingModel(CustomAssertions):
                                insel.run, 'not_even_a_file.csv')
 
     def test_insel_constants(self):
-        self.assertEqual(insel.run('templates/insel_constants.insel'), 3)
+        self.assertEqual(insel.run('templates/constants/simple.insel'), 3)
 
     def test_insel_duplicate_constant(self):
         self.assertEqual(
-            insel.run('templates/duplicate_constant.insel'), 12345)
+            insel.run('templates/constants/duplicate.insel'), 12345)
         self.assertEqual(Insel.last_warnings,
                          ['W04024 Redefinition of constant TEST skipped'])
 
     def test_insel_empty_constant(self):
-        self.assertEqual(insel.run('templates/empty_constant.insel'), 12345)
+        self.assertEqual(insel.run('templates/constants/empty.insel'), 12345)
         self.assertRegex(Insel.last_raw_output,
                          ("W05313 Stray constant definition detected at line 00003"
-                          " of file .*empty_constant.insel"))
+                          " of file .*empty.insel"))
 
     def test_insel_include(self):
         self.assertEqual(insel.run('templates/insel_include.insel'), 3)
