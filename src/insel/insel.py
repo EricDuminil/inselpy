@@ -23,6 +23,7 @@ def get_config():
         'windows': {'dirname': Path(os.getenv('ProgramFiles', '')) / 'insel',
                     'command': 'insel.exe'},
         'darwin': {'dirname': "/usr/local/insel/", 'command': 'insel'}
+        #TODO: Add gnuplot path here
     }
 
     return default_configs[system]
