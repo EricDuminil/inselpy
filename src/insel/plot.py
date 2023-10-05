@@ -28,7 +28,7 @@ class Plot(Template):
         parameters = super().add_defaults_to(parameters)
         defaults = {
             'plot_folder': Path('plots/'),
-            'result_folder': Insel.plot_path
+            'result_folder': Insel.plot_path.as_posix()
         }
         defaults.update(parameters)
         return defaults

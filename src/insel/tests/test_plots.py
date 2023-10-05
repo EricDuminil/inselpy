@@ -1,8 +1,8 @@
 import os
+from pathlib import Path
 import insel
 from .custom_assertions import CustomAssertions
 from .constants import SCRIPT_DIR
-from pathlib import Path
 
 os.chdir(SCRIPT_DIR)
 
