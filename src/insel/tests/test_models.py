@@ -17,6 +17,11 @@ class TestExistingModel(CustomAssertions):
         self.assertTrue('# HASHTAG' in header_content)
         self.assertTrue('! EXCLAMATION' in header_content)
 
+    def test_screen_without_input(self):
+        # NOTE: No input for screen used to be allowed, e.g. for "Hello World". It was confusing, though.
+        self.assertRaisesRegex(InselError, r"(Too few inputs for block [45].*)(\1)",
+                               insel.raw_run, 'templates/empty_screen.insel')
+
     def test_screen1g(self):
         self.compareLists(insel.run('templates/io/screen1g.insel'), [])
 
