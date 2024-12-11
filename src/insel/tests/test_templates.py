@@ -52,6 +52,13 @@ class TestTemplatesWithConstants(CustomAssertions):
         self.assertRaisesRegex(InselError, 'Location not found', insel.template,
                                'constants/string_constant', location_name='NotACity')
 
+    def test_ignore_units_in_defcon(self):
+        self.assertAlmostEqual(123 + 123.456 + 48.7 + 456.789,
+                               insel.template('constants/ignore_units_in_defcon.vseit'))
+        self.assertAlmostEqual(123 + 123.456 + 48.7 + 12,
+                               insel.template('constants/ignore_units_in_defcon.vseit',
+                                              Energy=12))
+
     def test_example_vseit(self):
         # PV in Nurnberg:
         self.compareLists([3866, 3652],

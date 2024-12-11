@@ -1,0 +1,383 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- XML for representing entities of a VSEit Network with their attributes and relationships-->
+
+<vseit-network xmlns:xlink="http://www.w3.org/1999/xlink" client-class="eu.insel.vseit.InselVseit" client-class-version="9" first-id="0" entity-count="39">
+<entity id="_0" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_16</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>1</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Hours</string></attr>
+</entity>
+<entity id="_1" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_17</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>2</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Latitude</string></attr>
+</entity>
+<entity id="_2" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_18</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>3</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Float</string></attr>
+</entity>
+<entity id="_3" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_19</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>4</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Integer</string></attr>
+</entity>
+<entity id="_4" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_20</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>5</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Whatever</string></attr>
+</entity>
+<entity id="_5" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_22</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>6</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>Energy</string></attr>
+</entity>
+<entity id="_6" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_16</to></ref>
+<ref name="portOf"><to>_32</to></ref>
+</entity>
+<entity id="_7" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_17</to></ref>
+<ref name="portOf"><to>_33</to></ref>
+</entity>
+<entity id="_8" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_18</to></ref>
+<ref name="portOf"><to>_34</to></ref>
+</entity>
+<entity id="_9" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_19</to></ref>
+<ref name="portOf"><to>_35</to></ref>
+</entity>
+<entity id="_10" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_20</to></ref>
+<ref name="portOf"><to>_36</to></ref>
+</entity>
+<entity id="_11" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_18</to></ref>
+<ref name="portOf"><to>_37</to></ref>
+</entity>
+<entity id="_12" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_16</to></ref>
+<ref name="portOf"><to>_37</to></ref>
+</entity>
+<entity id="_13" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_17</to></ref>
+<ref name="portOf"><to>_37</to></ref>
+</entity>
+<entity id="_14" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_22</to></ref>
+<ref name="portOf"><to>_37</to></ref>
+</entity>
+<entity id="_15" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_21</to></ref>
+<ref name="portOf"><to>_38</to></ref>
+</entity>
+<entity id="_16" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_6</to><to>_12</to></ref>
+<ref name="portOf"><to>_0</to></ref>
+</entity>
+<entity id="_17" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_7</to><to>_13</to></ref>
+<ref name="portOf"><to>_1</to></ref>
+</entity>
+<entity id="_18" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_8</to><to>_11</to></ref>
+<ref name="portOf"><to>_2</to></ref>
+</entity>
+<entity id="_19" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_9</to></ref>
+<ref name="portOf"><to>_3</to></ref>
+</entity>
+<entity id="_20" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_10</to></ref>
+<ref name="portOf"><to>_4</to></ref>
+</entity>
+<entity id="_21" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_15</to></ref>
+<ref name="portOf"><to>_37</to></ref>
+</entity>
+<entity id="_22" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_14</to></ref>
+<ref name="portOf"><to>_5</to></ref>
+</entity>
+<entity id="_23" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>7</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Integer</string></attr>
+<attr name="constValue"><string>123</string></attr>
+</entity>
+<entity id="_24" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>8</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>NegativeInteger</string></attr>
+<attr name="constValue"><string>-123</string></attr>
+</entity>
+<entity id="_25" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>9</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Float</string></attr>
+<attr name="constValue"><string>123.456</string></attr>
+</entity>
+<entity id="_26" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>10</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>ExpFloat</string></attr>
+<attr name="constValue"><string>123e45</string></attr>
+</entity>
+<entity id="_27" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>11</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Hours</string></attr>
+<attr name="constValue"><string>123 h</string></attr>
+</entity>
+<entity id="_28" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>12</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Energy</string></attr>
+<attr name="constValue"><string>456.789 kWh / (m²*a)</string></attr>
+</entity>
+<entity id="_29" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>13</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Latitude</string></attr>
+<attr name="constValue"><string>48.7°</string></attr>
+</entity>
+<entity id="_30" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>14</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Longitude</string></attr>
+<attr name="constValue"><string>9.8°</string></attr>
+</entity>
+<entity id="_31" class="eu.insel.block.DEFCON">
+<attr name="blockName"><string>DEFCON</string></attr>
+<attr name="blockFunction"><string>statement</string></attr>
+<attr name="userBlockNumber"><int>15</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="constName"><string>Whatever</string></attr>
+<attr name="constValue"><string>12 something</string></attr>
+</entity>
+<entity id="_32" class="eu.insel.block.SCREEN1G">
+<ref name="inPorts"><to>_6</to></ref>
+<attr name="blockName"><string>SCREEN1G</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>16</int></attr>
+<attr name="editorTitle"><string>Time [h]</string></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+</entity>
+<entity id="_33" class="eu.insel.block.SCREEN1G">
+<ref name="inPorts"><to>_7</to></ref>
+<attr name="blockName"><string>SCREEN1G</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>17</int></attr>
+<attr name="editorTitle"><string>Latitude [°]</string></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+</entity>
+<entity id="_34" class="eu.insel.block.SCREEN1G">
+<ref name="inPorts"><to>_8</to></ref>
+<attr name="blockName"><string>SCREEN1G</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>18</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+</entity>
+<entity id="_35" class="eu.insel.block.SCREEN1G">
+<ref name="inPorts"><to>_9</to></ref>
+<attr name="blockName"><string>SCREEN1G</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>19</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+</entity>
+<entity id="_36" class="eu.insel.block.SCREEN1G">
+<ref name="inPorts"><to>_10</to></ref>
+<attr name="blockName"><string>SCREEN1G</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>20</int></attr>
+<attr name="editorTitle"><string>Units are just documentation [ignored]</string></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+</entity>
+<entity id="_37" class="eu.insel.block.SUM">
+<ref name="inPorts"><to>_11</to><to>_12</to><to>_13</to><to>_14</to></ref>
+<ref name="outPorts"><to>_21</to></ref>
+<attr name="blockName"><string>SUM</string></attr>
+<attr name="blockFunction"><string>fb0002</string></attr>
+<attr name="userBlockNumber"><int>21</int></attr>
+<attr name="inputPortsCount"><int>4</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+</entity>
+<entity id="_38" class="eu.insel.block.SCREEN">
+<ref name="inPorts"><to>_15</to></ref>
+<attr name="blockName"><string>SCREEN</string></attr>
+<attr name="blockFunction"><string>fb0014</string></attr>
+<attr name="userBlockNumber"><int>22</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="sp1"><string>*</string></attr>
+</entity>
+
+<!-- One or more layouts of the VSEit Network above -->
+<layout name="Default" show-name="false" routing-policy="de.vseit.network.routing.RoutingPolicyOrthogonal" background-color="none" auto-display-new="true">
+<geom node="_22"><layer>1</layer><x>467</x><y>289</y><w>2</w><h>6</h></geom>
+<geom node="_5"><layer>1</layer><x>396</x><y>288</y><w>70</w><h>16</h></geom>
+<geom node="_15"><layer>1</layer><x>636</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_38"><layer>1</layer><x>639</x><y>261</y><w>34</w><h>34</h></geom>
+<geom node="_14"><layer>1</layer><x>564</x><y>289</y><w>2</w><h>6</h></geom>
+<geom node="_13"><layer>1</layer><x>564</x><y>280</y><w>2</w><h>6</h></geom>
+<geom node="_21"><layer>1</layer><x>602</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_12"><layer>1</layer><x>564</x><y>271</y><w>2</w><h>6</h></geom>
+<geom node="_11"><layer>1</layer><x>564</x><y>262</y><w>2</w><h>6</h></geom>
+<geom node="_37"><layer>1</layer><x>567</x><y>261</y><w>34</w><h>36</h></geom>
+<geom node="_10"><layer>1</layer><x>537</x><y>325</y><w>2</w><h>6</h></geom>
+<geom node="_36"><layer>1</layer><x>540</x><y>315</y><w>394</w><h>34</h></geom>
+<geom node="_20"><layer>1</layer><x>467</x><y>325</y><w>2</w><h>6</h></geom>
+<geom node="_4"><layer>1</layer><x>396</x><y>324</y><w>70</w><h>16</h></geom>
+<geom node="_31"><layer>1</layer><x>207</x><y>351</y><w>142</w><h>34</h></geom>
+<geom node="_9"><layer>1</layer><x>537</x><y>109</y><w>2</w><h>6</h></geom>
+<geom node="_35"><layer>1</layer><x>540</x><y>99</y><w>115</w><h>34</h></geom>
+<geom node="_19"><layer>1</layer><x>449</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_3"><layer>1</layer><x>396</x><y>144</y><w>52</w><h>16</h></geom>
+<geom node="_8"><layer>1</layer><x>537</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_34"><layer>1</layer><x>540</x><y>135</y><w>115</w><h>34</h></geom>
+<geom node="_18"><layer>1</layer><x>449</x><y>181</y><w>2</w><h>6</h></geom>
+<geom node="_2"><layer>1</layer><x>396</x><y>180</y><w>52</w><h>16</h></geom>
+<geom node="_7"><layer>1</layer><x>537</x><y>226</y><w>2</w><h>6</h></geom>
+<geom node="_33"><layer>1</layer><x>540</x><y>216</y><w>205</w><h>34</h></geom>
+<geom node="_17"><layer>1</layer><x>449</x><y>253</y><w>2</w><h>6</h></geom>
+<geom node="_1"><layer>1</layer><x>396</x><y>252</y><w>52</w><h>16</h></geom>
+<geom node="_30"><layer>1</layer><x>207</x><y>315</y><w>142</w><h>34</h></geom>
+<geom node="_29"><layer>1</layer><x>207</x><y>279</y><w>142</w><h>34</h></geom>
+<geom node="_28"><layer>1</layer><x>207</x><y>243</y><w>142</w><h>34</h></geom>
+<geom node="_27"><layer>1</layer><x>207</x><y>207</y><w>142</w><h>34</h></geom>
+<geom node="_26"><layer>1</layer><x>207</x><y>171</y><w>142</w><h>34</h></geom>
+<geom node="_25"><layer>1</layer><x>207</x><y>135</y><w>142</w><h>34</h></geom>
+<geom node="_24"><layer>1</layer><x>207</x><y>99</y><w>142</w><h>34</h></geom>
+<geom node="_6"><layer>1</layer><x>537</x><y>181</y><w>2</w><h>6</h></geom>
+<geom node="_32"><layer>1</layer><x>540</x><y>171</y><w>178</w><h>34</h></geom>
+<geom node="_23"><layer>1</layer><x>207</x><y>63</y><w>142</w><h>34</h></geom>
+<geom node="_16"><layer>1</layer><x>449</x><y>217</y><w>2</w><h>6</h></geom>
+<geom node="_0"><layer>1</layer><x>396</x><y>216</y><w>52</w><h>16</h></geom>
+</layout>
+<insel-file><![CDATA[
+B 1 CONST
+P 1
+    Hours           % Constant value
+
+B 2 CONST
+P 2
+    Latitude        % Constant value
+
+B 3 CONST
+P 3
+    Float           % Constant value
+
+B 4 CONST
+P 4
+    Integer         % Constant value
+
+B 5 CONST
+P 5
+    Whatever        % Constant value
+
+B 6 CONST
+P 6
+    Energy          % Constant value
+
+C   Integer
+    123             % Define global constant -- Block number : 7
+C   NegativeInteger
+    -123            % Define global constant -- Block number : 8
+C   Float
+    123.456         % Define global constant -- Block number : 9
+C   ExpFloat
+    123e45          % Define global constant -- Block number : 10
+C   Hours
+    123             % [h] Define global constant -- Block number : 11
+C   Energy
+    456.789         % [kWh / (m²*a)] Define global constant -- Block number : 12
+C   Latitude
+    48.7            % [°] Define global constant -- Block number : 13
+C   Longitude
+    9.8             % [°] Define global constant -- Block number : 14
+C   Whatever
+    12              % [something] Define global constant -- Block number : 15
+B 16 SCREEN1G        % Time [h]
+    1.1
+
+B 17 SCREEN1G        % Latitude [°]
+    2.1
+
+B 18 SCREEN1G
+    3.1
+
+B 19 SCREEN1G
+    4.1
+
+B 20 SCREEN1G        % Units are just documentation [ignored]
+    5.1
+
+B 21 SUM
+    3.1
+    1.1
+    2.1
+    6.1
+
+B 22 SCREEN
+   21.1
+P 22
+    '*'             % Format
+
+]]>
+</insel-file>
+</vseit-network>
