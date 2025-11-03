@@ -323,6 +323,16 @@ class TestBlock(CustomAssertions):
                                    insel.block('chs', 3.5, 2.0, -1.4, -2.6, -4.7, outputs=5)]),
                          '-3.50 -2.00 1.40 2.60 4.70')
 
+    def test_dow(self):
+        years = [1900, 1960, 1995, 2000, 2025]
+        for year in years:
+            day = datetime(year, 1, 1)
+            # Should be enough for February 29th
+            for i in range(90):
+                day += timedelta(days=1)
+                self.assertAlmostEqual(insel.block('DOW', day.year, day.month, day.day),
+                                       day.weekday() +1)
+
     def test_int(self):
         self.assertAlmostEqual(insel.block('int', 10.0), 10.0, places=5)
         self.assertAlmostEqual(insel.block('int', 1.23), 1.0, places=5)
