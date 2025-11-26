@@ -13,8 +13,6 @@ It can run single blocks, with the specified inputs, parameters and number of ou
 5.0
 >>> insel.block('do', parameters=[1, 10, 1])
 [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
->>> insel.block('do', parameters=[1, 10, 1])
-[1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
 >>> insel.block('gain', 2, 5, 7, parameters=[3], outputs=3)
 [6.0, 15.0, 21.0]
 ```
