@@ -1,10 +1,12 @@
+from pathlib import Path
 from typing import List
+
+from .existing_model import ExistingModel
+
 #  To allow from insel import Insel, InselError in tests:
 from .insel import Insel as Insel
-from .insel_error import InselError as InselError
-
 from .insel import Parameter
-from .existing_model import ExistingModel
+from .insel_error import InselError as InselError
 from .one_block_model import OneBlockModel
 from .template import Template
 
@@ -13,9 +15,9 @@ __version__ = "0.0.8"
 # TODO: Add gnuplot functions
 
 
-def block(name: str, *inputs: float,
-          parameters: List[Parameter] = [],
-          outputs: int = 1):
+def block(
+    name: str, *inputs: float, parameters: List[Parameter] = [], outputs: int = 1
+):
     """
     Returns the output of INSEL block *name*, with the given inputs and parameters.
     One output is returned by default, but more can be returned if desired.
@@ -37,10 +39,12 @@ def block(name: str, *inputs: float,
     >>> insel.block('gain', 2, 5, 7, parameters=[3], outputs=3)
     [6.0, 15.0, 21.0]
     """
-    return OneBlockModel(name, inputs=inputs, outputs=outputs, parameters=parameters).run()
+    return OneBlockModel(
+        name, inputs=inputs, outputs=outputs, parameters=parameters
+    ).run()
 
 
-def template(template_path, **parameters):
+def template(template_path: str | Path, **parameters):
     """
     Returns the output of INSEL template found at template_path,
     after substituting parameters inside the template.
@@ -73,7 +77,7 @@ def template(template_path, **parameters):
     return Template(template_path, **parameters).run()
 
 
-def run(path):
+def run(path: Path):
     """Returns the output of INSEL model found at path, without
     substituting any parameter.
     The output is parsed, and returned as float, list of floats or list of list of floats.

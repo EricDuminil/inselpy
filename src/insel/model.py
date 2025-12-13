@@ -18,7 +18,7 @@ class Model(object):
 
     def __init__(self) -> None:
         self.warnings: List[str] = []
-        Insel.last_raw_output: Optional[str] = None
+        Insel.last_raw_output = None
         Insel.last_warnings = self.warnings
         self.timeout: Optional[int] = None
         self.path: Path
