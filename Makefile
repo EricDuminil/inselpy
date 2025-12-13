@@ -33,3 +33,6 @@ upload_package_to_testpypi: _check_upload build_package ## Upload PyPI package t
 
 upload_package_to_pypi: _check_upload build_package ## Upload PyPI package to https://pypi.org/
 	python3 -m twine upload dist/* --verbose
+
+install_editable: ## Install package in dev mode
+	pip install -e .
