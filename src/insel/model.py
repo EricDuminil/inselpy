@@ -1,7 +1,8 @@
-from typing import List, Union, Optional
-import subprocess
 import logging
+import subprocess
 from pathlib import Path
+from typing import List, Optional, Union
+
 from .insel import Insel
 from .insel_error import InselError
 
@@ -28,7 +29,7 @@ class Model(object):
         Insel.last_raw_output = raw
         problem: str
         for problem in Insel.warning.findall(raw):
-            logging.warning('INSEL : %s', problem)
+            logging.warning("INSEL : %s", problem)
             self.warnings.append(problem)
         match = Insel.normal_run.search(raw)
         if match:
@@ -37,13 +38,12 @@ class Model(object):
             line: str
             for line in output.split("\n"):
                 if line:
-                    values: Optional[Union[float, List[float]]
-                                     ] = self.parse_line(line)
+                    values: Optional[Union[float, List[float]]] = self.parse_line(line)
                     if values is not None:
                         table.append(values)
             return self.extract(table)
         else:
-            line = '#' * 30
+            line = "#" * 30
             raise InselError(f"Problem with INSEL\n{line}\n{raw}\n{line}\n")
 
     def parse_line(self, line: str) -> Optional[Union[Row, float]]:
@@ -65,4 +65,5 @@ class Model(object):
     def raw_results(self) -> bytes:
         Insel.calls += 1
         return subprocess.check_output(
-            [Insel.command, self.path], shell=False, timeout=self.timeout)
+            [Insel.command, self.path], shell=False, timeout=self.timeout
+        )

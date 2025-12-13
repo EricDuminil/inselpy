@@ -14,8 +14,8 @@ class OneBlockModel(TemporaryModel):
 
     By default, only one output is shown.
     """
-    def __init__(self, name: str = '', inputs: Sequence[float] = None,
-                 parameters: List[Parameter] = None, outputs: int = 1):
+    def __init__(self, name: str = '', inputs: Sequence[float] = [],
+                 parameters: List[Parameter] = [], outputs: int = 1):
         super().__init__()
         self.name = name
         self.parameters: List[str] = [f"'{p}'" if isinstance(p, str)

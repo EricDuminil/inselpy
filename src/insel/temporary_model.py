@@ -1,7 +1,8 @@
-import tempfile
 import os
-from .model import Model
+import tempfile
+
 from .insel import Insel
+from .model import Model
 
 
 class TemporaryModel(Model):
@@ -9,8 +10,11 @@ class TemporaryModel(Model):
 
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
-            mode='w+', suffix=Insel.extension, prefix=f'python_{self.name}_',
-            delete=False)
+            mode="w+",
+            suffix=Insel.extension,
+            prefix=f"python_{self.name}_",
+            delete=False,
+        )
 
     def raw_results(self) -> bytes:
         try:
@@ -22,5 +26,4 @@ class TemporaryModel(Model):
             os.remove(self.path)
 
     def content(self) -> str:
-        raise NotImplementedError(
-            f"Implement {self.__class__.__name__}.content() !")
+        raise NotImplementedError(f"Implement {self.__class__.__name__}.content() !")
