@@ -17,7 +17,7 @@ class TemporaryModel(Model):
             delete=False,
         )
 
-    def raw_results(self) -> bytes:
+    def raw_results(self) -> str:
         try:
             with self.tempfile() as temp_model:
                 self.path = Path(temp_model.name)

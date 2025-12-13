@@ -25,7 +25,7 @@ class Model(object):
         self.name: str
 
     def run(self) -> Union[float, Row, Table]:
-        raw: str = self.raw_results().decode()
+        raw = self.raw_results()
         Insel.last_raw_output = raw
         problem: str
         for problem in Insel.warning.findall(raw):
@@ -62,8 +62,8 @@ class Model(object):
         else:
             return table
 
-    def raw_results(self) -> bytes:
+    def raw_results(self) -> str:
         Insel.calls += 1
         return subprocess.check_output(
             [Insel.command, self.path], shell=False, timeout=self.timeout
-        )
+        ).decode()

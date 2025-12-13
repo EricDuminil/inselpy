@@ -88,7 +88,7 @@ def run(path: Path):
     return ExistingModel(path).run()
 
 
-def raw_run(*params):
+def raw_run(*params) -> str:
     """Returns the output of INSEL model found at path, without
     substituting any parameter.
     The output is returned as is, without being parsed.
@@ -109,4 +109,4 @@ def raw_run(*params):
         10
     Normal end of run
     """
-    return ExistingModel(*params).raw_results().decode()
+    return ExistingModel(*params).raw_results()

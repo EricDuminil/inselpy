@@ -1,6 +1,7 @@
 import subprocess
-from .model import Model
+
 from .insel import Insel
+from .model import Model
 
 
 class ExistingModel(Model):
@@ -13,7 +14,8 @@ class ExistingModel(Model):
         super().__init__()
         self.params = list(params)
 
-    def raw_results(self) -> bytes:
+    def raw_results(self) -> str:
         Insel.calls += 1
-        return subprocess.check_output([Insel.command] + self.params,
-                                       shell=False)
+        return subprocess.check_output(
+            [Insel.command] + self.params, shell=False
+        ).decode()
