@@ -1,5 +1,6 @@
 import os
 import tempfile
+from pathlib import Path
 
 from .insel import Insel
 from .model import Model
@@ -19,7 +20,7 @@ class TemporaryModel(Model):
     def raw_results(self) -> bytes:
         try:
             with self.tempfile() as temp_model:
-                self.path = temp_model.name
+                self.path = Path(temp_model.name)
                 temp_model.write(self.content())
             return super().raw_results()
         finally:
