@@ -9,6 +9,10 @@ from .model import Model
 class TemporaryModel(Model):
     """Abstract class, e.g. for OneBlockModel or Template"""
 
+    def __init__(self, delete_after: bool = True):
+        super().__init__()
+        self.delete_after = delete_after
+
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
             mode="w+",
@@ -24,7 +28,10 @@ class TemporaryModel(Model):
                 temp_model.write(self.content())
             return super().raw_results()
         finally:
-            os.remove(self.path)
+            if self.delete_after:
+                os.remove(self.path)
+            else:
+                print(f"{self} has been written to {self.path}")
 
     def content(self) -> str:
         raise NotImplementedError(f"Implement {self.__class__.__name__}.content() !")

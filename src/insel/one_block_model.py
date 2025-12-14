@@ -24,6 +24,9 @@ class OneBlockModel(TemporaryModel):
         self.n_in: int = len(inputs)
         self.n_out: int = outputs
 
+    def __str__(self):
+        return self.name
+
     def content(self) -> str:
         lines: List[str] = []
         input_ids: List[str] = []
