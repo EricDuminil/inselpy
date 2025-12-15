@@ -30,8 +30,6 @@ class TemporaryModel(Model):
         finally:
             if self.delete_after:
                 os.remove(self.path)
-            else:
-                print(f"{self} has been written to {self.path}")
 
     def content(self) -> str:
         raise NotImplementedError(f"Implement {self.__class__.__name__}.content() !")
