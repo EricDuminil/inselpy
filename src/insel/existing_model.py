@@ -18,4 +18,4 @@ class ExistingModel(Model):
         Insel.calls += 1
         return subprocess.check_output(
             [Insel.command] + self.params, shell=False
-        ).decode()
+        ).decode(errors="replace")

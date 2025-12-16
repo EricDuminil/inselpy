@@ -66,4 +66,4 @@ class Model(object):
         Insel.calls += 1
         return subprocess.check_output(
             [Insel.command, self.path], shell=False, timeout=self.timeout
-        ).decode()
+        ).decode(errors="replace")
