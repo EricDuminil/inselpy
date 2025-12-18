@@ -28,15 +28,17 @@ class Model(object):
         raw = self.raw_results()
         Insel.last_raw_output = raw
         problem: str
-        for problem in Insel.warning.findall(raw):
+        for problem in Insel.warning_pattern.findall(raw):
             logging.warning("INSEL : %s", problem)
             self.warnings.append(problem)
-        match = Insel.normal_run.search(raw)
+        match = Insel.normal_run_pattern.search(raw)
         if match:
             output: str = match.group(1)
             table: Table = []
             line: str
             for line in output.split("\n"):
+                if Insel.ignore_pattern.match(line):
+                    continue
                 if line:
                     values: Optional[Union[float, List[float]]] = self.parse_line(line)
                     if values is not None:
@@ -47,7 +49,7 @@ class Model(object):
             raise InselError(f"Problem with INSEL\n{line}\n{raw}\n{line}\n")
 
     def parse_line(self, line: str) -> Optional[Union[Row, float]]:
-        if Insel.warning.search(line):
+        if Insel.warning_pattern.search(line):
             return None
         else:
             values: Row = [float(x) for x in line.split() if x]

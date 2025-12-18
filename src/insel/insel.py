@@ -38,10 +38,11 @@ class Insel(object):
         # If insel is not in PATH, use absolute path.
         command = dirname / command
     extension = ".insel"
-    normal_run = re.compile(
+    normal_run_pattern = re.compile(
         r'Running insel [\d\w \.\-]+ \.\.\.\s+([^\*]*)Normal end of run',
         re.I | re.DOTALL)
-    warning = re.compile(r'^[EFW]\d{5}.*?$', re.M)
+    warning_pattern = re.compile(r'^[EFW]\d{5}.*?$', re.M)
+    ignore_pattern = re.compile(r'^Writing parameters to file|Another example of ignored line', re.I)
     # Contains warnings during last execution. Might be convenient for testing. Not thread-safe!
     last_warnings: List[str] = []
     last_raw_output: Optional[str] = None
