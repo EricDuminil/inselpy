@@ -14,6 +14,8 @@ EXT = '.gnuplot'
 
 class Plot(Template):
     """Insel Template + Gnuplot Template"""
+    # TODO: Document
+    # TODO: Should work with standard gnuplot files too, straight from VSEIT
 
     def __init__(self, template_path, **parameters) -> None:
         super().__init__(template_path, **parameters)
