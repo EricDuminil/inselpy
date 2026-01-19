@@ -54,7 +54,7 @@ class Plot(Template):
 
     def _temp_gnuplot(self):
         return tempfile.NamedTemporaryFile(
-            mode="w+", suffix=EXT, prefix=f"{self.name}_", delete=False
+            mode="w+", suffix=EXT, prefix=f"{self.name}_", delete=False, encoding='utf-8',
         )
 
     def _plot(self):
