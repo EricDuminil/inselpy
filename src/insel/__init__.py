@@ -8,8 +8,8 @@ from .insel import Insel as Insel
 from .insel import Parameter
 from .insel_error import InselError as InselError
 from .one_block_model import OneBlockModel
-from .template import Template
 from .plot import Plot
+from .template import Template
 
 __version__ = "0.0.9b"
 
@@ -39,7 +39,10 @@ def block(
     [6.0, 15.0, 21.0]
     """
     return OneBlockModel(
-        name, inputs=inputs, outputs=outputs, parameters=parameters
+        name,
+        inputs=inputs,
+        outputs=outputs,
+        parameters=parameters,
     ).run()
 
 
