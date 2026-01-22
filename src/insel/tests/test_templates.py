@@ -310,7 +310,7 @@ class TestTemplates(CustomAssertions):
         It means that relative files will be relative to temp folder"""
         dat_file = Path(tempfile.gettempdir(), 'a' * 50 + '.txt')
         dat_file.unlink(missing_ok=True)
-        insel.template('io/write_params', dat_file=dat_file.name)
+        insel.template('io/write_params', dat_file=dat_file.name, run_in_templates_folder=False)
         self.assertTrue(dat_file.exists(),
                         f"{dat_file} should have been written")
         dat_file.unlink()

@@ -73,6 +73,8 @@ def template(template_path: str | Path, **parameters):
     >>> insel.template('constants/x_plus_y.vseit', x=5, y=5)
     10.0
     """
+    # TODO: Add delete_after
+    # TODO: Add run_in_templates_folder
     return Template(template_path, **parameters).run()
 
 
