@@ -367,6 +367,20 @@ class TestTemplates(CustomAssertions):
                 written = [float(line.split()[1]) for line in content]
                 self.compareLists(written, [x**2 for x in range(1, 11)], places=5)
 
+    def test_read_relative_file_from_template(self):
+        # NOTE: It's often convenient. It will lead to problems if templates/ folder is read-only
+        deviation = insel.template("io/read_relative_file.insel")
+        self.compareLists(deviation, [0, 0], places=4)
+
+    def test_cannot_read_relative_file_from_temp_folder(self):
+        self.assertRaisesRegex(
+            InselError,
+            "Cannot open file",
+            insel.template,
+            "io/read_relative_file.insel",
+            run_in_templates_folder=False,
+        )
+
     def test_write_block_relative_file_with_long_filename(self):
         """Template file is written in temp folder, in order for INSEL to run
         It means that relative files will be relative to temp folder"""

@@ -93,7 +93,7 @@ def plot(template_path, **parameters):
     return Plot(template_path, **parameters).run()
 
 
-def run(path: Path):
+def run(path: Path | str):
     """Returns the output of INSEL model found at path, without
     substituting any parameter.
     The output is parsed, and returned as float, list of floats or list of list of floats.
@@ -101,7 +101,7 @@ def run(path: Path):
     >>> insel.run('templates/one_to_ten.insel')
     [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
     """
-    return ExistingModel(path).run()
+    return ExistingModel(Path(path)).run()
 
 
 def raw_run(*params) -> str:
