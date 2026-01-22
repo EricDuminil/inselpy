@@ -46,7 +46,12 @@ def block(
     ).run()
 
 
-def template(template_path: str | Path, **parameters):
+def template(
+    template_path: str | Path,
+    delete_after: bool = True,
+    run_in_templates_folder: bool = True,
+    **parameters,
+):
     """
     Returns the output of INSEL template found at template_path,
     after substituting parameters inside the template.
@@ -76,9 +81,12 @@ def template(template_path: str | Path, **parameters):
     >>> insel.template('constants/x_plus_y.vseit', x=5, y=5)
     10.0
     """
-    # TODO: Add delete_after
-    # TODO: Add run_in_templates_folder
-    return Template(template_path, **parameters).run()
+    return Template(
+        template_path,
+        delete_after=delete_after,
+        run_in_templates_folder=run_in_templates_folder,
+        **parameters,
+    ).run()
 
 
 def plot(template_path, **parameters):
