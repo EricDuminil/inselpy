@@ -8,11 +8,10 @@ from .insel import Insel as Insel
 from .insel import Parameter
 from .insel_error import InselError as InselError
 from .one_block_model import OneBlockModel
+from .plot import Plot
 from .template import Template
 
-__version__ = "0.0.8"
-
-# TODO: Add gnuplot functions
+__version__ = "0.0.9b"
 
 
 def block(
@@ -40,11 +39,19 @@ def block(
     [6.0, 15.0, 21.0]
     """
     return OneBlockModel(
-        name, inputs=inputs, outputs=outputs, parameters=parameters
+        name,
+        inputs=inputs,
+        outputs=outputs,
+        parameters=parameters,
     ).run()
 
 
-def template(template_path: str | Path, **parameters):
+def template(
+    template_path: str | Path,
+    delete_after: bool = True,
+    run_in_templates_folder: bool = True,
+    **parameters,
+):
     """
     Returns the output of INSEL template found at template_path,
     after substituting parameters inside the template.
@@ -74,10 +81,19 @@ def template(template_path: str | Path, **parameters):
     >>> insel.template('constants/x_plus_y.vseit', x=5, y=5)
     10.0
     """
-    return Template(template_path, **parameters).run()
+    return Template(
+        template_path,
+        delete_after=delete_after,
+        run_in_templates_folder=run_in_templates_folder,
+        **parameters,
+    ).run()
 
 
-def run(path: Path):
+def plot(template_path, **parameters):
+    return Plot(template_path, **parameters).run()
+
+
+def run(path: Path | str):
     """Returns the output of INSEL model found at path, without
     substituting any parameter.
     The output is parsed, and returned as float, list of floats or list of list of floats.
@@ -85,7 +101,7 @@ def run(path: Path):
     >>> insel.run('templates/one_to_ten.insel')
     [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
     """
-    return ExistingModel(path).run()
+    return ExistingModel(Path(path)).run()
 
 
 def raw_run(*params) -> str:

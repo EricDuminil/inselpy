@@ -42,7 +42,7 @@ class Template(TemporaryModel):
     # Will be used to disable gnuplot
     empty_gnuplot = Path(tempfile.gettempdir()) / "empty.gnuplot"
 
-    def __init__(self, template_path, delete_after=True, **parameters) -> None:
+    def __init__(self, template_path, delete_after=True, run_in_templates_folder=True, **parameters) -> None:
         super().__init__(delete_after)
         template_path = Path(template_path)
         if template_path.suffix == ".vseit":
@@ -51,6 +51,10 @@ class Template(TemporaryModel):
             self.template_path: Path = template_path.with_suffix(".insel")
         self.name: str = self.template_path.stem
         self.parameters: Dict[str, Any] = self.add_defaults_to(parameters)
+        if run_in_templates_folder:
+            self.temp_dir = self.template_full_path().parent
+        else:
+            self.temp_dir = None
 
     def template_full_path(self) -> Path:
         full_path: Path = Template.dirname.resolve() / self.template_path
@@ -106,6 +110,7 @@ class Template(TemporaryModel):
             "data_folder": Template.dirname.parent / "data",
             "template_folder": Template.dirname,
             "gnuplot": False,
+            "template_name": self.name,
         }
         defaults.update(parameters)
         return defaults

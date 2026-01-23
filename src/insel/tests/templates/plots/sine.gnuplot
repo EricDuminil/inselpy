@@ -1,0 +1,19 @@
+set macro
+set style data lines
+thin  = "1"
+thick = "2"
+set linetype 1 linecolor rgbcolor "#f2880a" linewidth @thick
+set linetype 2 linecolor rgbcolor "#f2880a" linewidth @thin
+# set style increment user
+set title "Sine test"
+set ylabel '$ template_name $ '
+set ytics nomirror
+set xtics nomirror
+
+set xtics 90
+set mxtics 3
+set format x "%g°"
+
+set output '$plot_folder$/sine.png'
+set terminal pngcairo font 'Calibri, 16' size 1400, 800
+plot "$result_folder$/insel.gpl" title "My $ template_name $"

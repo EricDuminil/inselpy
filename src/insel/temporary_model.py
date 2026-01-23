@@ -9,9 +9,10 @@ from .model import Model
 class TemporaryModel(Model):
     """Abstract class, e.g. for OneBlockModel or Template"""
 
-    def __init__(self, delete_after: bool = True):
+    def __init__(self, delete_after: bool = True, temp_dir: str | Path | None = None):
         super().__init__()
         self.delete_after = delete_after
+        self.temp_dir = temp_dir
 
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
@@ -19,6 +20,7 @@ class TemporaryModel(Model):
             suffix=Insel.extension,
             prefix=f"python_{self.name}_",
             delete=False,
+            dir=self.temp_dir,
         )
 
     def raw_results(self) -> str:
