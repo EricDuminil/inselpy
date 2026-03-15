@@ -11,7 +11,9 @@ ASAN could catch errors, but a SEGFAULT would also appear randomly without it,
 before the engine was fixed.
 """
 
+import contextlib
 import ctypes
+import os
 import platform
 import tempfile
 import threading
@@ -26,13 +28,35 @@ N_REPEATS = 3
 SIMPLE_MODEL = """\
 s 1 CONST
 p 1
-\t1.0
+\t1200.0
 s 2 CONST
 p 2
-\t2.0
+\t34.0
 s 3 SUM 1.1 2.1
 s 4 SCREEN 3.1
 """
+
+
+@contextlib.contextmanager
+def _suppress_c_stdout():
+    """Redirect C-level stdout (fd 1) to /dev/null.
+
+    Python's redirect_stdout only affects sys.stdout; this also silences
+    printf() and Fortran WRITE(*,...) calls from the engine and block libs.
+    fflush(NULL) drains all C/Fortran buffers before restoring the fd so
+    buffered output doesn't leak onto the real stdout after the context exits.
+    """
+    libc = ctypes.CDLL('msvcrt' if platform.system() == 'Windows' else None)
+    saved = os.dup(1)
+    devnull = os.open(os.devnull, os.O_WRONLY)
+    os.dup2(devnull, 1)
+    os.close(devnull)
+    try:
+        yield
+    finally:
+        libc.fflush(None)  # flush all C/Fortran buffered streams
+        os.dup2(saved, 1)
+        os.close(saved)
 
 
 def _lib_path() -> Path:
@@ -99,10 +123,11 @@ class TestThreading(unittest.TestCase):
             )
             for i in range(N_THREADS)
         ]
-        for t in threads:
-            t.start()
-        for t in threads:
-            t.join()
+        with _suppress_c_stdout():
+            for t in threads:
+                t.start()
+            for t in threads:
+                t.join()
 
         Path(model_path).unlink(missing_ok=True)
 
