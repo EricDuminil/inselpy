@@ -282,6 +282,10 @@ class TestTemplates(CustomAssertions):
         iso_template.timeout = 5
         self.assertEqual(iso_template.run(), 16)
 
+    def test_non_ascii_template_name(self):
+        utf8_template = insel.Template("io/ä_tïméß_b", a=2, b=2)
+        self.assertEqual(utf8_template.run(), 4)
+
     def test_sunpower_isc(self):
         self.assertRaisesRegex(
             AttributeError, "UndefinedValue", insel.template, "photovoltaic/i_sc"
