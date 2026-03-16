@@ -119,6 +119,11 @@ class TestTemplatesWithConstants(CustomAssertions):
         self.assertEqual(3.7, insel.template("constants/same", x=1.2))
 
 class TestTemplatesWithDifferentEncoding(CustomAssertions):
+# FIXME: It still fails on windows with:
+# C:\Users\Täst Üser>insel -v
+# terminate called after throwing an instance of 'std::filesystem::__cxx11::filesystem_error'
+#  what():  filesystem error: cannot create directories: Permission denied [C:\Users\T├â┬ñst ├â┬£ser\AppData\Roaming\INSEL_8_3\tmp\]
+
     def test_non_ascii_template(self):
         utf8_template = insel.Template("encoding/a_times_b_utf8", a=2, b=2)
         utf8_template.timeout = 5
