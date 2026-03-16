@@ -23,7 +23,7 @@ from pathlib import Path
 import insel
 
 N_THREADS = 20
-N_REPEATS = 20
+N_REPEATS = 50
 
 SIMPLE_MODEL = """\
 s 1 CONST
@@ -130,6 +130,7 @@ class TestThreading(unittest.TestCase):
                 t.join()
 
         Path(model_path).unlink(missing_ok=True)
+
 
         self.assertEqual(errors, [],
                          f"Exceptions in threads: {errors}")
