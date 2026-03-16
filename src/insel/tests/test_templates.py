@@ -154,6 +154,10 @@ class TestTemplatesWithDifferentEncoding(CustomAssertions):
         self.assertEqual(direct_run, 123)
 
     def test_read_file_in_non_ascii_folder(self):
+        if IS_WINDOWS:
+            self.skipTest(
+                "FORTRAN BLOCK don't work with non-ascii on Windows yet"
+            )
         direct_run = insel.run("templates/encoding/Ëñçödìñg/read_file.insel")
         self.assertEqual(direct_run, 55)
 
