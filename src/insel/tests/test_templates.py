@@ -287,6 +287,10 @@ class TestTemplates(CustomAssertions):
         utf8_template = insel.Template("io/ä_tïm€ß_b", a=2, b=2)
         self.assertEqual(utf8_template.run(), 4)
 
+    def test_space_in_template_name(self):
+        utf8_template = insel.Template("io/space in folder/a times b", a=2, b=2)
+        self.assertEqual(utf8_template.run(), 4)
+
     def test_sunpower_isc(self):
         self.assertRaisesRegex(
             AttributeError, "UndefinedValue", insel.template, "photovoltaic/i_sc"
