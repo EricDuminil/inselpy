@@ -119,6 +119,7 @@ class TestTemplatesWithConstants(CustomAssertions):
         self.assertEqual(3.7, insel.template("constants/same", x=1.2))
 
 class TestTemplatesWithDifferentEncoding(CustomAssertions):
+    # TODO: Also try to use READ inside a weird folder name
 # FIXME: It still fails on windows with:
 # C:\Users\Täst Üser>insel -v
 # terminate called after throwing an instance of 'std::filesystem::__cxx11::filesystem_error'
