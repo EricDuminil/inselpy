@@ -146,6 +146,10 @@ class TestTemplatesWithDifferentEncoding(CustomAssertions):
         direct_run = insel.run("templates/encoding/Ëñçödìñg/x_plus_y.vseit")
         self.assertEqual(direct_run, 123)
 
+    def test_full_unicode(self):
+        insel.run("templates/encoding/Ëñçödìñg/💎.vseit")
+        insel.run("templates/encoding/Ëñçödìñg/こんにちは.vseit")
+
     def test_read_file_in_non_ascii_folder(self):
         direct_run = insel.run("templates/encoding/Ëñçödìñg/read_file.insel")
         self.assertEqual(direct_run, 55)
