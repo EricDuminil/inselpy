@@ -17,6 +17,7 @@ class TemporaryModel(Model):
     def tempfile(self):
         return tempfile.NamedTemporaryFile(
             mode="w+",
+            encoding="utf-8",
             suffix=Insel.extension,
             prefix=f"python_{self.name}_",
             delete=False,
