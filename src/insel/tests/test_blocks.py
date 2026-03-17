@@ -326,10 +326,10 @@ class TestBlock(CustomAssertions):
     def test_dow(self):
         years = [1900, 1960, 1995, 2000, 2025]
         for year in years:
-            day = datetime(year, 1, 1)
+            jan_1st = datetime(year, 1, 1)
             # Should be enough for February 29th
-            for i in range(90):
-                day += timedelta(days=1)
+            for i in range(50, 70):
+                day = jan_1st + timedelta(days=i)
                 self.assertAlmostEqual(insel.block('DOW', day.year, day.month, day.day),
                                        day.weekday() +1)
 

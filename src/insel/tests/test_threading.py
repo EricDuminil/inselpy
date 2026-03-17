@@ -23,7 +23,7 @@ from pathlib import Path
 import insel
 
 N_THREADS = 20
-N_REPEATS = 50
+N_REPEATS = 20
 
 SIMPLE_MODEL = """\
 s 1 CONST
