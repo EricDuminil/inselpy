@@ -119,12 +119,6 @@ class TestTemplatesWithConstants(CustomAssertions):
         self.assertEqual(3.7, insel.template("constants/same", x=1.2))
 
 class TestTemplatesWithDifferentEncoding(CustomAssertions):
-    # TODO: Also try to use READ inside a weird folder name
-# FIXME: It still fails on windows with:
-# C:\Users\Täst Üser>insel -v
-# terminate called after throwing an instance of 'std::filesystem::__cxx11::filesystem_error'
-#  what():  filesystem error: cannot create directories: Permission denied [C:\Users\T├â┬ñst ├â┬£ser\AppData\Roaming\INSEL_8_3\tmp\]
-
     def test_non_ascii_template(self):
         utf8_template = insel.Template("encoding/a_times_b_utf8", a=2, b=2)
         utf8_template.timeout = 5
@@ -135,7 +129,6 @@ class TestTemplatesWithDifferentEncoding(CustomAssertions):
         self.assertEqual(iso_template.run(), 16)
 
     def test_non_ascii_template_name(self):
-        # NOTE: that it's not Unicode on windows. Only "wide-chars" AFAIK
         template = insel.Template("encoding/ä_tïm€ß_b", a=3, b=2)
         self.assertEqual(template.run(), 6)
 
@@ -154,10 +147,6 @@ class TestTemplatesWithDifferentEncoding(CustomAssertions):
         self.assertEqual(direct_run, 123)
 
     def test_read_file_in_non_ascii_folder(self):
-        if IS_WINDOWS:
-            self.skipTest(
-                "FORTRAN BLOCK don't work with non-ascii on Windows yet"
-            )
         direct_run = insel.run("templates/encoding/Ëñçödìñg/read_file.insel")
         self.assertEqual(direct_run, 55)
 
@@ -393,7 +382,7 @@ class TestTemplates(CustomAssertions):
             model = insel.Template("io/write_params", dat_file=dat_file, **write_params)
             model.run()
             self.assertEqual(model.warnings, [])
-            self.assertTrue(dat_file.exists(), "File should have been written")
+            self.assertTrue(dat_file.exists(), f"'{dat_file.resolve()}' file should have been written.")
             with open(dat_file) as out:
                 if write_params.get("header"):
                     next(out)
