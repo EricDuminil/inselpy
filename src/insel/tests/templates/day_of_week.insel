@@ -1,0 +1,15 @@
+%% Check that DOW from 3 columns returns the 4th column
+B 1 DO
+P 1 1 10000 1
+
+B 2 READ
+P 2 4 1 '$days_csv$' '*'
+
+B 3 DOW 2.1 2.2 2.3
+
+B 4 EQ 2.4 3.1
+
+B 5 MINN 4.1
+
+B 6 SCREEN 5.1
+P 6 '*'
