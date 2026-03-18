@@ -3,25 +3,26 @@
 # TODO: Check Java Palette
 # TODO: Check Documentation too
 COLUMNS = 13
-TEST_DIR = "src/insel/tests"
+TEST_DIR = 'src/insel/tests'
 templates = Dir.glob("#{TEST_DIR}/templates/**/*.insel")
-blocks_in_templates = templates.map{ |t|
-  File.read(t).force_encoding("utf-8").encode("utf-8", invalid: :replace, replace: "?").scan(/^[bs]\s+\d+\s+(\w+)/i)
+blocks_in_templates = templates.map { |t|
+  File.read(t).force_encoding('utf-8').encode('utf-8', invalid: :replace, replace: '?').scan(/^[bs]\s+\d+\s+(\w+)/i)
 }
 
-blocks_in_py = Dir.glob("#{TEST_DIR}/test*.py").map{ |py| File.read(py).scan(/insel\.block\(\s*["'](\w+?)["']/) }.flatten
+blocks_in_py = Dir.glob("#{TEST_DIR}/test*.py").map { |py| File.read(py).scan(/insel\.block\(\s*["'](\w+?)["']/) }.flatten
 
 tested_blocks = (blocks_in_templates + blocks_in_py).flatten.uniq.sort.map(&:upcase)
 
 all_blocks = `insel -b`.split("\n\n").last.split.sort
 
-examples = Dir.glob("/usr/local/insel/examples/**/*").select{ |f| f =~ /\.(insel|vseit)$/i }
-blocks_in_examples = examples.map{ |t|
-  File.read(t).force_encoding("utf-8").encode("utf-8", invalid: :replace, replace: "?").scan(/^[bs]\s+\d+\s+(\w+)/i)
+examples = Dir.glob('/usr/local/insel/examples/**/*').select { |f| f =~ /\.(insel|vseit)$/i }
+blocks_in_examples = examples.map { |t|
+  File.read(t).force_encoding('utf-8').encode('utf-8', invalid: :replace, replace: '?').scan(/^[bs]\s+\d+\s+(\w+)/i)
 }.flatten.uniq.sort
 
 puts "Tested blocks = #{tested_blocks.size} / #{all_blocks.size}"
 puts "Example blocks = #{blocks_in_examples.size} / #{all_blocks.size}"
+
 class String
   def colorize(color_code)
     "\e[#{color_code}m#{self}\e[0m"
@@ -49,7 +50,7 @@ color_blocks = all_blocks.map do |block|
     if blocks_in_examples.include?(block)
       block.green
     else
-      block.green + "!"
+      block.green + '!'
     end
   elsif blocks_in_examples.include? block
     block.blue
@@ -68,9 +69,9 @@ end
 n = color_blocks.size
 h = (n / COLUMNS).ceil
 
-rectangle = color_blocks.each_slice(h).map{|l| l + [""] * (h - l.size)}
+rectangle = color_blocks.each_slice(h).map { |l| l + [''] * (h - l.size) }
 
-rectangle = rectangle.map{ |col| max_size = col.map(&:size).max + 2; col.map{ |b| b.ljust(max_size, ' ')} }
+rectangle = rectangle.map { |col| max_size = col.map(&:size).max + 2; col.map { |b| b.ljust(max_size, ' ') } }
 
 rectangle.transpose.each do |bs|
   puts bs.join
