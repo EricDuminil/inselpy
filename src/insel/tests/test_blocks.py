@@ -1,5 +1,6 @@
 # coding=utf8
 import math
+import os
 import tempfile
 from collections import Counter
 from datetime import datetime, timedelta
@@ -385,9 +386,8 @@ class TestBlock(CustomAssertions):
     def test_dow(self):
         # NOTE: testing the results one by one was too slow, so use a template to check many years at once
         years = [1900, 1960, 1995, 2000, 2024, 2025]
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".csv", delete_on_close=False
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False,) as f:
+            temp_path = f.name
             f.write(f"# Year Month Day DayOfWeek(Monday 1, Sunday 7)\n")
             for year in years:
                 jan_1st = datetime(year, 1, 1)
@@ -396,11 +396,14 @@ class TestBlock(CustomAssertions):
                     f.write(f"{day.year} {day.month} {day.day} {day.weekday() + 1}\n")
             f.close()
 
-            self.assertAlmostEqual(insel.template("day_of_week", days_csv=f.name), 1)
+        try:
+            self.assertAlmostEqual(insel.template("day_of_week", days_csv=temp_path), 1)
             self.assertTrue(
                 "Unexpected end of file" in str(Insel.last_warnings),
                 "CSV file should have been read completely",
             )
+        finally:
+            os.remove(temp_path)
 
     def test_int(self):
         self.assertAlmostEqual(insel.block("int", 10.0), 10.0, places=5)
