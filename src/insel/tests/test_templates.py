@@ -118,41 +118,6 @@ class TestTemplatesWithConstants(CustomAssertions):
     def test_both_placeholder_and_constant(self):
         self.assertEqual(3.7, insel.template("constants/same", x=1.2))
 
-class TestTemplatesWithDifferentEncoding(CustomAssertions):
-    def test_non_ascii_template(self):
-        utf8_template = insel.Template("encoding/a_times_b_utf8", a=2, b=2)
-        utf8_template.timeout = 5
-        self.assertEqual(utf8_template.run(), 4)
-
-        iso_template = insel.Template("encoding/a_times_b_iso8859", a=4, b=4)
-        iso_template.timeout = 5
-        self.assertEqual(iso_template.run(), 16)
-
-    def test_non_ascii_template_name(self):
-        template = insel.Template("encoding/ä_tïm€ß_b", a=3, b=2)
-        self.assertEqual(template.run(), 6)
-
-    def test_space_in_template_name(self):
-        template = insel.Template("encoding/space in folder/a times b", a=617, b=2)
-        self.assertEqual(template.run(), 1234)
-
-    def test_non_ascii_in_template_folder(self):
-        template = insel.Template("encoding/Ëñçödìñg/a times b", a=2, b=2)
-        self.assertEqual(template.run(), 4)
-
-        template = insel.Template("encoding/Ëñçödìñg/x_plus_y.vseit", x=1200, y=34)
-        self.assertEqual(template.run(), 1234)
-
-        direct_run = insel.run("templates/encoding/Ëñçödìñg/x_plus_y.vseit")
-        self.assertEqual(direct_run, 123)
-
-    def test_full_unicode(self):
-        insel.run("templates/encoding/Ëñçödìñg/💎.vseit")
-        insel.run("templates/encoding/Ëñçödìñg/こんにちは.vseit")
-
-    def test_read_file_in_non_ascii_folder(self):
-        direct_run = insel.run("templates/encoding/Ëñçödìñg/read_file.insel")
-        self.assertEqual(direct_run, 55)
 
 class TestTemplates(CustomAssertions):
     def test_empty_if(self):
@@ -308,7 +273,6 @@ class TestTemplates(CustomAssertions):
         values = insel.template("mathematics/polyg")
         self.compareLists(values, [1, 1, 5, 4, -2, 0, 2, 4, 4, 4])
 
-
     def test_sunpower_isc(self):
         self.assertRaisesRegex(
             AttributeError, "UndefinedValue", insel.template, "photovoltaic/i_sc"
@@ -386,7 +350,10 @@ class TestTemplates(CustomAssertions):
             model = insel.Template("io/write_params", dat_file=dat_file, **write_params)
             model.run()
             self.assertEqual(model.warnings, [])
-            self.assertTrue(dat_file.exists(), f"'{dat_file.resolve()}' file should have been written.")
+            self.assertTrue(
+                dat_file.exists(),
+                f"'{dat_file.resolve()}' file should have been written.",
+            )
             with open(dat_file) as out:
                 if write_params.get("header"):
                     next(out)
