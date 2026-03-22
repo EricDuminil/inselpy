@@ -16,5 +16,4 @@ set format x "%g°"
 
 set output '$plot_folder$/sine.png'
 set terminal pngcairo size 1400, 800
-# NOTE: Multiple plot blocks can be used. Which means the PLOT block id is included in the filename:
-plot "$result_folder$/insel3.gpl" title "My $ template_name $"
+plot "$result_folder$/insel.gpl" title "My $ template_name $"
