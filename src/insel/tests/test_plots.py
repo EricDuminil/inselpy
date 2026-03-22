@@ -13,3 +13,6 @@ class TestBasicPlots(CustomAssertions):
         png_output.unlink(missing_ok=True)
         insel.plot('plots/sine', x_max=720)
         self.assertTrue(png_output.exists(), f"{png_output} should have been written")
+
+    def test_double_plot(self):
+        insel.plot('plots/double_plot')
