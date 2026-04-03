@@ -166,7 +166,13 @@ class TestTemplates(CustomAssertions):
         #       1e-4 really isn't any problem for °C or W/m²
         self.compareLists(deviation, [0, 0], places=4)
 
+    def test_random_streams(self):
+        # Check that RAN1 returns the same streams with the same seed, and different streams with different seeds
+        all_trues = insel.template("random/check_randoms.vseit")
+        self.assertEqual(all_trues, [1] * 7, "Every check should be true for random streams")
+
     def test_random_and_normal_distribution_consistency(self):
+        # Check if the results are the same, even on different architectures
         deviation = insel.template("random/check_random_and_normal_consistency.vseit")
         self.compareLists(deviation, [0, 0], places=4)
 
