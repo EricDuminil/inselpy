@@ -1,3 +1,4 @@
+import math
 import os
 import re
 import tempfile
@@ -41,6 +42,16 @@ class TestBasicTemplates(CustomAssertions):
 
 
 class TestTemplatesWithConstants(CustomAssertions):
+    def test_tiny_and_huge_constants(self):
+        pi = math.pi
+        for exponent in [-300, -50, 50, 300]:
+            x = pi * 10**exponent
+            self.assertAlmostEqual(
+                x,
+                insel.template("constants/one_constant.insel", x=x),
+                delta=x / 10**15,
+            )
+
     def test_vseit_is_a_template(self):
         # A Vseit model should be a template with default values
         self.assertEqual(3, insel.run("templates/constants/x_plus_y.vseit"))
@@ -159,7 +170,9 @@ class TestTemplates(CustomAssertions):
         deviation = insel.template("random/check_random_and_normal_consistency.vseit")
         self.compareLists(deviation, [0, 0], places=4)
 
-        ran_deviation, gasdev_deviation = insel.template("random/check_random_and_normal_consistency.vseit", SEED=4567)
+        ran_deviation, gasdev_deviation = insel.template(
+            "random/check_random_and_normal_consistency.vseit", SEED=4567
+        )
         self.assertNotAlmostEqual(ran_deviation, 0, places=3)
         self.assertNotAlmostEqual(gasdev_deviation, 0, places=3)
 
@@ -294,11 +307,9 @@ class TestTemplates(CustomAssertions):
             insel.template("photovoltaic/i_sc", pv_id="003305"), 5.96, places=2
         )
         # TODO: More research is needed :)
-        self.skipTest(
-            """This spec fails, probably because of a too low
+        self.skipTest("""This spec fails, probably because of a too low
                 'Temperature coeff of short-circuit current' in .bp files
-                 .982E-7 in this example, instead of ~0.2E-3"""
-        )
+                 .982E-7 in this example, instead of ~0.2E-3""")
         self.assertAlmostEqual(
             insel.template("photovoltaic/i_sc", pv_id="003305", temperature=70),
             5.96 + (70 - 25) * 3.5e-3,

@@ -54,6 +54,6 @@ class OneBlockModel(TemporaryModel):
 
         screen_inputs = ' '.join(f"{block_id}.{i + 1}" for i in range(self.n_out))
         lines.append(f"s {screen_id} SCREEN {screen_inputs}")
-        lines.append(f"p {screen_id} '({self.n_out}E24.16)'")
+        lines.append(f"p {screen_id} '({self.n_out}E25.16E3)'")
 
         return "\n".join(lines)
