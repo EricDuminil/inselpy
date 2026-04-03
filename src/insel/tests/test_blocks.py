@@ -11,6 +11,8 @@ from insel import Insel, InselError
 from .constants import IMPORTANT_BLOCKS, STUTTGART
 from .custom_assertions import CustomAssertions
 
+DOUBLE_PRECISION = 12  # [digits]
+
 
 class TestBlock(CustomAssertions):
     def test_blocks_are_unique(self):
@@ -69,13 +71,13 @@ class TestBlock(CustomAssertions):
             )
 
     def test_pi(self):
-        self.assertAlmostEqual(insel.block("pi"), math.pi, places=6)
+        self.assertAlmostEqual(insel.block("pi"), math.pi, places=DOUBLE_PRECISION)
 
     def test_constants(self):
         # Solar constant. Should it be 1361?
         # https://en.wikipedia.org/wiki/Solar_constant
         self.assertAlmostEqual(insel.block("gs"), 1367)
-        self.assertAlmostEqual(insel.block("e"), math.exp(1), places=6)
+        self.assertAlmostEqual(insel.block("e"), math.exp(1), places=DOUBLE_PRECISION)
         # Elementary charge
         self.assertAlmostEqual(insel.block("q"), 1.60217663e-19, delta=1e-23)
         # Boltzmann
@@ -132,32 +134,32 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block("inv", math.inf), 1)
 
     def test_sum(self):
-        self.assertAlmostEqual(insel.block("sum", 2), 2, places=8)
-        self.assertAlmostEqual(insel.block("sum", 2, 4), 6, places=8)
-        self.assertAlmostEqual(insel.block("sum", 2, 4, 5), 11, places=8)
+        self.assertAlmostEqual(insel.block("sum", 2), 2, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("sum", 2, 4), 6, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("sum", 2, 4, 5), 11, places=DOUBLE_PRECISION)
         self.assertNaN(insel.block("sum", 2, float("nan")))
         self.assertInf(insel.block("sum", 2, float("inf")))
 
     def test_if(self):
-        self.assertAlmostEqual(insel.block("if", 3.14, 1), 3.14, places=6)
-        self.assertAlmostEqual(insel.block("if", 3.14, 2), 3.14, places=6)
-        self.assertAlmostEqual(insel.block("if", 3.14, 0.5), 3.14, places=6)
-        self.assertAlmostEqual(insel.block("if", 3.14, -0.5), 3.14, places=6)
-        self.assertAlmostEqual(insel.block("if", 3.14, float("inf")), 3.14, places=6)
+        self.assertAlmostEqual(insel.block("if", 3.14, 1), 3.14, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("if", 3.14, 2), 3.14, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("if", 3.14, 0.5), 3.14, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("if", 3.14, -0.5), 3.14, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("if", 3.14, float("inf")), 3.14, places=DOUBLE_PRECISION)
         #  Weird, actually. It should be empty. Seems to require a DO block
-        self.assertAlmostEqual(insel.block("if", 3.14, 0), 0.0, places=6)
-        self.assertAlmostEqual(insel.block("if", 3.14, 0.4), 0.0, places=6)
-        self.assertAlmostEqual(insel.block("if", 3.14, -0.4), 0.0, places=6)
+        self.assertAlmostEqual(insel.block("if", 3.14, 0), 0.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("if", 3.14, 0.4), 0.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("if", 3.14, -0.4), 0.0, places=DOUBLE_PRECISION)
         self.assertNaN(insel.block("if", float("nan"), 1))
-        self.assertAlmostEqual(insel.block("if", 3.14, float("nan")), 0.0, places=6)
+        self.assertAlmostEqual(insel.block("if", 3.14, float("nan")), 0.0, places=DOUBLE_PRECISION)
 
     def test_ifelsenan(self):
-        self.assertAlmostEqual(insel.block("ifelsenan", 3.14, 1), 3.14, places=6)
-        self.assertAlmostEqual(insel.block("ifelsenan", 3.14, 2), 3.14, places=6)
-        self.assertAlmostEqual(insel.block("ifelsenan", 3.14, 0.5), 3.14, places=6)
-        self.assertAlmostEqual(insel.block("ifelsenan", 3.14, -0.5), 3.14, places=6)
+        self.assertAlmostEqual(insel.block("ifelsenan", 3.14, 1), 3.14, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("ifelsenan", 3.14, 2), 3.14, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("ifelsenan", 3.14, 0.5), 3.14, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("ifelsenan", 3.14, -0.5), 3.14, places=DOUBLE_PRECISION)
         self.assertAlmostEqual(
-            insel.block("ifelsenan", 3.14, float("inf")), 3.14, places=6
+            insel.block("ifelsenan", 3.14, float("inf")), 3.14, places=DOUBLE_PRECISION
         )
         self.assertNaN(insel.block("ifelsenan", 3.14, 0))
         self.assertNaN(insel.block("ifelsenan", 3.14, 0.4))
@@ -165,20 +167,20 @@ class TestBlock(CustomAssertions):
         self.assertNaN(insel.block("ifelsenan", 3.14, float("nan")))
 
     def test_ifpos(self):
-        self.assertAlmostEqual(insel.block("ifpos", 3.14), 3.14, places=6)
+        self.assertAlmostEqual(insel.block("ifpos", 3.14), 3.14, places=DOUBLE_PRECISION)
         #  Weird, actually. It should be empty. Seems to require a DO block
-        self.assertAlmostEqual(insel.block("ifpos", -3.14), 0.0, places=6)
+        self.assertAlmostEqual(insel.block("ifpos", -3.14), 0.0, places=DOUBLE_PRECISION)
 
     def test_ifneg(self):
-        self.assertAlmostEqual(insel.block("ifneg", -3.14), -3.14, places=6)
+        self.assertAlmostEqual(insel.block("ifneg", -3.14), -3.14, places=DOUBLE_PRECISION)
         #  Weird, actually. It should be empty. Seems to require a DO block
-        self.assertAlmostEqual(insel.block("ifneg", 3.14), 0.0, places=6)
+        self.assertAlmostEqual(insel.block("ifneg", 3.14), 0.0, places=DOUBLE_PRECISION)
 
     def test_diff(self):
-        self.assertAlmostEqual(insel.block("diff", 4, 1), 3, places=8)
-        self.assertAlmostEqual(insel.block("diff", 1, 4), -3, places=8)
-        self.assertAlmostEqual(insel.block("diff", 1000, 1), 999, places=8)
-        self.assertAlmostEqual(insel.block("diff", 500, 123), 377, places=8)
+        self.assertAlmostEqual(insel.block("diff", 4, 1), 3, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("diff", 1, 4), -3, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("diff", 1000, 1), 999, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("diff", 500, 123), 377, places=DOUBLE_PRECISION)
 
         self.assertNaN(insel.block("diff", 2, float("nan")))
         self.assertInf(insel.block("diff", 2, float("inf")))
@@ -191,8 +193,8 @@ class TestBlock(CustomAssertions):
         self.assertRaisesRegex(InselError, "Too many", insel.block, "diff", 1, 2, 3)
 
     def test_gain(self):
-        self.assertAlmostEqual(insel.block("gain", 3, parameters=[2]), 6, places=8)
-        self.assertAlmostEqual(insel.block("gain", 1, parameters=[0]), 0, places=8)
+        self.assertAlmostEqual(insel.block("gain", 3, parameters=[2]), 6, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("gain", 1, parameters=[0]), 0, places=DOUBLE_PRECISION)
         results = insel.block("gain", 2, 5, 7, parameters=[3], outputs=3)
         self.assertIsInstance(
             results, list, "Gain should return N outputs for N inputs"
@@ -206,7 +208,7 @@ class TestBlock(CustomAssertions):
         )
 
     def test_att(self):
-        self.assertAlmostEqual(insel.block("att", 3, parameters=[2]), 1.5, places=8)
+        self.assertAlmostEqual(insel.block("att", 3, parameters=[2]), 1.5, places=DOUBLE_PRECISION)
         # Division by 0
         self.assertRaisesRegex(
             InselError, "Zero .+ invalid", insel.block, "att", 1, parameters=[0]
@@ -218,7 +220,7 @@ class TestBlock(CustomAssertions):
         self.assertEqual(repr(results), "[3.0, 1.0, 2.0, 2.5]")
 
     def test_div(self):
-        self.assertAlmostEqual(insel.block("div", 3, 2), 1.5, places=8)
+        self.assertAlmostEqual(insel.block("div", 3, 2), 1.5, places=DOUBLE_PRECISION)
         # Division by 0
         self.assertNaN(insel.block("div", 1, 0))
         self.assertEqual(
@@ -254,42 +256,44 @@ class TestBlock(CustomAssertions):
 
     def test_sine(self):
         self.assertAlmostEqual(insel.block("sin", 0), 0)
-        self.assertAlmostEqual(insel.block("sin", 180), 0, places=6)
-        self.assertAlmostEqual(insel.block("sin", 45), 2**0.5 / 2, places=6)
-        self.assertAlmostEqual(insel.block("sin", 30), 0.5, places=6)
-        self.assertAlmostEqual(insel.block("sin", 60), 3**0.5 / 2, places=6)
+        self.assertAlmostEqual(insel.block("sin", 180), 0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("sin", 45), 2**0.5 / 2, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("sin", 30), 0.5, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("sin", 60), 3**0.5 / 2, places=DOUBLE_PRECISION)
         self.assertAlmostEqual(insel.block("sin", 90), 1)
         self.assertAlmostEqual(insel.block("sin", -90), -1)
-        self.assertAlmostEqual(insel.block("sin", math.pi, parameters=[1]), 0, places=6)
         self.assertAlmostEqual(
-            insel.block("sin", math.pi / 2, parameters=[1]), 1, places=6
+            insel.block("sin", math.pi, parameters=[1]), 0, places=DOUBLE_PRECISION
         )
         self.assertAlmostEqual(
-            insel.block("sin", math.pi / 6, parameters=[1]), 0.5, places=6
+            insel.block("sin", math.pi / 2, parameters=[1]), 1, places=DOUBLE_PRECISION
         )
         self.assertAlmostEqual(
-            insel.block("sin", -math.pi / 2, parameters=[1]), -1, places=6
+            insel.block("sin", math.pi / 6, parameters=[1]), 0.5, places=DOUBLE_PRECISION
+        )
+        self.assertAlmostEqual(
+            insel.block("sin", -math.pi / 2, parameters=[1]), -1, places=DOUBLE_PRECISION
         )
 
     def test_cosine(self):
         self.assertAlmostEqual(insel.block("cos", 0), 1)
-        self.assertAlmostEqual(insel.block("cos", 180), -1, places=6)
-        self.assertAlmostEqual(insel.block("cos", 45), 2**0.5 / 2, places=6)
-        self.assertAlmostEqual(insel.block("cos", 30), 3**0.5 / 2, places=6)
-        self.assertAlmostEqual(insel.block("cos", 60), 0.5, places=6)
+        self.assertAlmostEqual(insel.block("cos", 180), -1, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("cos", 45), 2**0.5 / 2, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("cos", 30), 3**0.5 / 2, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("cos", 60), 0.5, places=DOUBLE_PRECISION)
         self.assertAlmostEqual(insel.block("cos", 90), 0)
         self.assertAlmostEqual(insel.block("cos", -90), 0)
         self.assertAlmostEqual(
-            insel.block("cos", math.pi, parameters=[1]), -1, places=6
+            insel.block("cos", math.pi, parameters=[1]), -1, places=DOUBLE_PRECISION
         )
         self.assertAlmostEqual(
-            insel.block("cos", math.pi / 2, parameters=[1]), 0, places=6
+            insel.block("cos", math.pi / 2, parameters=[1]), 0, places=DOUBLE_PRECISION
         )
         self.assertAlmostEqual(
-            insel.block("cos", math.pi / 3, parameters=[1]), 0.5, places=6
+            insel.block("cos", math.pi / 3, parameters=[1]), 0.5, places=DOUBLE_PRECISION
         )
         self.assertAlmostEqual(
-            insel.block("cos", -math.pi / 2, parameters=[1]), 0, places=6
+            insel.block("cos", -math.pi / 2, parameters=[1]), 0, places=DOUBLE_PRECISION
         )
 
     def test_atan2(self):
@@ -299,7 +303,7 @@ class TestBlock(CustomAssertions):
         self.assertAlmostEqual(insel.block("atan2", -1, -1), -135)
         self.assertAlmostEqual(insel.block("atan2", 1, 1, parameters=[1]), math.pi / 4)
         self.assertAlmostEqual(
-            insel.block("atan2", 1, 0, parameters=[1]), math.pi / 2, places=6
+            insel.block("atan2", 1, 0, parameters=[1]), math.pi / 2, places=DOUBLE_PRECISION
         )
         self.assertNaN(insel.block("atan2", math.nan, 1))
         self.assertNaN(insel.block("atan2", 1, math.nan))
@@ -307,42 +311,42 @@ class TestBlock(CustomAssertions):
     def test_atan(self):
         self.assertAlmostEqual(insel.block("atan", 1), 45)
         self.assertAlmostEqual(insel.block("atan", 0), 0)
-        self.assertAlmostEqual(insel.block("atan", math.inf), 90, places=4)
+        self.assertAlmostEqual(insel.block("atan", math.inf), 90, places=DOUBLE_PRECISION)
         self.assertNaN(insel.block("atan", math.nan))
 
     def test_offset(self):
-        self.assertAlmostEqual(insel.block("offset", 3, parameters=[-2]), 1.0, places=8)
+        self.assertAlmostEqual(insel.block("offset", 3, parameters=[-2]), 1.0, places=DOUBLE_PRECISION)
         # Multiple inputs
         results = insel.block("offset", 9, 3, 6, -10.5, parameters=[3], outputs=4)
         self.assertEqual(repr(results), "[12.0, 6.0, 9.0, -7.5]")
 
     def test_root(self):
-        self.assertAlmostEqual(insel.block("root", 2, parameters=[2]), 2**0.5, places=6)
+        self.assertAlmostEqual(insel.block("root", 2, parameters=[2]), 2**0.5, places=DOUBLE_PRECISION)
         self.assertEqual(
             repr(insel.block("root", 9, 16, 25, parameters=[2], outputs=3)),
             "[3.0, 4.0, 5.0]",
         )
 
     def test_sqrt(self):
-        self.assertAlmostEqual(insel.block("sqrt", 2), 2**0.5, places=6)
+        self.assertAlmostEqual(insel.block("sqrt", 2), 2**0.5, places=DOUBLE_PRECISION)
         self.assertEqual(
             repr(insel.block("sqrt", 9, 16, 25, outputs=3)), "[3.0, 4.0, 5.0]"
         )
 
     def test_abs(self):
-        self.assertAlmostEqual(insel.block("abs", 1.23), 1.23, places=6)
-        self.assertAlmostEqual(insel.block("abs", -1.23), 1.23, places=6)
+        self.assertAlmostEqual(insel.block("abs", 1.23), 1.23, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("abs", -1.23), 1.23, places=DOUBLE_PRECISION)
         self.assertEqual(
             repr(insel.block("abs", -9, 16, -25, outputs=3)), "[9.0, 16.0, 25.0]"
         )
 
     def test_exp(self):
-        self.assertAlmostEqual(insel.block("exp", 1.0), 2.71828, places=5)
-        self.assertAlmostEqual(insel.block("exp", 0.0), 1.0, places=6)
-        self.assertAlmostEqual(insel.block("exp", -1.0), 1 / 2.71828, places=6)
+        self.assertAlmostEqual(insel.block("exp", 1.0), 2.71828, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("exp", 0.0), 1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("exp", -1.0), 1 / 2.71828, places=DOUBLE_PRECISION)
         for exponent in [-50, -20, 20, 50, 80]:
             self.assertAlmostEqual(
-                insel.block("exp", exponent) / math.exp(exponent), 1, places=6
+                insel.block("exp", exponent) / math.exp(exponent), 1, places=DOUBLE_PRECISION
             )
         self.assertEqual(
             " ".join(
@@ -355,10 +359,10 @@ class TestBlock(CustomAssertions):
         )
 
     def test_nop(self):
-        self.assertAlmostEqual(insel.block("nop", 1.0), 1.0, places=5)
-        self.assertAlmostEqual(insel.block("nop", 0.0), 0.0, places=6)
-        self.assertAlmostEqual(insel.block("nop", -1.0), -1.0, places=6)
-        self.assertAlmostEqual(insel.block("nop", 20), 20, places=5)
+        self.assertAlmostEqual(insel.block("nop", 1.0), 1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("nop", 0.0), 0.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("nop", -1.0), -1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("nop", 20), 20, places=DOUBLE_PRECISION)
         self.assertEqual(
             " ".join(
                 [
@@ -370,9 +374,9 @@ class TestBlock(CustomAssertions):
         )
 
     def test_chs(self):
-        self.assertAlmostEqual(insel.block("chs", 1.0), -1.0, places=5)
-        self.assertAlmostEqual(insel.block("chs", 1.23), -1.23, places=5)
-        self.assertAlmostEqual(insel.block("chs", -234.56), 234.56, places=5)
+        self.assertAlmostEqual(insel.block("chs", 1.0), -1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("chs", 1.23), -1.23, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("chs", -234.56), 234.56, places=DOUBLE_PRECISION)
         self.assertEqual(
             " ".join(
                 [
@@ -386,7 +390,11 @@ class TestBlock(CustomAssertions):
     def test_dow(self):
         # NOTE: testing the results one by one was too slow, so use a template to check many years at once
         years = [1900, 1960, 1995, 2000, 2024, 2025]
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".csv", delete=False,) as f:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            suffix=".csv",
+            delete=False,
+        ) as f:
             temp_path = f.name
             f.write(f"# Year Month Day DayOfWeek(Monday 1, Sunday 7)\n")
             for year in years:
@@ -406,33 +414,33 @@ class TestBlock(CustomAssertions):
             os.remove(temp_path)
 
     def test_int(self):
-        self.assertAlmostEqual(insel.block("int", 10.0), 10.0, places=5)
-        self.assertAlmostEqual(insel.block("int", 1.23), 1.0, places=5)
-        self.assertAlmostEqual(insel.block("int", 1.67), 1.0, places=5)
-        self.assertAlmostEqual(insel.block("int", -1.3), -1.0, places=5)
-        self.assertAlmostEqual(insel.block("int", -1.7), -1.0, places=5)
+        self.assertAlmostEqual(insel.block("int", 10.0), 10.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("int", 1.23), 1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("int", 1.67), 1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("int", -1.3), -1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("int", -1.7), -1.0, places=DOUBLE_PRECISION)
         self.assertEqual(
             repr(insel.block("int", -9.7, 16.2, -25.7, outputs=3)),
             "[-9.0, 16.0, -25.0]",
         )
 
     def test_anint(self):
-        self.assertAlmostEqual(insel.block("anint", 10.0), 10.0, places=5)
-        self.assertAlmostEqual(insel.block("anint", 1.23), 1.0, places=5)
-        self.assertAlmostEqual(insel.block("anint", 1.67), 2.0, places=5)
-        self.assertAlmostEqual(insel.block("anint", -1.3), -1.0, places=5)
-        self.assertAlmostEqual(insel.block("anint", -1.7), -2.0, places=5)
+        self.assertAlmostEqual(insel.block("anint", 10.0), 10.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("anint", 1.23), 1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("anint", 1.67), 2.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("anint", -1.3), -1.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("anint", -1.7), -2.0, places=DOUBLE_PRECISION)
         self.assertEqual(
             repr(insel.block("anint", -9.7, 16.2, -25.7, outputs=3)),
             "[-10.0, 16.0, -26.0]",
         )
 
     def test_frac(self):
-        self.assertAlmostEqual(insel.block("frac", 10.0), 0.0, places=5)
-        self.assertAlmostEqual(insel.block("frac", 1.23), 0.23, places=5)
-        self.assertAlmostEqual(insel.block("frac", 1.67), 0.67, places=5)
-        self.assertAlmostEqual(insel.block("frac", -1.3), -0.3, places=5)
-        self.assertAlmostEqual(insel.block("frac", -1.7), -0.7, places=5)
+        self.assertAlmostEqual(insel.block("frac", 10.0), 0.0, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("frac", 1.23), 0.23, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("frac", 1.67), 0.67, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("frac", -1.3), -0.3, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("frac", -1.7), -0.7, places=DOUBLE_PRECISION)
         self.assertEqual(
             " ".join(
                 [
@@ -550,7 +558,7 @@ class TestBlock(CustomAssertions):
     def test_do(self):
         self.assertEqual(len(insel.block("do", parameters=[1, 10, 1])), 10)
         many_points = insel.block("do", parameters=[-10, 10, 0.1])
-        self.compareLists(many_points, [x / 10.0 for x in range(-100, 101)], places=5)
+        self.compareLists(many_points, [x / 10.0 for x in range(-100, 101)], places=DOUBLE_PRECISION)
 
     def test_warning_is_fine(self):
         self.assertAlmostEqual(insel.block("acos", 1.5), 0)
