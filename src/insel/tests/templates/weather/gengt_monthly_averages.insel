@@ -27,7 +27,7 @@ P 3
     0.3             % Autocorrelation coefficient lag one
     0.171           % Autocorrelation coefficient lag two
     1002            % Initialisation of random number generator
-    0.1             % Maximum allowed mean temperature deviation
+    0.05            % Maximum allowed mean temperature deviation
     2000            % Maximum number of iterations
 
 B 4 ABS

@@ -176,7 +176,7 @@ class TestTemplates(CustomAssertions):
         self.assertAlmostEqual(
             temperature_deviation,
             0,
-            delta=0.1,
+            delta=0.05,
             msg="Temperature shouldnt vary by more than 0.1K",
         )
 
