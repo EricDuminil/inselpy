@@ -155,6 +155,14 @@ class TestTemplates(CustomAssertions):
         #       1e-4 really isn't any problem for °C or W/m²
         self.compareLists(deviation, [0, 0], places=4)
 
+    def test_random_and_normal_distribution_consistency(self):
+        deviation = insel.template("random/check_random_and_normal_consistency.vseit")
+        self.compareLists(deviation, [0, 0], places=4)
+
+        ran_deviation, gasdev_deviation = insel.template("random/check_random_and_normal_consistency.vseit", SEED=4567)
+        self.assertNotAlmostEqual(ran_deviation, 0, places=3)
+        self.assertNotAlmostEqual(gasdev_deviation, 0, places=3)
+
     def test_gengt_averages(self):
         irradiance_deviation, temperature_deviation = insel.template(
             "weather/gengt_monthly_averages"
