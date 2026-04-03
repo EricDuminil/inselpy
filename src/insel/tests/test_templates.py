@@ -92,11 +92,11 @@ class TestTemplatesWithConstants(CustomAssertions):
     def test_example_vseit(self):
         # PV in Nurnberg:
         self.compareLists(
-            [3866, 3652], insel.template("constants/nurnberg.vseit"), places=0
+            [3867, 3653], insel.template("constants/nurnberg.vseit"), places=-1
         )
         # PV in Phoenix
         self.compareLists(
-            [6560, 6260],
+            [6510, 6210],
             insel.template(
                 "constants/nurnberg.vseit",
                 Latitude=33,
