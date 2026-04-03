@@ -11,7 +11,7 @@ from insel import Insel, InselError
 from .constants import IMPORTANT_BLOCKS, STUTTGART
 from .custom_assertions import CustomAssertions
 
-DOUBLE_PRECISION = 12  # [digits]
+DOUBLE_PRECISION = 14  # [digits]
 
 
 class TestBlock(CustomAssertions):
