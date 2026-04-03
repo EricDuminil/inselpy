@@ -341,9 +341,9 @@ class TestBlock(CustomAssertions):
         )
 
     def test_exp(self):
-        self.assertAlmostEqual(insel.block("exp", 1.0), 2.71828, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("exp", 1.0), math.exp(1), places=DOUBLE_PRECISION)
         self.assertAlmostEqual(insel.block("exp", 0.0), 1.0, places=DOUBLE_PRECISION)
-        self.assertAlmostEqual(insel.block("exp", -1.0), 1 / 2.71828, places=DOUBLE_PRECISION)
+        self.assertAlmostEqual(insel.block("exp", -1.0), 1 / math.exp(1), places=DOUBLE_PRECISION)
         for exponent in [-50, -20, 20, 50, 80]:
             self.assertAlmostEqual(
                 insel.block("exp", exponent) / math.exp(exponent), 1, places=DOUBLE_PRECISION
