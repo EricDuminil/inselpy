@@ -367,9 +367,18 @@ class TestTemplates(CustomAssertions):
                 content = out.readlines()
 
         self.assertGreater(len(content), 0)
+        significant_figures = 7
         for line in content:
-            columns = line.split()
-            self.assertEqual(len(columns), 5, f"Columns should not be too close to each others:\n{line}")
+            cells = line.split()
+            self.assertEqual(len(cells), 5, f"Columns should not be too close to each others:\n{line}")
+            power, x1, x2, x3, x4 = [float(cell) for cell in cells]
+            positive = 10**power
+            negative = -(10 ** (-power))
+            self.assertAlmostEqual(positive, x1, delta=positive / 10**significant_figures)
+            self.assertAlmostEqual(negative, x2, delta=-negative / 10**significant_figures)
+            self.assertAlmostEqual(-positive, x3, delta=positive / 10**significant_figures)
+            self.assertAlmostEqual(-negative, x4, delta=-negative / 10**significant_figures)
+
             self.assertLess(len(line), 87, f"Columns should not be too wide:\n{line}")
             # NOTE: expg.dat can be deleted once done
 
