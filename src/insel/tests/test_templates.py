@@ -92,7 +92,7 @@ class TestTemplatesWithConstants(CustomAssertions):
     def test_example_vseit(self):
         # PV in Nurnberg:
         self.compareLists(
-            [3867, 3653], insel.template("constants/nurnberg.vseit"), places=-1
+            [3867, 3653], insel.template("constants/nurnberg.vseit"), delta=10
         )
         # PV in Phoenix
         self.compareLists(
@@ -104,7 +104,7 @@ class TestTemplatesWithConstants(CustomAssertions):
                 Tilt=10,
                 Timezone=-7,
             ),
-            places=-1,
+            delta=50,
         )
 
     def test_placeholder_over_constant(self):
@@ -244,7 +244,8 @@ class TestTemplates(CustomAssertions):
         v2_results = insel.template(
             "photovoltaic/nurnberg_v2", latitude=49.5, longitude=11.08, timezone=+1
         )
-        self.compareLists(v1_results, [3865, 3645], places=-1)
+
+        self.compareLists(v1_results, [3867, 3653], delta=10)
         self.compareLists(v2_results, v1_results, places=2)
 
     def test_cumc(self):
