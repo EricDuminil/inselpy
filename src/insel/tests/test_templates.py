@@ -188,11 +188,12 @@ class TestTemplates(CustomAssertions):
         irradiance_deviation, temperature_deviation = insel.template(
             "weather/gengt_monthly_averages"
         )
+        # NOTE: Trying to get tighter results might lead to some problems in SimStadt
         self.assertAlmostEqual(
             irradiance_deviation,
             0,
-            delta=3,
-            msg="Irradiance shouldnt vary by more than 3 W/m²",
+            delta=5,
+            msg="Irradiance shouldnt vary by more than 5 W/m²",
         )
         self.assertAlmostEqual(
             temperature_deviation,

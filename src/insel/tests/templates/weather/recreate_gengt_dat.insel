@@ -1,0 +1,37 @@
+% Use this model if you want to update GENGT dat files
+b 1 MTM2  2.2
+p 1
+    'Berlin'
+b 2 CLOCK
+p 2
+                 2010
+                    1
+                    1
+                    0
+                    0
+                    0
+                 2014
+                    1
+                    1
+                    0
+                    0
+                    0
+                    1
+    'h'
+b 10 GENGT2  1.1 1.3 1.4 1.5 1.7 1.8 2.1 2.2 2.3 2.4
+p 10
+                52.47
+                 13.3
+                    1
+                    1
+                    0
+                  0.3
+                0.171
+                 1002
+                  0.1
+                 2000
+b 12 WRITE 10.1 10.2
+p 12
+                    1
+    '../../data/gengt_comparison.dat'
+    '*'
