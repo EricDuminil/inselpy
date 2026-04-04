@@ -1,0 +1,6 @@
+s 1 CONST
+p 1 $x$
+
+s 2 SCREEN 1.1
+p 2 '(E24.16E3)'
+

@@ -1,6 +1,8 @@
 % Originally exported and saved from INSEL 8.2
 % in order to make sure that GENGT outputs the same results when run
 % multiple times from the GUI. Could help during refactoring.
+% It has then been updated with new values, after move to double-precision floats, and
+% new random streams.
 % The output should be 0, 0
 b 1 MTM2  2.2
 p 1
