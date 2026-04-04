@@ -169,7 +169,9 @@ class TestTemplates(CustomAssertions):
     def test_random_streams(self):
         # Check that RAN1 returns the same streams with the same seed, and different streams with different seeds
         all_trues = insel.template("random/check_randoms.vseit")
-        self.assertEqual(all_trues, [1] * 7, "Every check should be true for random streams")
+        self.assertEqual(
+            all_trues, [1] * 7, "Every check should be true for random streams"
+        )
 
     def test_random_and_normal_distribution_consistency(self):
         # Check if the results are the same, even on different architectures
@@ -352,6 +354,24 @@ class TestTemplates(CustomAssertions):
             305 * (1 - 0.38 / 100) ** (temp - 25),
             places=0,
         )
+
+    def test_write_columns(self):
+        """Make sure the columns are written correctly. Not too wide, not too close to each others.
+        Even now that inputs are double-precision floats.
+        """
+        comparison_dat = SCRIPT_DIR / "data" / "expg_columns.dat"
+        with open(comparison_dat) as orig:
+            original_content = orig.readlines()
+        with tempfile.TemporaryDirectory() as tmpdirname:
+            dat_file = Path(tmpdirname) / "columns.dat"
+            self.assertFalse(dat_file.exists())
+            insel.template("io/write_columns", dat_file=dat_file)
+            with open(dat_file) as out:
+                content = out.readlines()
+
+        for orig_line, line in zip(original_content, content):
+            # NOTE: strip() could be allowed
+            self.assertEqual(orig_line, line, "Column should be not too wide, and not too close")
 
     def test_write_block(self):
         self._run_write_block()
