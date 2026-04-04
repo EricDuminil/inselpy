@@ -102,6 +102,10 @@ class TestExistingModel(CustomAssertions):
         self.assertTrue('T€st 12345' in out,
                         "Headline should be allowed to be in UTF-8")
 
+    def test_enough_iterations_for_gent(self):
+        insel.run('templates/weather/simstadt_monthly_to_hourly.insel')
+        self.assertEqual([], insel.Insel.last_warnings, "INSEL should have created the hourly values")
+
     def test_mpp_without_top_of_loop(self):
         self.assertRaisesRegex(InselError, "No TOL-block", insel.run,
                                'templates/photovoltaic/mpp_without_top_of_loop.vseit')
