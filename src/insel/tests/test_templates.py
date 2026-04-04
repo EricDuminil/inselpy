@@ -367,7 +367,7 @@ class TestTemplates(CustomAssertions):
                 content = out.readlines()
 
         self.assertGreater(len(content), 0)
-        significant_figures = 7
+        significant_figures = 7 # If more is needed, a specific format should be used
         for line in content:
             cells = line.split()
             self.assertEqual(len(cells), 5, f"Columns should not be too close to each others:\n{line}")
