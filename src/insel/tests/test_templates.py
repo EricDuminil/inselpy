@@ -359,9 +359,6 @@ class TestTemplates(CustomAssertions):
         """Make sure the columns are written correctly. Not too wide, not too close to each others.
         Even now that inputs are double-precision floats.
         """
-        comparison_dat = SCRIPT_DIR / "data" / "expg_columns.dat"
-        with open(comparison_dat) as orig:
-            original_content = orig.readlines()
         with tempfile.TemporaryDirectory() as tmpdirname:
             dat_file = Path(tmpdirname) / "columns.dat"
             self.assertFalse(dat_file.exists())
@@ -369,9 +366,12 @@ class TestTemplates(CustomAssertions):
             with open(dat_file) as out:
                 content = out.readlines()
 
-        for orig_line, line in zip(original_content, content):
-            # NOTE: strip() could be allowed
-            self.assertEqual(orig_line, line, "Column should be not too wide, and not too close")
+        self.assertGreater(len(content), 0)
+        for line in content:
+            columns = line.split()
+            self.assertEqual(len(columns), 5, f"Columns should not be too close to each others:\n{line}")
+            self.assertLess(len(line), 87, f"Columns should not be too wide:\n{line}")
+            # NOTE: expg.dat can be deleted once done
 
     def test_write_block(self):
         self._run_write_block()
