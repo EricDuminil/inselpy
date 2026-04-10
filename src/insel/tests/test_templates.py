@@ -511,9 +511,8 @@ class TestTemplates(CustomAssertions):
         fourfivesix = insel.template("io/read_simple_file", ext="csv")
         self.compareLists(fourfivesix, [4, 5, 6])
 
-    #TODO: def test_read_csv_with_commas(self):
     def test_read_csv_with_semicolons(self):
-        table = insel.template("io/read_csv_file")
+        table = insel.template("io/read_csv_file", basename='table_with_semicolons')
         self.assertEqual(
             table,
             [
@@ -525,6 +524,18 @@ class TestTemplates(CustomAssertions):
             ],
         )
 
+    def test_read_csv_with_commas(self):
+        table = insel.template("io/read_csv_file", basename='table_with_commas')
+        self.assertEqual(
+            table,
+            [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9],
+                [10, 11, 12],
+                [13, 14, 15],
+            ],
+        )
     def test_read_epw_file(self):
         # Depending on extension, READ block will parse as normal file or EPW
         stuttgart_epw_average_temp = insel.template("io/read_epw_file", ext="epw")
