@@ -369,17 +369,29 @@ class TestTemplates(CustomAssertions):
                 content = out.readlines()
 
         self.assertGreater(len(content), 0)
-        significant_figures = 7 # If more is needed, a specific format should be used
+        significant_figures = 7  # If more is needed, a specific format should be used
         for line in content:
             cells = line.split()
-            self.assertEqual(len(cells), 5, f"Columns should not be too close to each others:\n{line}")
+            self.assertEqual(
+                len(cells),
+                5,
+                f"Columns should not be too close to each others:\n{line}",
+            )
             power, x1, x2, x3, x4 = [float(cell) for cell in cells]
             positive = 10**power
             negative = -(10 ** (-power))
-            self.assertAlmostEqual(positive, x1, delta=positive / 10**significant_figures)
-            self.assertAlmostEqual(negative, x2, delta=-negative / 10**significant_figures)
-            self.assertAlmostEqual(-positive, x3, delta=positive / 10**significant_figures)
-            self.assertAlmostEqual(-negative, x4, delta=-negative / 10**significant_figures)
+            self.assertAlmostEqual(
+                positive, x1, delta=positive / 10**significant_figures
+            )
+            self.assertAlmostEqual(
+                negative, x2, delta=-negative / 10**significant_figures
+            )
+            self.assertAlmostEqual(
+                -positive, x3, delta=positive / 10**significant_figures
+            )
+            self.assertAlmostEqual(
+                -negative, x4, delta=-negative / 10**significant_figures
+            )
 
             self.assertLess(len(line), 87, f"Columns should not be too wide:\n{line}")
             # NOTE: expg.dat can be deleted once done
@@ -498,6 +510,19 @@ class TestTemplates(CustomAssertions):
         # Now it just tries to read it as a normal file
         fourfivesix = insel.template("io/read_simple_file", ext="csv")
         self.compareLists(fourfivesix, [4, 5, 6])
+
+    def test_read_csv_with_semicolons(self):
+        table = insel.template("io/read_csv_file")
+        self.assertEqual(
+            table,
+            [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9],
+                [10, 11, 12],
+                [13, 14, 15],
+            ],
+        )
 
     def test_read_epw_file(self):
         # Depending on extension, READ block will parse as normal file or EPW
