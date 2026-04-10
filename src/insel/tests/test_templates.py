@@ -505,12 +505,13 @@ class TestTemplates(CustomAssertions):
             ["F05031 Block 00002: Unexpected end of file - simulation terminated"],
         )
 
-    def test_read_csv_like_as_normal_file(self):
+    def test_read_csv_like_a_normal_file(self):
         # READ block used to completely skip CSV files :-/
         # Now it just tries to read it as a normal file
         fourfivesix = insel.template("io/read_simple_file", ext="csv")
         self.compareLists(fourfivesix, [4, 5, 6])
 
+    #TODO: def test_read_csv_with_commas(self):
     def test_read_csv_with_semicolons(self):
         table = insel.template("io/read_csv_file")
         self.assertEqual(
