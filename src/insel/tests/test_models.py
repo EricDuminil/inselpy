@@ -119,7 +119,9 @@ class TestExistingModel(CustomAssertions):
                                'templates/engine/sum_sum_do.insel')
 
     def test_algebraic_loop_with_do_do(self):
-        self.skipTest("templates/engine/do_do.insel fails with SIGSEGV")
+        self.assertRaisesRegex(InselError, "Algebraic loop detected", insel.run,
+                               'templates/engine/do_do.insel')
 
     def test_algebraic_loop_with_sum_sum(self):
-        self.skipTest("templates/engine/sum_sum.insel fails with SIGSEGV")
+        self.assertRaisesRegex(InselError, "Algebraic loop detected", insel.run,
+                               'templates/engine/sum_sum.insel')
