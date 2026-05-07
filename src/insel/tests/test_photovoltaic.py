@@ -58,7 +58,6 @@ TRINA_VERTEX_410 = dict(
 SPR_345 = dict(
     manufacturer_name="Sunpower",
     name="SPR-X21-345",
-    pv_id="s345",
     mpp=345.0,
     u_oc=68.2,
     i_sc=6.39,
@@ -171,7 +170,8 @@ class TestSPR345(PhotovoltaicModuleChecks):
     module_params = SPR_345
 
     def test_cells_in_series(self):
-        self.assertEqual(self.module.serie, 96)  # 96 cells, 1 string
+        self.assertEqual(self.module.serie, 96)
+        self.assertEqual(self.module.pv_id, "s345")
 
 
 class TestTrinaVertex410(PhotovoltaicModuleChecks):

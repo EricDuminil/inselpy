@@ -87,9 +87,9 @@ class Inverter:
     manufacturer_name: str
     name: str
     nominal_power: float
-    p_for_eta_max: float
     eta_max: float
     eta_euro: float
+    p_for_eta_max: float = 0.40
     inverter_id: str = ""
 
     _OK = "dark_cyan"
@@ -97,7 +97,10 @@ class Inverter:
 
     def __post_init__(self):
         if not self.inverter_id:
-            self.inverter_id = f"{self.name[0].lower()}{int(self.nominal_power)}"
+            nominal_power = self.nominal_power
+            if nominal_power >= 1000:
+                nominal_power /= 1000
+            self.inverter_id = f"{self.name[0].lower()}{int(nominal_power)}"
         self.params = self._find_corrected_params()
         self.params["nominal_power"] = self.nominal_power
 
