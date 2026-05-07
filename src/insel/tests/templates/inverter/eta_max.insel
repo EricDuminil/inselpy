@@ -1,0 +1,22 @@
+s 1	DO
+p 1
+	0.01
+	1
+	0.001
+
+s 2	GAIN 1.1
+p 2
+	$nominal_power$
+
+s 3	IVP 2.1
+p 3
+	$nominal_power$
+	$p_self$
+	$v_loss$
+	$r_loss$
+
+s 4	MAXX 3.2
+
+s 5	SCREEN 4.1
+p 5
+	'*'
