@@ -1,6 +1,7 @@
 # INSELpy
 
 This module allows to execute [INSEL](https://insel.eu/) models from Python, and can be used to write unit tests for INSEL blocks and models.
+The package is available at https://pypi.org/project/insel/
 
 ## Single blocks
 
@@ -113,24 +114,29 @@ from insel import PhotovoltaicModuleModel
 module = PhotovoltaicModuleModel(
     manufacturer_name="Trina",
     name="Vertex TSM 410",
-    mpp=410,
-    u_oc=41.6,
-    i_sc=12.40,
-    u_mpp=34.6,
-    i_mpp=11.85,
-    noct=43,
-    alpha_u_percent=-0.25,
-    alpha_i_percent=0.04,
-    rows=5,
-    columns=24,
-    height=1.754,
-    width=1.096,
-    eta=21.3,
-    parallel=2,
+    mpp=410, # [W]
+    u_oc=41.6, # [V]
+    i_sc=12.40, # [A]
+    u_mpp=34.6, # [V]
+    i_mpp=11.85, # [A]
+    noct=43, # [°C]
+    alpha_u_percent=-0.25, # [% / K]
+    alpha_i_percent=0.04, # [% / K]
+    rows=5, # [cells / row]
+    columns=24, # [cells / column]
+    height=1.754, # [m]
+    width=1.096, # [m]
+    eta=21.3, # [%]
+    parallel=2, # [strings / module] 2 for half-cells, 1 otherwise
+    # Optional:
+    mass=21, # [kg]
+    module_tolerance=3, # [%]
 )
 
-module.report()                    # datasheet vs. simulated comparison table; also writes an example .insel file to output_folder
-print(module.plot().read_text())   # I(V,T) curves via gnuplot, displayed in terminal → plots/iv_curve_v410.txt
+# datasheet vs. simulated comparison table; also writes an example .insel file to output_folder
+module.report()
+# I(V,T) curves via gnuplot, displayed in terminal → plots/iv_curve_v410.txt
+print(module.plot().read_text())   
 ```
 
 ## Inverters
@@ -143,9 +149,11 @@ from insel import Inverter
 inverter = Inverter(
     manufacturer_name="Fronius",
     name="Symo 10k",
-    nominal_power=10000,
-    eta_max=0.982,
-    eta_euro=0.979,
+    nominal_power=10000, # [W]
+    eta_max=0.982, # [-] Max efficiency
+    eta_euro=0.979, # [-] Euro efficiency
+    # Optional:
+    p_for_eta_max=0.40 # [-] At which efficiency is eta_max reached?
 )
 
 inverter.report()                   # specified vs. simulated efficiency comparison table
