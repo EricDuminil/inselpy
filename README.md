@@ -93,3 +93,55 @@ It can also simply run complete models:
 []
 ```
 
+## PV modules
+
+`PhotovoltaicModuleModel` runs the PVDET1 block to fit a single-diode model from
+datasheet specifications. A `.bp` file is written to `output_folder` (default:
+`./output/`) and used by all subsequent simulation calls.
+
+```python
+from insel import PhotovoltaicModuleModel
+
+module = PhotovoltaicModuleModel(
+    manufacturer_name="Trina",
+    name="Vertex TSM 410",
+    mpp=410,
+    u_oc=41.6,
+    i_sc=12.40,
+    u_mpp=34.6,
+    i_mpp=11.85,
+    noct=43,
+    alpha_u_percent=-0.25,
+    alpha_i_percent=0.04,
+    rows=5,
+    columns=24,
+    height=1.754,
+    width=1.096,
+    eta=21.3,
+    parallel=2,
+)
+
+module.report()   # datasheet vs. simulated comparison table
+module.plot()     # I(V) and P(V) curves via gnuplot → plots/iv_curve_v410.txt
+```
+
+## Inverters
+
+`Inverter` fits the three IVP block loss parameters that reproduce the specified
+η_max and η_euro.
+
+```python
+from insel import Inverter
+
+inverter = Inverter(
+    manufacturer_name="Fronius",
+    name="Symo 10k",
+    nominal_power=10000,
+    eta_max=0.982,
+    eta_euro=0.979,
+)
+
+inverter.report()   # specified vs. simulated efficiency comparison table
+inverter.plot()     # η(DC) curve via gnuplot → plots/inverter_eta_curve_s10.txt
+```
+
