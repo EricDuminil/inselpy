@@ -13,7 +13,7 @@ os.chdir(SCRIPT_DIR)
 # Deye SUN600G3-EU-230 — micro-inverter, real-world example
 DEYE_SUN600 = dict(
     manufacturer_name="Deye",
-    name="Deye SUN600G3-EU-230",
+    name="SUN600G3-EU-230",
     nominal_power=600,
     eta_max=0.965,
     eta_euro=0.95,
