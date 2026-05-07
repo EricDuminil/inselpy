@@ -18,11 +18,10 @@ class PhotovoltaicModuleModel:
     ordering of mpp vs. nameplate values, and the power temperature coefficient range.
 
     >>> module = PhotovoltaicModuleModel(
-    ...     manufacturer_name="Acme", name="Sol 250", pv_id="ac250",
+    ...     manufacturer_name="Acme", name="Sol 250",
     ...     mpp=250, u_oc=37.5, i_sc=8.7, u_mpp=30.5, i_mpp=8.2,
     ...     noct=47, alpha_u_percent=-0.32, alpha_i_percent=0.05,
-    ...     rows=6, columns=10, module_tolerance=3,
-    ...     height=1.65, width=0.995, mass=18.6, eta=15.3,
+    ...     rows=6, columns=10, height=1.65, width=0.995, eta=15.3,
     ...     output_folder=Path("/tmp/insel_pv"),
     ... )
     >>> module.simulated_mpp()           # W at STC
@@ -33,7 +32,6 @@ class PhotovoltaicModuleModel:
 
     manufacturer_name: str
     name: str
-    pv_id: str
     mpp: float
     u_oc: float
     i_sc: float
@@ -44,12 +42,13 @@ class PhotovoltaicModuleModel:
     alpha_i_percent: float
     rows: int
     columns: int
-    module_tolerance: float
     height: float
     width: float
-    mass: float
     eta: float
+    pv_id: str = ""
     parallel: int = 1
+    module_tolerance: float = 5.0
+    mass: float = 20.0
     module_technology: str = "crystalline_silicon"
     maximum_voltage: float = 1000  # [V]
     absorption_coefficient: float = 0.7
@@ -58,6 +57,8 @@ class PhotovoltaicModuleModel:
     output_folder: Path = field(default_factory=lambda: Path.cwd() / "output")
 
     def __post_init__(self):
+        if not self.pv_id:
+            self.pv_id = f"{self.name[0].lower()}{int(self.mpp)}"
         self.output_folder = Path(self.output_folder)
         self.output_folder.mkdir(parents=True, exist_ok=True)
         insel.OneBlockModel("PVDET1", inputs=[], parameters=self._pvdet1_params(), outputs=6).run()
