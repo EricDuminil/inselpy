@@ -78,20 +78,7 @@ class PhotovoltaicModuleModel:
             raise ValueError(f"Power temperature coefficient {dmpp_dt:.2f} % / K is outside [-0.20, -0.60]")
 
     def report(self):
-        """Print a comparison table of nameplate vs. simulated values. Requires `rich`."""
-        try:
-            from rich import box
-            from rich.console import Console
-            from rich.table import Table
-        except ImportError as e:
-            raise ImportError("report() requires the 'rich' package: pip install rich") from e
-
-        table = Table(title=f"{self.manufacturer_name}\n{self.name}")
-        table.add_column("Value", justify="left", no_wrap=True)
-        table.add_column("Simulated", justify="right")
-        table.add_column("Unit", justify="left")
-        table.add_column("Deviation", justify="center")
-
+        """Print a comparison table of nameplate vs. simulated values."""
         compare = [
             ("Pmpp", self.mpp,   self.simulated_mpp(),   "W"),
             ("Umpp", self.u_mpp, self.simulated_u_mpp(), "V"),
@@ -100,17 +87,32 @@ class PhotovoltaicModuleModel:
             ("Isc",  self.i_sc,  self.simulated_i_sc(),  "A"),
             ("η",    self.eta,   self.simulated_eta(),   "%"),
         ]
-        for row_name, original, simulated, unit in compare:
-            percent = (simulated - original) / original * 100
-            color = "dark_cyan" if abs(percent) < 0.5 else "dark_orange"
-            table.add_row(row_name, f"{simulated:.1f}", unit, f"{percent:+.2f} %", style=color)
+        try:
+            from rich import box
+            from rich.console import Console
+            from rich.table import Table
 
-        table.add_row("dMPP / dT",  f"{self.dmpp_dt:.2f}",              "% / K", style="dark_cyan")
-        table.add_row("Fill Factor", f"{self.simulated_fill_factor():.1f}", "%",   style="dark_cyan")
-
-        table.box = box.MINIMAL
-        table.width = 80
-        Console().print(table)
+            table = Table(title=f"{self.manufacturer_name}\n{self.name}")
+            table.add_column("Value", justify="left", no_wrap=True)
+            table.add_column("Simulated", justify="right")
+            table.add_column("Unit", justify="left")
+            table.add_column("Deviation", justify="center")
+            for row_name, original, simulated, unit in compare:
+                percent = (simulated - original) / original * 100
+                color = "dark_cyan" if abs(percent) < 0.5 else "dark_orange"
+                table.add_row(row_name, f"{simulated:.1f}", unit, f"{percent:+.2f} %", style=color)
+            table.add_row("dMPP / dT",   f"{self.dmpp_dt:.2f}",               "% / K", style="dark_cyan")
+            table.add_row("Fill Factor", f"{self.simulated_fill_factor():.1f}", "%",    style="dark_cyan")
+            table.box = box.MINIMAL
+            table.width = 80
+            Console().print(table)
+        except ImportError:
+            print(f"{self.manufacturer_name} {self.name}")
+            for row_name, original, simulated, unit in compare:
+                percent = (simulated - original) / original * 100
+                print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
+            print(f"  dMPP / dT: {self.dmpp_dt:.2f} % / K")
+            print(f"  Fill Factor: {self.simulated_fill_factor():.1f} %")
 
     @property
     def simulation_parameters(self) -> dict:

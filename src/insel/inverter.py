@@ -90,12 +90,14 @@ class Inverter:
     p_for_eta_max: float
     eta_max: float
     eta_euro: float
-    inverter_id: str
+    inverter_id: str = ""
 
     _OK = "dark_cyan"
     _WARNING = "dark_orange"
 
     def __post_init__(self):
+        if not self.inverter_id:
+            self.inverter_id = f"{self.name[0].lower()}{int(self.nominal_power)}"
         self.params = self._find_corrected_params()
         self.params["nominal_power"] = self.nominal_power
 
@@ -165,39 +167,40 @@ class Inverter:
         return Path("plots") / f"inverter_eta_curve_{self.inverter_id}.txt"
 
     def report(self):
-        """Print a comparison table of specified vs. simulated efficiency values. Requires `rich`."""
-        try:
-            from rich import box
-            from rich.console import Console
-            from rich.table import Table
-        except ImportError as e:
-            raise ImportError("report() requires the 'rich' package: pip install rich") from e
-
-        table = Table(title=" ".join([self.manufacturer_name, self.name]))
-        table.add_column("Value",     justify="left",  no_wrap=True)
-        table.add_column("Simulated", justify="right")
-        table.add_column("Unit",      justify="left")
-        table.add_column("Deviation", justify="center")
-
+        """Print a comparison table of specified vs. simulated efficiency values."""
         compare = [
             ("% of power at which η_max is achieved",
              self.p_for_eta_max * 100, self.simulated_p_for_eta_max * 100, "%"),
             ("η_max",  self.eta_max  * 100, self.simulated_eta_max  * 100, "%"),
             ("η_euro", self.eta_euro * 100, self.simulated_eta_euro * 100, "%"),
         ]
-        for row_name, original, simulated, unit in compare:
-            percent = (simulated - original) / original * 100
-            color = self._OK if abs(percent) < 2.0 else self._WARNING
-            table.add_row(row_name, f"{simulated:.1f}", unit, f"{percent:+.2f} %", style=color)
+        try:
+            from rich import box
+            from rich.console import Console
+            from rich.table import Table
 
-        table.add_row("η_CEC", f"{self.simulated_eta_cec * 100:.1f}", "%", style=self._OK)
-        table.add_row("Normalized self-consumption", f"{self.params['p_self']:.7f}", style=self._OK)
-        table.add_row("Normalized voltage losses",   f"{self.params['v_loss']:.7f}", style=self._OK)
-        table.add_row("Normalized ohmic losses",     f"{self.params['r_loss']:.7f}", style=self._OK)
-
-        table.box = box.MINIMAL
-        table.width = 80
-        Console().print(table)
+            table = Table(title=" ".join([self.manufacturer_name, self.name]))
+            table.add_column("Value",     justify="left",  no_wrap=True)
+            table.add_column("Simulated", justify="right")
+            table.add_column("Unit",      justify="left")
+            table.add_column("Deviation", justify="center")
+            for row_name, original, simulated, unit in compare:
+                percent = (simulated - original) / original * 100
+                color = self._OK if abs(percent) < 2.0 else self._WARNING
+                table.add_row(row_name, f"{simulated:.1f}", unit, f"{percent:+.2f} %", style=color)
+            table.add_row("η_CEC", f"{self.simulated_eta_cec * 100:.1f}", "%", style=self._OK)
+            table.add_row("Normalized self-consumption", f"{self.params['p_self']:.7f}", style=self._OK)
+            table.add_row("Normalized voltage losses",   f"{self.params['v_loss']:.7f}", style=self._OK)
+            table.add_row("Normalized ohmic losses",     f"{self.params['r_loss']:.7f}", style=self._OK)
+            table.box = box.MINIMAL
+            table.width = 80
+            Console().print(table)
+        except ImportError:
+            print(f"{self.manufacturer_name} {self.name}")
+            for row_name, original, simulated, unit in compare:
+                percent = (simulated - original) / original * 100
+                print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
+            print(f"  η_CEC: {self.simulated_eta_cec * 100:.1f} %")
 
     def _find_params(self, p_max: float) -> dict:
         p_self, v_loss, r_loss = EtaCurve.find_params(p_max, self.eta_max, self.eta_euro)
