@@ -30,9 +30,8 @@ FRONIUS_SYMO = dict(
 )
 
 
-class InverterChecks(CustomAssertions):
+class InverterChecks:
     """Parametric tests shared by all inverter fixtures."""
-    __test__ = False
     inverter_params: dict
 
     @classmethod
@@ -78,8 +77,7 @@ class InverterChecks(CustomAssertions):
         self.assertTrue((self.inv.output_folder / f"inverter_{self.inv.inverter_id}_example.insel").exists())
 
 
-class TestFroniusSymo(InverterChecks):
-    __test__ = True
+class TestFroniusSymo(InverterChecks, CustomAssertions):
     inverter_params = FRONIUS_SYMO
 
     def test_str(self):
@@ -87,8 +85,7 @@ class TestFroniusSymo(InverterChecks):
         self.assertEqual(self.inv.inverter_id, "s10")
 
 
-class TestDeyeSUN600(InverterChecks):
-    __test__ = True
+class TestDeyeSUN600(InverterChecks, CustomAssertions):
     inverter_params = DEYE_SUN600
 
     def test_str(self):

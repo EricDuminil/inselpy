@@ -77,9 +77,8 @@ SPR_345 = dict(
 )
 
 
-class PhotovoltaicModuleChecks(CustomAssertions):
+class PhotovoltaicModuleChecks:
     """Parametric tests shared by all PV module fixtures."""
-    __test__ = False  # prevents pytest from collecting this base class directly
     module_params: dict
 
     @classmethod
@@ -158,16 +157,14 @@ class PhotovoltaicModuleChecks(CustomAssertions):
         self.assertTrue((self.tmp / f"pv{self.module.pv_id}_example.insel").exists())
 
 
-class TestJASolar460(PhotovoltaicModuleChecks):
-    __test__ = True
+class TestJASolar460(PhotovoltaicModuleChecks, CustomAssertions):
     module_params = JA_SOLAR_460
 
     def test_cells_in_series(self):
         self.assertEqual(self.module.serie, 54)  # 108 cells / 2 parallel strings
 
 
-class TestSPR345(PhotovoltaicModuleChecks):
-    __test__ = True
+class TestSPR345(PhotovoltaicModuleChecks, CustomAssertions):
     module_params = SPR_345
 
     def test_cells_in_series(self):
@@ -175,8 +172,7 @@ class TestSPR345(PhotovoltaicModuleChecks):
         self.assertEqual(self.module.pv_id, "s345")
 
 
-class TestTrinaVertex410(PhotovoltaicModuleChecks):
-    __test__ = True
+class TestTrinaVertex410(PhotovoltaicModuleChecks, CustomAssertions):
     module_params = TRINA_VERTEX_410
 
     def _delta(self, value, percent=0.4):
