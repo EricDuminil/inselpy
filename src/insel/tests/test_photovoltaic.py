@@ -155,7 +155,7 @@ class PhotovoltaicModuleChecks:
 
     def test_report_runs_without_error(self):
         self.module.report()
-        self.assertTrue((self.tmp / f"pv{self.module.pv_id}_example.insel").exists())
+        self.assertTrue((self.tmp / f"pv{self.module.pv_id}_example.vseit").exists())
 
 
 class TestJASolar460(PhotovoltaicModuleChecks, CustomAssertions):

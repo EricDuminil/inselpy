@@ -77,7 +77,7 @@ class InverterChecks:
 
     def test_report_runs_without_error(self):
         self.inv.report()
-        self.assertTrue((self.inv.output_folder / f"inverter_{self.inv.inverter_id}_example.insel").exists())
+        self.assertTrue((self.inv.output_folder / f"inverter_{self.inv.inverter_id}_example.vseit").exists())
 
 
 class TestFroniusSymo(InverterChecks, CustomAssertions):

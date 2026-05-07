@@ -3,7 +3,9 @@ from pathlib import Path
 
 import insel
 
-_TEMPLATES_DIR = Path(__file__).resolve().parent / "tests" / "templates" / "photovoltaic"
+_TEMPLATES_DIR = (
+    Path(__file__).resolve().parent / "tests" / "templates" / "photovoltaic"
+)
 
 
 @dataclass
@@ -61,7 +63,9 @@ class PhotovoltaicModuleModel:
             self.pv_id = f"{self.name[0].lower()}{int(self.mpp)}"
         self.output_folder = Path(self.output_folder)
         self.output_folder.mkdir(parents=True, exist_ok=True)
-        insel.OneBlockModel("PVDET1", inputs=[], parameters=self._pvdet1_params(), outputs=6).run()
+        insel.OneBlockModel(
+            "PVDET1", inputs=[], parameters=self._pvdet1_params(), outputs=6
+        ).run()
         self._validate()
 
     def _validate(self):
@@ -70,22 +74,28 @@ class PhotovoltaicModuleModel:
         if self.alpha_u > 0:
             raise ValueError("alpha_u must be negative")
         if self.u_mpp >= self.u_oc:
-            raise ValueError(f"u_mpp ({self.u_mpp}) must be less than u_oc ({self.u_oc})")
+            raise ValueError(
+                f"u_mpp ({self.u_mpp}) must be less than u_oc ({self.u_oc})"
+            )
         if self.i_mpp >= self.i_sc:
-            raise ValueError(f"i_mpp ({self.i_mpp}) must be less than i_sc ({self.i_sc})")
+            raise ValueError(
+                f"i_mpp ({self.i_mpp}) must be less than i_sc ({self.i_sc})"
+            )
         dmpp_dt = self.dmpp_dt
         if not -0.20 >= dmpp_dt >= -0.60:
-            raise ValueError(f"Power temperature coefficient {dmpp_dt:.2f} % / K is outside [-0.20, -0.60]")
+            raise ValueError(
+                f"Power temperature coefficient {dmpp_dt:.2f} % / K is outside [-0.20, -0.60]"
+            )
 
     def report(self):
         """Print a comparison table of nameplate vs. simulated values."""
         compare = [
-            ("Pmpp", self.mpp,   self.simulated_mpp(),   "W"),
+            ("Pmpp", self.mpp, self.simulated_mpp(), "W"),
             ("Umpp", self.u_mpp, self.simulated_u_mpp(), "V"),
             ("Impp", self.i_mpp, self.simulated_i_mpp(), "A"),
-            ("Uoc",  self.u_oc,  self.simulated_u_oc(),  "V"),
-            ("Isc",  self.i_sc,  self.simulated_i_sc(),  "A"),
-            ("η",    self.eta,   self.simulated_eta(),   "%"),
+            ("Uoc", self.u_oc, self.simulated_u_oc(), "V"),
+            ("Isc", self.i_sc, self.simulated_i_sc(), "A"),
+            ("η", self.eta, self.simulated_eta(), "%"),
         ]
         try:
             from rich import box
@@ -100,9 +110,18 @@ class PhotovoltaicModuleModel:
             for row_name, original, simulated, unit in compare:
                 percent = (simulated - original) / original * 100
                 color = "dark_cyan" if abs(percent) < 0.5 else "dark_orange"
-                table.add_row(row_name, f"{simulated:.1f}", unit, f"{percent:+.2f} %", style=color)
-            table.add_row("dMPP / dT",   f"{self.dmpp_dt:.2f}",               "% / K", style="dark_cyan")
-            table.add_row("Fill Factor", f"{self.simulated_fill_factor():.1f}", "%",    style="dark_cyan")
+                table.add_row(
+                    row_name, f"{simulated:.1f}", unit, f"{percent:+.2f} %", style=color
+                )
+            table.add_row(
+                "dMPP / dT", f"{self.dmpp_dt:.2f}", "% / K", style="dark_cyan"
+            )
+            table.add_row(
+                "Fill Factor",
+                f"{self.simulated_fill_factor():.1f}",
+                "%",
+                style="dark_cyan",
+            )
             table.box = box.MINIMAL
             table.width = 80
             Console().print(table)
@@ -113,10 +132,10 @@ class PhotovoltaicModuleModel:
                 print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
             print(f"  dMPP / dT: {self.dmpp_dt:.2f} % / K")
             print(f"  Fill Factor: {self.simulated_fill_factor():.1f} %")
-        self.write_example_insel()
-        print(f"INSEL example written to {self.output_folder / f'pv{self.pv_id}_example.insel'}")
         self.write_example_vseit()
-        print(f"VSEIT example written to {self.output_folder / f'pv{self.pv_id}_example.vseit'}")
+        print(
+            f"VSEIT example written to {self.output_folder / f'pv{self.pv_id}_example.vseit'}"
+        )
 
     @property
     def simulation_parameters(self) -> dict:
@@ -126,7 +145,7 @@ class PhotovoltaicModuleModel:
     @property
     def dmpp_dt(self) -> float:
         """Power temperature coefficient [% / K], computed at NOCT vs. STC."""
-        mpp_25   = self.simulated_mpp(irradiance=1000, temperature=25)
+        mpp_25 = self.simulated_mpp(irradiance=1000, temperature=25)
         mpp_noct = self.simulated_mpp(irradiance=1000, temperature=self.noct)
         return (mpp_noct - mpp_25) / (mpp_25 * (self.noct - 25)) * 100
 
@@ -169,23 +188,33 @@ class PhotovoltaicModuleModel:
             return result
         raise ValueError(f"Template '{name}' returned {result!r}, expected a float.")
 
-    def simulated_u_oc(self, irradiance: float = 1000, temperature: float = 25) -> float:
+    def simulated_u_oc(
+        self, irradiance: float = 1000, temperature: float = 25
+    ) -> float:
         return self.simulate("u_oc", irradiance=irradiance, temperature=temperature)
 
-    def simulated_u_mpp(self, irradiance: float = 1000, temperature: float = 25) -> float:
+    def simulated_u_mpp(
+        self, irradiance: float = 1000, temperature: float = 25
+    ) -> float:
         return self.simulate("u_mpp", irradiance=irradiance, temperature=temperature)
 
-    def simulated_i_mpp(self, irradiance: float = 1000, temperature: float = 25) -> float:
+    def simulated_i_mpp(
+        self, irradiance: float = 1000, temperature: float = 25
+    ) -> float:
         return self.simulate("i_mpp", irradiance=irradiance, temperature=temperature)
 
-    def simulated_i_sc(self, irradiance: float = 1000, temperature: float = 25) -> float:
+    def simulated_i_sc(
+        self, irradiance: float = 1000, temperature: float = 25
+    ) -> float:
         return self.simulate("i_sc", irradiance=irradiance, temperature=temperature)
 
     def simulated_mpp(self, irradiance: float = 1000, temperature: float = 25) -> float:
         return self.simulate("mpp", irradiance=irradiance, temperature=temperature)
 
     def simulated_fill_factor(self) -> float:
-        return self.simulated_mpp() / (self.simulated_u_oc() * self.simulated_i_sc()) * 100
+        return (
+            self.simulated_mpp() / (self.simulated_u_oc() * self.simulated_i_sc()) * 100
+        )
 
     def simulated_eta(self) -> float:
         """Simulated module efficiency at STC [%]."""
@@ -206,7 +235,12 @@ class PhotovoltaicModuleModel:
         """Highest expected power output (1000 W/m², -25 °C) [W]."""
         return self.simulate("mpp", irradiance=1000, temperature=-25)
 
-    def plot(self, tty_width: int = 100, tty_height: int = 40, plots_folder: Path = Path("plots")) -> Path:
+    def plot(
+        self,
+        tty_width: int = 100,
+        tty_height: int = 40,
+        plots_folder: Path = Path("plots"),
+    ) -> Path:
         """Render I(V) and P(V) curves at STC to a text file. Requires gnuplot.
 
         Sweeps voltage from 0 to u_max (u_oc at -25 °C, 1000 W/m²) in 0.1 V steps.
@@ -226,20 +260,9 @@ class PhotovoltaicModuleModel:
         )
         return plots_folder / f"iv_curve_{self.pv_id}.txt"
 
-    def write_example_insel(self):
-        from .template import Template
-        t = Template(
-            _TEMPLATES_DIR / "ivt_curves",
-            run_in_templates_folder=False,
-            gnuplot=True,
-            u_max=self.u_max,
-            i_max=self.i_max,
-            **self.simulation_parameters,
-        )
-        (self.output_folder / f"pv{self.pv_id}_example.insel").write_text(t.content())
-
     def write_example_vseit(self):
         from .template import Template
+
         bp_values = self._read_bp_values()
         bp_params = {f"bp{i + 2}": bp_values[i] for i in range(29)}
         t = Template(
@@ -287,7 +310,7 @@ class PhotovoltaicModuleModel:
             self.emission_coefficient,
             self.specific_module_heat_capacity,
             self.noct,
-            int(True),   # overwrite existing .bp file
+            int(True),  # overwrite existing .bp file
             int(False),  # don't generate custom module info file
             self.maximum_voltage,
             self.width,

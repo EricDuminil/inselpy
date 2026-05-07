@@ -19,8 +19,8 @@ class EtaCurve:
     >>> p_self, v_loss, r_loss = EtaCurve.find_params(pm=0.50, em=0.982, ee=0.979)
     """
 
-    pm: float           # power fraction at which eta_max is achieved
-    eta_max: float      # peak efficiency
+    pm: float  # power fraction at which eta_max is achieved
+    eta_max: float  # peak efficiency
     desired_eta_euro: float
 
     @classmethod
@@ -40,14 +40,16 @@ class EtaCurve:
         return [ec.a(c), ec.b(c), c]
 
     def a(self, c: float) -> float:
-        return self.pm ** 2 * c
+        return self.pm**2 * c
 
     def b(self, c: float) -> float:
-        return (self.pm - self.eta_max * (self.pm + 2 * self.a(c))) / (self.pm * self.eta_max)
+        return (self.pm - self.eta_max * (self.pm + 2 * self.a(c))) / (
+            self.pm * self.eta_max
+        )
 
     def eta(self, i: float, c: float) -> float:
         return -(1 + self.b(c)) / (2 * c * i) + math.sqrt(
-            (1 + self.b(c)) ** 2 / (2 * c * i) ** 2 + (i - self.a(c)) / (c * i ** 2)
+            (1 + self.b(c)) ** 2 / (2 * c * i) ** 2 + (i - self.a(c)) / (c * i**2)
         )
 
     def eta_euro(self, c: float) -> float:
@@ -58,7 +60,7 @@ class EtaCurve:
             + 0.13 * self.eta(0.20, c)
             + 0.10 * self.eta(0.30, c)
             + 0.48 * self.eta(0.50, c)
-            + 0.20 * self.eta(1.0,  c)
+            + 0.20 * self.eta(1.0, c)
         )
 
 
@@ -147,15 +149,17 @@ class Inverter:
             **self.params,
         )
         return (
-            eta_10  * 0.04
-            + eta_20  * 0.05
-            + eta_30  * 0.12
-            + eta_50  * 0.21
-            + eta_75  * 0.53
+            eta_10 * 0.04
+            + eta_20 * 0.05
+            + eta_30 * 0.12
+            + eta_50 * 0.21
+            + eta_75 * 0.53
             + eta_100 * 0.05
         )
 
-    def plot(self, width: int = 100, height: int = 40, plots_folder: Path = Path("plots")) -> Path:
+    def plot(
+        self, width: int = 100, height: int = 40, plots_folder: Path = Path("plots")
+    ) -> Path:
         """Render the η(DC) efficiency curve to a text file. Requires gnuplot.
 
         Returns the path of the generated text file.
@@ -177,9 +181,13 @@ class Inverter:
     def report(self):
         """Print a comparison table of specified vs. simulated efficiency values."""
         compare = [
-            ("% of power at which η_max is achieved",
-             self.p_for_eta_max * 100, self.simulated_p_for_eta_max * 100, "%"),
-            ("η_max",  self.eta_max  * 100, self.simulated_eta_max  * 100, "%"),
+            (
+                "% of power at which η_max is achieved",
+                self.p_for_eta_max * 100,
+                self.simulated_p_for_eta_max * 100,
+                "%",
+            ),
+            ("η_max", self.eta_max * 100, self.simulated_eta_max * 100, "%"),
             ("η_euro", self.eta_euro * 100, self.simulated_eta_euro * 100, "%"),
         ]
         try:
@@ -188,18 +196,34 @@ class Inverter:
             from rich.table import Table
 
             table = Table(title=" ".join([self.manufacturer_name, self.name]))
-            table.add_column("Value",     justify="left",  no_wrap=True)
+            table.add_column("Value", justify="left", no_wrap=True)
             table.add_column("Simulated", justify="right")
-            table.add_column("Unit",      justify="left")
+            table.add_column("Unit", justify="left")
             table.add_column("Deviation", justify="center")
             for row_name, original, simulated, unit in compare:
                 percent = (simulated - original) / original * 100
                 color = self._OK if abs(percent) < 2.0 else self._WARNING
-                table.add_row(row_name, f"{simulated:.1f}", unit, f"{percent:+.2f} %", style=color)
-            table.add_row("η_CEC", f"{self.simulated_eta_cec * 100:.1f}", "%", style=self._OK)
-            table.add_row("Normalized self-consumption", f"{self.params['p_self']:.7f}", style=self._OK)
-            table.add_row("Normalized voltage losses",   f"{self.params['v_loss']:.7f}", style=self._OK)
-            table.add_row("Normalized ohmic losses",     f"{self.params['r_loss']:.7f}", style=self._OK)
+                table.add_row(
+                    row_name, f"{simulated:.1f}", unit, f"{percent:+.2f} %", style=color
+                )
+            table.add_row(
+                "η_CEC", f"{self.simulated_eta_cec * 100:.1f}", "%", style=self._OK
+            )
+            table.add_row(
+                "Normalized self-consumption",
+                f"{self.params['p_self']:.7f}",
+                style=self._OK,
+            )
+            table.add_row(
+                "Normalized voltage losses",
+                f"{self.params['v_loss']:.7f}",
+                style=self._OK,
+            )
+            table.add_row(
+                "Normalized ohmic losses",
+                f"{self.params['r_loss']:.7f}",
+                style=self._OK,
+            )
             table.box = box.MINIMAL
             table.width = 80
             Console().print(table)
@@ -209,23 +233,14 @@ class Inverter:
                 percent = (simulated - original) / original * 100
                 print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
             print(f"  η_CEC: {self.simulated_eta_cec * 100:.1f} %")
-        self.write_example_insel()
-        print(f"INSEL example written to {self.output_folder / f'inverter_{self.inverter_id}_example.insel'}")
         self.write_example_vseit()
-        print(f"VSEIT example written to {self.output_folder / f'inverter_{self.inverter_id}_example.vseit'}")
-
-    def write_example_insel(self):
-        from .template import Template
-        t = Template(
-            _TEMPLATES_DIR / "inverter_eta_curve",
-            run_in_templates_folder=False,
-            gnuplot=True,
-            **self.params,
+        print(
+            f"VSEIT example written to {self.output_folder / f'inverter_{self.inverter_id}_example.vseit'}"
         )
-        (self.output_folder / f"inverter_{self.inverter_id}_example.insel").write_text(t.content())
 
     def write_example_vseit(self):
         from .template import Template
+
         t = Template(
             _TEMPLATES_DIR / "inverter_eta_curve.vseit",
             run_in_templates_folder=False,
@@ -235,10 +250,14 @@ class Inverter:
             p_dc_max=int(self.nominal_power * 1.2),
             **self.params,
         )
-        (self.output_folder / f"inverter_{self.inverter_id}_example.vseit").write_text(t.content())
+        (self.output_folder / f"inverter_{self.inverter_id}_example.vseit").write_text(
+            t.content()
+        )
 
     def _find_params(self, p_max: float) -> dict:
-        p_self, v_loss, r_loss = EtaCurve.find_params(p_max, self.eta_max, self.eta_euro)
+        p_self, v_loss, r_loss = EtaCurve.find_params(
+            p_max, self.eta_max, self.eta_euro
+        )
         return dict(p_self=p_self, v_loss=v_loss, r_loss=r_loss)
 
     def _simulated_p_for_eta_max(self, p_max: float) -> float:
