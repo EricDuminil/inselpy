@@ -2,12 +2,14 @@ from pathlib import Path
 from typing import List
 
 from .existing_model import ExistingModel
+from .inverter import Inverter as Inverter
 
 #  To allow from insel import Insel, InselError in tests:
 from .insel import Insel as Insel
 from .insel import Parameter
 from .insel_error import InselError as InselError
 from .one_block_model import OneBlockModel
+from .photovoltaic import PhotovoltaicModuleModel as PhotovoltaicModuleModel
 from .plot import Plot
 from .template import Template
 

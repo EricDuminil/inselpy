@@ -85,11 +85,70 @@ If no value is specified in Python, the value defined in the block will be used 
 
 If the Vseit model contains a PLOT block, it will be deactivated by default. In order to launch gnuplot anyway, `insel.template('model.vseit', gnuplot=True)` can be used.
 
+## Gnuplot
+
+`insel.plot()` works like `insel.template()` but also runs gnuplot on the result.
+The template must contain a PLOT block whose gnuplot script produces the desired output.
+
+```python
+insel.plot('photovoltaic/iv_curve_text', pv_id='v410', u_max=45.0, ...)
+```
+
 ## INSEL models
 
 It can also simply run complete models:
 ```python
 >>> insel.run('/usr/local/insel/examples/meteorology/sunae.vseit')
 []
+```
+
+## PV modules
+
+`PhotovoltaicModuleModel` runs the PVDET1 block to fit a single-diode model from datasheet specifications.
+A `.bp` file is written to `output_folder` (default: `./output/`) and used by all subsequent simulation calls.
+
+```python
+from insel import PhotovoltaicModuleModel
+
+module = PhotovoltaicModuleModel(
+    manufacturer_name="Trina",
+    name="Vertex TSM 410",
+    mpp=410,
+    u_oc=41.6,
+    i_sc=12.40,
+    u_mpp=34.6,
+    i_mpp=11.85,
+    noct=43,
+    alpha_u_percent=-0.25,
+    alpha_i_percent=0.04,
+    rows=5,
+    columns=24,
+    height=1.754,
+    width=1.096,
+    eta=21.3,
+    parallel=2,
+)
+
+module.report()   # datasheet vs. simulated comparison table; also writes an example .insel file to output_folder
+module.plot()     # I(V,T) curves via gnuplot, displayed in terminal → plots/iv_curve_v410.txt
+```
+
+## Inverters
+
+`Inverter` fits the three IVP block loss parameters that reproduce the specified $η_{max}$ and $η_{euro}$.
+
+```python
+from insel import Inverter
+
+inverter = Inverter(
+    manufacturer_name="Fronius",
+    name="Symo 10k",
+    nominal_power=10000,
+    eta_max=0.982,
+    eta_euro=0.979,
+)
+
+inverter.report()   # specified vs. simulated efficiency comparison table
+inverter.plot()     # η(DC) curve via gnuplot → plots/inverter_eta_curve_s10.txt
 ```
 
