@@ -1,3 +1,4 @@
+import math
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -250,9 +251,9 @@ class PhotovoltaicModuleModel:
         plots_folder.mkdir(exist_ok=True, parents=True)
         insel.plot(
             _TEMPLATES_DIR / "iv_curve_text",
-            u_max=self.u_max,
-            i_max=self.i_max,
-            p_max=self.p_max,
+            u_max=math.ceil(self.u_max / 5) * 5,
+            i_max=math.ceil(self.i_max) + 1,
+            p_max=math.ceil(self.p_max / 50) * 5,
             tty_width=tty_width,
             tty_height=tty_height,
             plots_folder=plots_folder,
@@ -270,9 +271,9 @@ class PhotovoltaicModuleModel:
             run_in_templates_folder=False,
             gnuplot=True,
             name=self.name,
-            u_max=self.u_max,
-            i_max=self.i_max,
-            p_max=self.p_max,
+            u_max=math.ceil(self.u_max / 5) * 5,
+            i_max=math.ceil(self.i_max) + 1,
+            p_max=math.ceil(self.p_max / 50) * 5,
             **bp_params,
         )
         (self.output_folder / f"pv{self.pv_id}_example.vseit").write_text(t.content())

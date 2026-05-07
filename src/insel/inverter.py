@@ -110,7 +110,7 @@ class Inverter:
         self.params["nominal_power"] = self.nominal_power
 
     def __str__(self) -> str:
-        return f"{self.name} ({self.nominal_power} W)"
+        return f"{self.manufacturer_name} {self.name} ({self.nominal_power} W)"
 
     @property
     def simulated_p_for_eta_max(self) -> float:
@@ -247,7 +247,7 @@ class Inverter:
             gnuplot=True,
             manufacturer_name=self.manufacturer_name,
             name=self.name,
-            p_dc_max=int(self.nominal_power * 1.2),
+            p_dc_max=math.ceil(self.nominal_power * 1.2 / 500) * 500,
             **self.params,
         )
         (self.output_folder / f"inverter_{self.inverter_id}_example.vseit").write_text(
