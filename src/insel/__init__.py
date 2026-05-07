@@ -2,7 +2,6 @@ from pathlib import Path
 from typing import List
 
 from .existing_model import ExistingModel
-from .inverter import EtaCurve as EtaCurve
 from .inverter import Inverter as Inverter
 
 #  To allow from insel import Insel, InselError in tests:
