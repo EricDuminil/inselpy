@@ -147,6 +147,23 @@ class Inverter:
             + eta_100 * 0.05
         )
 
+    def plot(self, width: int = 100, height: int = 40) -> Path:
+        """Render the η(DC) efficiency curve to plots/ as a text file. Requires gnuplot.
+
+        Returns the path of the generated text file.
+        """
+        Path("plots").mkdir(exist_ok=True)
+        insel.plot(
+            _TEMPLATES_DIR / "inverter_eta_curve_text",
+            manufacturer_name=self.manufacturer_name,
+            name=self.name,
+            iv_id=self.inverter_id,
+            width=width,
+            height=height,
+            **self.params,
+        )
+        return Path("plots") / f"inverter_eta_curve_{self.inverter_id}.txt"
+
     def report(self):
         """Print a comparison table of specified vs. simulated efficiency values. Requires `rich`."""
         try:

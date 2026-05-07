@@ -1,6 +1,12 @@
+import os
+from pathlib import Path
+
 from insel import EtaCurve, Inverter
 
+from .constants import SCRIPT_DIR
 from .custom_assertions import CustomAssertions
+
+os.chdir(SCRIPT_DIR)
 
 # Fronius Symo 10k — real-world example
 FRONIUS_SYMO = dict(
@@ -23,8 +29,7 @@ class TestEtaCurve(CustomAssertions):
         pm, em, ee = 0.50, 0.982, 0.979
         p_self, v_loss, r_loss = EtaCurve.find_params(pm, em, ee)
         ec = EtaCurve(pm=pm, eta_max=em, desired_eta_euro=ee)
-        reconstructed = ec.eta_euro(r_loss)
-        self.assertAlmostEqual(reconstructed, ee, places=4)
+        self.assertAlmostEqual(ec.eta_euro(r_loss), ee, places=4)
 
     def test_different_efficiencies_give_different_params(self):
         params_a = EtaCurve.find_params(0.50, 0.982, 0.979)
@@ -33,8 +38,9 @@ class TestEtaCurve(CustomAssertions):
 
 
 class TestInverter(CustomAssertions):
-    def setUp(self):
-        self.inv = Inverter(**FRONIUS_SYMO)
+    @classmethod
+    def setUpClass(cls):
+        cls.inv = Inverter(**FRONIUS_SYMO)
 
     def test_params_are_set(self):
         self.assertIn("p_self", self.inv.params)
@@ -61,3 +67,13 @@ class TestInverter(CustomAssertions):
 
     def test_str(self):
         self.assertEqual(str(self.inv), "Symo 10k (10000 W)")
+
+    def test_plot_creates_output_file(self):
+        output = Path("plots") / f"inverter_eta_curve_{self.inv.inverter_id}.txt"
+        output.unlink(missing_ok=True)
+        result = self.inv.plot()
+        self.assertEqual(result, output)
+        self.assertTrue(output.exists(), f"{output} should have been written by gnuplot")
+
+    def test_report_runs_without_error(self):
+        self.inv.report()

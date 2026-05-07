@@ -199,6 +199,24 @@ class PhotovoltaicModuleModel:
         """Highest expected power output (1000 W/m², -25 °C) [W]."""
         return self.simulate("mpp", irradiance=1000, temperature=-25)
 
+    def plot(self, tty_width: int = 100, tty_height: int = 40) -> Path:
+        """Render I(V) and P(V) curves at STC to plots/ as a text file. Requires gnuplot.
+
+        Sweeps voltage from 0 to u_max (u_oc at -25 °C, 1000 W/m²) in 0.1 V steps.
+        Returns the path of the generated text file.
+        """
+        Path("plots").mkdir(exist_ok=True)
+        insel.plot(
+            _TEMPLATES_DIR / "iv_curve_text",
+            u_max=self.u_max,
+            i_max=self.i_max,
+            p_max=self.p_max,
+            tty_width=tty_width,
+            tty_height=tty_height,
+            **self.simulation_parameters,
+        )
+        return Path("plots") / f"iv_curve_{self.pv_id}.txt"
+
     def _pvdet1_params(self) -> list:
         return [
             self.serie,

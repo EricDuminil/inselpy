@@ -1,0 +1,18 @@
+s 1 CONST
+p 1
+        1000
+s 4 CONST
+p 4
+          25
+s 6 PLOT  11.1 7.1 8.1
+p 6
+    'insel.gnu'
+s 7 $current||PVI$  11.1 1.1 4.1
+p 7 0
+  i '$bp_folder$/pv$pv_id$.bp'
+s 8 MUL 11.1 7.1
+s 11 DO
+p 11
+           0.
+      $u_max$
+          0.1
