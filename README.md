@@ -129,8 +129,8 @@ module = PhotovoltaicModuleModel(
     parallel=2,
 )
 
-module.report()   # datasheet vs. simulated comparison table; also writes an example .insel file to output_folder
-module.plot()     # I(V,T) curves via gnuplot, displayed in terminal → plots/iv_curve_v410.txt
+module.report()                    # datasheet vs. simulated comparison table; also writes an example .insel file to output_folder
+print(module.plot().read_text())   # I(V,T) curves via gnuplot, displayed in terminal → plots/iv_curve_v410.txt
 ```
 
 ## Inverters
@@ -148,7 +148,7 @@ inverter = Inverter(
     eta_euro=0.979,
 )
 
-inverter.report()   # specified vs. simulated efficiency comparison table
-inverter.plot()     # η(DC) curve via gnuplot → plots/inverter_eta_curve_s10.txt
+inverter.report()                   # specified vs. simulated efficiency comparison table
+print(inverter.plot().read_text())  # η(DC) curve via gnuplot → plots/inverter_eta_curve_s10.txt
 ```
 

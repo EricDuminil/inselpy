@@ -221,9 +221,7 @@ class PhotovoltaicModuleModel:
             tty_height=tty_height,
             **self.simulation_parameters,
         )
-        output = Path("plots") / f"iv_curve_{self.pv_id}.txt"
-        print(output.read_text())
-        return output
+        return Path("plots") / f"iv_curve_{self.pv_id}.txt"
 
     def write_example_insel(self):
         from .template import Template
