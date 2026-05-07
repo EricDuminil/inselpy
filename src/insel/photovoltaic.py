@@ -113,9 +113,10 @@ class PhotovoltaicModuleModel:
                 print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
             print(f"  dMPP / dT: {self.dmpp_dt:.2f} % / K")
             print(f"  Fill Factor: {self.simulated_fill_factor():.1f} %")
-        example = self.output_folder / f"pv{self.pv_id}_example.insel"
         self.write_example_insel()
-        print(f"INSEL example written to {example}")
+        print(f"INSEL example written to {self.output_folder / f'pv{self.pv_id}_example.insel'}")
+        self.write_example_vseit()
+        print(f"VSEIT example written to {self.output_folder / f'pv{self.pv_id}_example.vseit'}")
 
     @property
     def simulation_parameters(self) -> dict:
@@ -236,6 +237,35 @@ class PhotovoltaicModuleModel:
             **self.simulation_parameters,
         )
         (self.output_folder / f"pv{self.pv_id}_example.insel").write_text(t.content())
+
+    def write_example_vseit(self):
+        from .template import Template
+        bp_values = self._read_bp_values()
+        bp_params = {f"bp{i + 2}": bp_values[i] for i in range(29)}
+        t = Template(
+            _TEMPLATES_DIR / "ivt_curves.vseit",
+            run_in_templates_folder=False,
+            gnuplot=True,
+            name=self.name,
+            u_max=self.u_max,
+            i_max=self.i_max,
+            p_max=self.p_max,
+            **bp_params,
+        )
+        (self.output_folder / f"pv{self.pv_id}_example.vseit").write_text(t.content())
+
+    def _read_bp_values(self) -> list:
+        """Read the 29 parameter values from the PVDET1-generated .bp file."""
+        bp_file = self.output_folder / f"pv{self.pv_id}.bp"
+        values = []
+        for line in bp_file.read_text(encoding="utf-8", errors="replace").splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("%"):
+                continue
+            value_part = stripped.split("%")[0].strip()
+            if value_part:
+                values.append(value_part)
+        return values
 
     def _pvdet1_params(self) -> list:
         return [

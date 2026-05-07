@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- XML for representing entities of a VSEit Network with their attributes and relationships-->
+
+<vseit-network xmlns:xlink="http://www.w3.org/1999/xlink" client-class="eu.insel.vseit.InselVseit" client-class-version="10" first-id="0" entity-count="22">
+<entity id="_0" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_13</to></ref>
+<ref name="portOf"><to>_16</to></ref>
+</entity>
+<entity id="_1" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_11</to></ref>
+<ref name="portOf"><to>_16</to></ref>
+</entity>
+<entity id="_2" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_10</to></ref>
+<ref name="portOf"><to>_17</to></ref>
+</entity>
+<entity id="_3" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_10</to></ref>
+<ref name="portOf"><to>_16</to></ref>
+</entity>
+<entity id="_4" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_12</to></ref>
+<ref name="portOf"><to>_20</to></ref>
+</entity>
+<entity id="_5" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_11</to></ref>
+<ref name="portOf"><to>_20</to></ref>
+</entity>
+<entity id="_6" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_10</to></ref>
+<ref name="portOf"><to>_20</to></ref>
+</entity>
+<entity id="_7" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_15</to></ref>
+<ref name="portOf"><to>_16</to></ref>
+</entity>
+<entity id="_8" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_11</to></ref>
+<ref name="portOf"><to>_21</to></ref>
+</entity>
+<entity id="_9" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_13</to></ref>
+<ref name="portOf"><to>_21</to></ref>
+</entity>
+<entity id="_10" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_2</to><to>_3</to><to>_6</to></ref>
+<ref name="portOf"><to>_18</to></ref>
+</entity>
+<entity id="_11" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_1</to><to>_5</to><to>_8</to></ref>
+<ref name="portOf"><to>_17</to></ref>
+</entity>
+<entity id="_12" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_4</to></ref>
+<ref name="portOf"><to>_19</to></ref>
+</entity>
+<entity id="_13" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_0</to><to>_9</to></ref>
+<ref name="portOf"><to>_20</to></ref>
+</entity>
+<entity id="_14" class="eu.insel.block.PortOut">
+<ref name="portOf"><to>_20</to></ref>
+</entity>
+<entity id="_15" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_7</to></ref>
+<ref name="portOf"><to>_21</to></ref>
+</entity>
+<entity id="_16" class="eu.insel.block.PLOTP">
+<ref name="inPorts"><to>_3</to><to>_1</to><to>_0</to><to>_7</to></ref>
+<attr name="blockName"><string>PLOTP</string></attr>
+<attr name="blockFunction"><string>fb0044</string></attr>
+<attr name="userBlockNumber"><int>1</int></attr>
+<attr name="inputPortsCount"><int>4</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="title"><string>I(V) depending on temperature\nTrina Vertex 440</string></attr>
+<attr name="terminal"><enum>Window</enum></attr>
+<attr name="width"><string>1024</string></attr>
+<attr name="height"><string>768</string></attr>
+<attr name="font"><font>Calibri-plain-18</font></attr>
+<attr name="grid"><bool>true</bool></attr>
+<attr name="axisThickness"><string>1</string></attr>
+<attr name="xLabel"><string>Voltage</string></attr>
+<attr name="yLabel"><string>Current</string></attr>
+<attr name="yMin"><string>0</string></attr>
+<attr name="yMax"><string>12</string></attr>
+<attr name="sp1"><string>advanced_plot.gnu</string></attr>
+<attr name="xFormat"><string>%g V</string></attr>
+<attr name="yFormat"><string>%g A</string></attr>
+<attr name="customGnuplotCommands"><string>## Uncommented commands will be executed before plot.
+# set xtics ("Jan" 15, "Feb" 45, "Mar" 74, "Apr" 105, "May" 135, "Jun" 166, "Jul" 196, "Aug" 227, "Sep" 258, "Oct" 288, "Nov" 319, "Dec" 349)
+# set size ratio -1          ## Same unit length for x and y
+# set lmargin at screen 0.1; set rmargin at screen 0.7  ## Leave more blank space
+# curve_name5 = "Name of curve #5"
+set format cb "%g °C"  ## Display unit on color box
+
+set cbtics 25
+
+set label "I(U, T_m)" at 10, 11.2
+
+set label "P(U, T_m)" at 53, second 530
+
+
+
+### Change line color depending on parameter
+plot data_file using 1:2:4 with lines palette title curve_name1 axis x1y1,\
+       data_file using 1:3:4 with lines palette title curve_name2 axis x1y2</string></attr>
+<attr name="style"><enum>Lines</enum></attr>
+<attr name="curveName3"><string>#3</string></attr>
+<attr name="curveName4"><string>#4</string></attr>
+<attr name="curveThickness"><string>2</string></attr>
+<attr name="curveColor1"><color>0072bd</color></attr>
+<attr name="curveColor2"><color>d95319</color></attr>
+<attr name="curveColor3"><color>edb120</color></attr>
+<attr name="curveColor4"><color>7e2f8e</color></attr>
+<attr name="y2Label"><string>Power</string></attr>
+<attr name="y2Min"><string>0</string></attr>
+<attr name="y2Max"><string>600</string></attr>
+<attr name="y2Format"><string>%g W</string></attr>
+<attr name="curve1YAxis"><enum>Y1</enum></attr>
+<attr name="curve2YAxis"><enum>Y2</enum></attr>
+<attr name="curve3YAxis"><enum>Y1</enum></attr>
+<attr name="curve4YAxis"><enum>Y1</enum></attr>
+<attr name="bp1"><bool>false</bool></attr>
+<attr name="polar"><bool>false</bool></attr>
+<attr name="logscaleX"><bool>false</bool></attr>
+<attr name="logscaleY"><bool>false</bool></attr>
+</entity>
+<entity id="_17" class="eu.insel.block.DO">
+<ref name="inPorts"><to>_2</to></ref>
+<ref name="outPorts"><to>_11</to></ref>
+<attr name="blockName"><string>DO</string></attr>
+<attr name="blockFunction"><string>fb0013</string></attr>
+<attr name="userBlockNumber"><int>2</int></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>0</string></attr>
+<attr name="bp2"><string>60</string></attr>
+<attr name="bp3"><string>0.01</string></attr>
+</entity>
+<entity id="_18" class="eu.insel.block.DO">
+<ref name="outPorts"><to>_10</to></ref>
+<attr name="blockName"><string>DO</string></attr>
+<attr name="blockFunction"><string>fb0013</string></attr>
+<attr name="userBlockNumber"><int>3</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>-25</string></attr>
+<attr name="bp2"><string>75</string></attr>
+<attr name="bp3"><string>25</string></attr>
+</entity>
+<entity id="_19" class="eu.insel.block.CONST">
+<ref name="outPorts"><to>_12</to></ref>
+<attr name="blockName"><string>CONST</string></attr>
+<attr name="blockFunction"><string>fb0001</string></attr>
+<attr name="userBlockNumber"><int>4</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>1000</string></attr>
+</entity>
+<entity id="_20" class="eu.insel.block.PVI">
+<ref name="inPorts"><to>_5</to><to>_4</to><to>_6</to></ref>
+<ref name="outPorts"><to>_13</to><to>_14</to></ref>
+<attr name="blockName"><string>PVI</string></attr>
+<attr name="blockFunction"><string>se0001</string></attr>
+<attr name="userBlockNumber"><int>5</int></attr>
+<attr name="inputPortsCount"><int>3</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><enum>In3Mode</enum></attr>
+<attr name="bp2"><string>60</string></attr>
+<attr name="bp3"><string>2</string></attr>
+<attr name="bp4"><string>1</string></attr>
+<attr name="bp5"><string>1</string></attr>
+<attr name="bp6"><string>0.0167</string></attr>
+<attr name="bp7"><string>1.998</string></attr>
+<attr name="bp8"><string>1.12</string></attr>
+<attr name="bp9"><string>0.282192E+00</string></attr>
+<attr name="bp10"><string>0.128161E-03</string></attr>
+<attr name="bp11"><string>0.224722E+04</string></attr>
+<attr name="bp12"><string>0.000000E+00</string></attr>
+<attr name="bp13"><string>0.899831E-04</string></attr>
+<attr name="bp14"><string>0.137244E+00</string></attr>
+<attr name="bp15"><string>0.138036E+01</string></attr>
+<attr name="bp16"><string>2.000000</string></attr>
+<attr name="bp17"><string>0.000000E+00</string></attr>
+<attr name="bp18"><string>0.000000E+00</string></attr>
+<attr name="bp19"><string>0.000000E+00</string></attr>
+<attr name="bp20"><string>5.0</string></attr>
+<attr name="bp21"><string>-5.0</string></attr>
+<attr name="bp22"><string>1.762</string></attr>
+<attr name="bp23"><string>21.000</string></attr>
+<attr name="bp24"><string>0.70</string></attr>
+<attr name="bp25"><string>0.85</string></attr>
+<attr name="bp26"><string>900.0</string></attr>
+<attr name="bp27"><string>43.0</string></attr>
+<attr name="bp28"><string>25.0</string></attr>
+<attr name="bp29"><string>1E-5</string></attr>
+<attr name="bp30"><string>100</string></attr>
+<attr name="sp1"><string>000000</string></attr>
+</entity>
+<entity id="_21" class="eu.insel.block.MUL">
+<ref name="inPorts"><to>_8</to><to>_9</to></ref>
+<ref name="outPorts"><to>_15</to></ref>
+<attr name="blockName"><string>MUL</string></attr>
+<attr name="blockFunction"><string>fb0002</string></attr>
+<attr name="userBlockNumber"><int>6</int></attr>
+<attr name="inputPortsCount"><int>2</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+</entity>
+
+<!-- One or more layouts of the VSEit Network above -->
+<layout name="Global Perspective" show-name="false" routing-policy="de.vseit.network.routing.RoutingPolicyOrthogonal" background-color="none" auto-display-new="true">
+<geom node="_15"><layer>1</layer><x>422</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_9"><layer>1</layer><x>384</x><y>154</y><w>2</w><h>6</h></geom>
+<geom node="_8"><layer>1</layer><x>384</x><y>136</y><w>2</w><h>6</h></geom>
+<geom node="_21"><layer>1</layer><x>387</x><y>135</y><w>34</w><h>34</h></geom>
+<geom node="_14"><layer>1</layer><x>332</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_13"><layer>1</layer><x>332</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_6"><layer>1</layer><x>294</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_4"><layer>1</layer><x>294</x><y>154</y><w>2</w><h>6</h></geom>
+<geom node="_5"><layer>1</layer><x>294</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_20"><layer>1</layer><x>297</x><y>144</y><w>34</w><h>34</h></geom>
+<geom node="_2"><layer>1</layer><x>159</x><y>100</y><w>2</w><h>6</h></geom>
+<geom node="_11"><layer>1</layer><x>197</x><y>100</y><w>2</w><h>6</h></geom>
+<geom node="_17"><layer>1</layer><x>162</x><y>90</y><w>34</w><h>34</h></geom>
+<geom node="_7"><layer>1</layer><x>474</x><y>118</y><w>2</w><h>6</h></geom>
+<geom node="_3"><layer>1</layer><x>474</x><y>91</y><w>2</w><h>6</h></geom>
+<geom node="_1"><layer>1</layer><x>474</x><y>100</y><w>2</w><h>6</h></geom>
+<geom node="_0"><layer>1</layer><x>474</x><y>109</y><w>2</w><h>6</h></geom>
+<geom node="_16"><layer>1</layer><x>477</x><y>90</y><w>34</w><h>36</h></geom>
+<geom node="_10"><layer>1</layer><x>107</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_18"><layer>1</layer><x>72</x><y>135</y><w>34</w><h>34</h></geom>
+<geom node="_12"><layer>1</layer><x>197</x><y>172</y><w>2</w><h>6</h></geom>
+<geom node="_19"><layer>1</layer><x>162</x><y>171</y><w>34</w><h>16</h></geom>
+</layout>
+<insel-file><![CDATA[
+B 1 PLOTP
+    3.1
+    2.1
+    5.1
+    6.1
+P 1
+    'advanced_plot.gnu' % Gnuplot file name
+    0               % Sort by decreasing Y?
+
+B 2 DO
+    3.1
+P 2
+    0               % Initial value
+    60              % Final value
+    0.01            % Increment
+
+B 3 DO
+P 3
+    -25             % Initial value
+    75              % Final value
+    25              % Increment
+
+B 4 CONST
+P 4
+    1000            % Constant value
+
+B 5 PVI
+    2.1
+    4.1
+    3.1
+P 5
+    0               % Module temperature is
+    60              % Number of cells in series per module
+    2               % Number of cells in parallel per module
+    1               % Number of modules in series
+    1               % Number of modules in parallel
+    0.0167          % Single cell area
+    1.998           % Single module area
+    1.12            % Band gap
+    0.282192E+00    % Coefficient of short-circuit current density
+    0.128161E-03    % Temperature coefficient of short-circuit current
+    0.224722E+04    % Coefficient of saturation current density (Shockley diode)
+    0.000000E+00    % Coefficient of saturation current density (Recombination diode)
+    0.899831E-04    % Series resistance
+    0.137244E+00    % Parallel resistance
+    0.138036E+01    % Diode ideality factor alpha
+    2.000000        % Diode ideality factor beta
+    0.000000E+00    % Bishop parameter a
+    0.000000E+00    % Bishop parameter M
+    0.000000E+00    % Bishop parameter Vbr
+    5.0             % Module tolerance plus
+    -5.0            % Module tolerance minus
+    1.762           % Characteristic module length
+    21.000          % Module weight
+    0.70            % Absorption coefficient
+    0.85            % Emission factor
+    900.0           % Specific heat of a module
+    43.0            % Nominal operating cell temperature
+    25.0            % Initial cell temperature
+    1E-5            % Single cell voltage error tolerance
+    100             % Maximum number of iterations
+    '000000'        % Product ID
+
+B 6 MUL
+    2.1
+    5.1
+
+]]>
+</insel-file>
+</vseit-network>

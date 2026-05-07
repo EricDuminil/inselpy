@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- XML for representing entities of a VSEit Network with their attributes and relationships-->
+
+<vseit-network xmlns:xlink="http://www.w3.org/1999/xlink" client-class="eu.insel.vseit.InselVseit" client-class-version="10" first-id="0" entity-count="10">
+<entity id="_0" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_4</to></ref>
+<ref name="portOf"><to>_9</to></ref>
+</entity>
+<entity id="_1" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_6</to></ref>
+<ref name="portOf"><to>_9</to></ref>
+</entity>
+<entity id="_2" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_5</to></ref>
+<ref name="portOf"><to>_9</to></ref>
+</entity>
+<entity id="_3" class="eu.insel.block.PortIn">
+<ref name="linkFrom"><to>_4</to></ref>
+<ref name="portOf"><to>_7</to></ref>
+</entity>
+<entity id="_4" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_0</to><to>_3</to></ref>
+<ref name="portOf"><to>_8</to></ref>
+</entity>
+<entity id="_5" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_2</to></ref>
+<ref name="portOf"><to>_7</to></ref>
+</entity>
+<entity id="_6" class="eu.insel.block.PortOut">
+<ref name="linkTo"><to>_1</to></ref>
+<ref name="portOf"><to>_7</to></ref>
+</entity>
+<entity id="_7" class="eu.insel.block.IVP">
+<ref name="inPorts"><to>_3</to></ref>
+<ref name="outPorts"><to>_6</to><to>_5</to></ref>
+<attr name="blockName"><string>IVP</string></attr>
+<attr name="blockFunction"><string>se0008</string></attr>
+<attr name="userBlockNumber"><int>1</int></attr>
+<attr name="editorTitle"><string>Fronius Symo Gen24 10k</string></attr>
+<attr name="inputPortsCount"><int>1</int></attr>
+<attr name="outputPortsCount"><int>2</int></attr>
+<attr name="bp1"><string>10000</string></attr>
+<attr name="bp2"><string>0.002240</string></attr>
+<attr name="bp3"><string>0.009264</string></attr>
+<attr name="bp4"><string>0.009172</string></attr>
+<attr name="sp1"><string>000000</string></attr>
+</entity>
+<entity id="_8" class="eu.insel.block.DO">
+<ref name="outPorts"><to>_4</to></ref>
+<attr name="blockName"><string>DO</string></attr>
+<attr name="blockFunction"><string>fb0013</string></attr>
+<attr name="userBlockNumber"><int>2</int></attr>
+<attr name="inputPortsCount"><int>0</int></attr>
+<attr name="outputPortsCount"><int>1</int></attr>
+<attr name="bp1"><string>0</string></attr>
+<attr name="bp2"><string>12000</string></attr>
+<attr name="bp3"><string>1</string></attr>
+</entity>
+<entity id="_9" class="eu.insel.block.PLOT">
+<ref name="inPorts"><to>_0</to><to>_1</to><to>_2</to></ref>
+<attr name="blockName"><string>PLOT</string></attr>
+<attr name="blockFunction"><string>fb0044</string></attr>
+<attr name="userBlockNumber"><int>3</int></attr>
+<attr name="inputPortsCount"><int>3</int></attr>
+<attr name="outputPortsCount"><int>0</int></attr>
+<attr name="title"><string>Fronius Symo Gen24 10k</string></attr>
+<attr name="terminal"><enum>Window</enum></attr>
+<attr name="width"><string>1152</string></attr>
+<attr name="height"><string>768</string></attr>
+<attr name="font"><font>Calibri-plain-18</font></attr>
+<attr name="grid"><bool>true</bool></attr>
+<attr name="axisThickness"><string>1</string></attr>
+<attr name="xLabel"><string>Input (DC)</string></attr>
+<attr name="xUnit"><string>W</string></attr>
+<attr name="yLabel"><string>Output (AC)</string></attr>
+<attr name="yUnit"><string>W</string></attr>
+<attr name="sp1"><string>advanced_plot.gnu</string></attr>
+<attr name="customGnuplotCommands"><string>## Uncommented commands will be executed before plot.
+# set xtics ("Jan" 15, "Feb" 45, "Mar" 74, "Apr" 105, "May" 135, "Jun" 166, "Jul" 196, "Aug" 227, "Sep" 258, "Oct" 288, "Nov" 319, "Dec" 349)
+# set size ratio -1          ## Same unit length for x and y
+# set lmargin at screen 0.1; set rmargin at screen 0.7  ## Leave more blank space
+# curve_name5 = "Name of curve #5"
+set key center right</string></attr>
+<attr name="style"><enum>Lines</enum></attr>
+<attr name="curveName1"><string>P_{AC }(P_{ DC})</string></attr>
+<attr name="curveName2"><string>η</string></attr>
+<attr name="curveName3"><string>#3</string></attr>
+<attr name="curveName4"><string>#4</string></attr>
+<attr name="curveThickness"><string>2</string></attr>
+<attr name="curveColor1"><color>0072bd</color></attr>
+<attr name="curveColor2"><color>d95319</color></attr>
+<attr name="curveColor3"><color>edb120</color></attr>
+<attr name="curveColor4"><color>7e2f8e</color></attr>
+<attr name="y2Label"><string>{/Symbol h}</string></attr>
+<attr name="y2Unit"><string>-</string></attr>
+<attr name="curve1YAxis"><enum>Y1</enum></attr>
+<attr name="curve2YAxis"><enum>Y2</enum></attr>
+<attr name="curve3YAxis"><enum>Y1</enum></attr>
+<attr name="curve4YAxis"><enum>Y1</enum></attr>
+<attr name="bp1"><bool>false</bool></attr>
+<attr name="polar"><bool>false</bool></attr>
+<attr name="logscaleX"><bool>false</bool></attr>
+<attr name="logscaleY"><bool>false</bool></attr>
+</entity>
+
+<!-- One or more layouts of the VSEit Network above -->
+<layout name="Default" show-name="false" routing-policy="de.vseit.network.routing.RoutingPolicyOrthogonal" background-color="none" auto-display-new="true">
+<geom node="_5"><layer>1</layer><x>449</x><y>181</y><w>2</w><h>6</h></geom>
+<geom node="_6"><layer>1</layer><x>449</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_3"><layer>1</layer><x>411</x><y>172</y><w>2</w><h>6</h></geom>
+<geom node="_7"><layer>1</layer><x>414</x><y>162</y><w>34</w><h>34</h></geom>
+<geom node="_2"><layer>1</layer><x>528</x><y>172</y><w>2</w><h>6</h></geom>
+<geom node="_1"><layer>1</layer><x>528</x><y>163</y><w>2</w><h>6</h></geom>
+<geom node="_0"><layer>1</layer><x>528</x><y>154</y><w>2</w><h>6</h></geom>
+<geom node="_9"><layer>1</layer><x>531</x><y>153</y><w>34</w><h>34</h></geom>
+<geom node="_4"><layer>1</layer><x>350</x><y>145</y><w>2</w><h>6</h></geom>
+<geom node="_8"><layer>1</layer><x>315</x><y>135</y><w>34</w><h>34</h></geom>
+</layout>
+<insel-file><![CDATA[
+B 1 IVP             % Fronius Symo Gen24 10k
+    2.1
+P 1
+    10000           % Nominal DC power
+    0.002240        % Normalized self consumption
+    0.009264        % Normalized voltage losses
+    0.009172        % Normalized ohmic losses
+    '000000'        % Inverter ID
+
+B 2 DO
+P 2
+    0               % Initial value
+    12000           % Final value
+    1               % Increment
+
+B 3 PLOT
+    2.1
+    1.1
+    1.2
+P 3
+    'advanced_plot.gnu' % Gnuplot file name
+    0               % Sort by decreasing Y?
+
+]]>
+</insel-file>
+</vseit-network>

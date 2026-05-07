@@ -209,9 +209,10 @@ class Inverter:
                 percent = (simulated - original) / original * 100
                 print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
             print(f"  η_CEC: {self.simulated_eta_cec * 100:.1f} %")
-        example = self.output_folder / f"inverter_{self.inverter_id}_example.insel"
         self.write_example_insel()
-        print(f"INSEL example written to {example}")
+        print(f"INSEL example written to {self.output_folder / f'inverter_{self.inverter_id}_example.insel'}")
+        self.write_example_vseit()
+        print(f"VSEIT example written to {self.output_folder / f'inverter_{self.inverter_id}_example.vseit'}")
 
     def write_example_insel(self):
         from .template import Template
@@ -222,6 +223,19 @@ class Inverter:
             **self.params,
         )
         (self.output_folder / f"inverter_{self.inverter_id}_example.insel").write_text(t.content())
+
+    def write_example_vseit(self):
+        from .template import Template
+        t = Template(
+            _TEMPLATES_DIR / "inverter_eta_curve.vseit",
+            run_in_templates_folder=False,
+            gnuplot=True,
+            manufacturer_name=self.manufacturer_name,
+            name=self.name,
+            p_dc_max=int(self.nominal_power * 1.2),
+            **self.params,
+        )
+        (self.output_folder / f"inverter_{self.inverter_id}_example.vseit").write_text(t.content())
 
     def _find_params(self, p_max: float) -> dict:
         p_self, v_loss, r_loss = EtaCurve.find_params(p_max, self.eta_max, self.eta_euro)
