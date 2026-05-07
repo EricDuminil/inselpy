@@ -133,7 +133,7 @@ module = PhotovoltaicModuleModel(
     module_tolerance=3, # [%]
 )
 
-# datasheet vs. simulated comparison table; also writes an example .insel file to output_folder
+# datasheet vs. simulated comparison table; also writes an example .vseit file to output_folder
 module.report()
 # I(V,T) curves via gnuplot, displayed in terminal → plots/iv_curve_v410.txt
 print(module.plot().read_text())   
@@ -156,6 +156,7 @@ inverter = Inverter(
     p_for_eta_max=0.40 # [-] At which efficiency is eta_max reached?
 )
 
+# datasheet vs. simulated comparison table; also writes an example .vseit file to output_folder
 inverter.report()                   # specified vs. simulated efficiency comparison table
 print(inverter.plot().read_text())  # η(DC) curve via gnuplot → plots/inverter_eta_curve_s10.txt
 ```
