@@ -13,7 +13,7 @@ from .photovoltaic import PhotovoltaicModuleModel as PhotovoltaicModuleModel
 from .plot import Plot
 from .template import Template
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 
 def block(
