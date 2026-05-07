@@ -144,10 +144,11 @@ class PhotovoltaicModuleChecks:
         self.assertLess(self.module.alpha_u, 0)
 
     def test_plot_creates_output_file(self):
-        output = Path("plots") / f"iv_curve_{self.module.pv_id}.txt"
+        output = self.tmp / f"iv_curve_{self.module.pv_id}.txt"
         output.unlink(missing_ok=True)
-        self.assertEqual(self.module.plot(), output)
+        self.assertEqual(self.module.plot(plots_folder=self.tmp), output)
         self.assertTrue(output.exists())
+        self.assertIn(self.module.name, output.read_text())
 
     def test_simulated_fill_factor(self):
         self.assertAlmostEqual(self.module.simulated_fill_factor(), 80, delta=1)

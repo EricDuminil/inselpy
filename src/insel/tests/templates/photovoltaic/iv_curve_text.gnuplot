@@ -15,7 +15,7 @@ set y2range [0 : $p_max$]
 set y2tics 50
 
 set terminal dumb $tty_width||100$ $tty_height||40$
-set output 'plots/iv_curve_$pv_id$.txt'
+set output '$plots_folder||plots$/iv_curve_$pv_id$.txt'
 
 plot "$result_folder$/insel.gpl" using 1:2 axis x1y1 title "I(V)",\
      "$result_folder$/insel.gpl" using 1:3 axis x1y2 title "P(V)"

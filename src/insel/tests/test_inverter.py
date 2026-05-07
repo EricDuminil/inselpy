@@ -66,11 +66,14 @@ class InverterChecks:
                                delta=self.inv.eta_euro * 0.01)
 
     def test_plot_creates_output_file(self):
-        output = Path("plots") / f"inverter_eta_curve_{self.inv.inverter_id}.txt"
+        output = self.tmp / f"inverter_eta_curve_{self.inv.inverter_id}.txt"
         output.unlink(missing_ok=True)
-        result = self.inv.plot()
+        result = self.inv.plot(plots_folder=self.tmp)
         self.assertEqual(result, output)
         self.assertTrue(output.exists(), f"{output} should have been written by gnuplot")
+        content = output.read_text()
+        self.assertIn(self.inv.manufacturer_name, content)
+        self.assertIn(self.inv.name, content)
 
     def test_report_runs_without_error(self):
         self.inv.report()

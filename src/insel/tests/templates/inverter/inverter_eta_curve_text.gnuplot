@@ -12,6 +12,6 @@ set yrange [80:100]
 set xrange [0:100]
 
 set terminal dumb $width||100$ $height||40$
-set output 'plots/inverter_eta_curve_$iv_id$.txt'
+set output '$plots_folder||plots$/inverter_eta_curve_$iv_id$.txt'
 
 plot "$result_folder$/insel.gpl" using ($1*100):($2*100) title "Eta(DC)"
