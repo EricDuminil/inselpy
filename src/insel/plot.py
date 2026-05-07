@@ -14,9 +14,19 @@ EXT = ".gnuplot"
 
 
 class Plot(Template):
-    """Insel Template + Gnuplot Template"""
+    """Runs an INSEL template and then renders the paired gnuplot script.
 
-    # TODO: Document
+    Expects two files with the same basename inside the templates/ folder:
+    * <basename>.insel   — INSEL model, usually containing one or more PLOT blocks
+    * <basename>.gnuplot — gnuplot script with $placeholder$ substitution
+
+    PLOT blocks write data to Insel.plot_path (insel.gpl, insel2.gpl, …).
+    The gnuplot script reads those files and writes its final output
+    (PNG, SVG, text, …) to wherever its `set output` directive points.
+
+    Both files share the same **parameters for placeholder substitution.
+    """
+
     # TODO: Should work with standard gnuplot files too, straight from VSEIT
 
     def __init__(self, template_path, **parameters) -> None:
@@ -29,6 +39,11 @@ class Plot(Template):
         return result
 
     def add_defaults_to(self, parameters):
+        """Adds plot_folder and result_folder on top of Template's defaults.
+
+        plot_folder:   where the gnuplot script writes its output (default: plots/ in CWD)
+        result_folder: where PLOT blocks write their .gpl data files (Insel.plot_path)
+        """
         parameters = super().add_defaults_to(parameters)
         defaults = {
             "plot_folder": Path("plots/"),

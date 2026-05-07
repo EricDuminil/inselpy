@@ -90,6 +90,33 @@ def template(
 
 
 def plot(template_path, **parameters):
+    """
+    Runs an INSEL template and then renders the accompanying gnuplot file.
+
+    Expects two files with the same basename in the templates/ folder:
+    * a .insel template (the simulation model, typically containing one or more PLOT blocks)
+    * a .gnuplot template (the gnuplot script, with $placeholder$ substitution)
+
+    The INSEL model writes its data to temporary files under Insel.plot_path
+    (e.g. ~/.insel_8_3/tmp/insel.gpl, insel2.gpl, …).
+    The gnuplot script reads those files and writes its output (PNG, SVG, text, …)
+    wherever its `set output` directive points — typically inside a plots/ subfolder
+    relative to the current working directory.
+
+    Both files share the same **parameters, so a value like x_max=720 can be used
+    in both the .insel template and the .gnuplot script via the $x_max$ placeholder.
+
+    The built-in $template_name$, $plot_folder$, and $result_folder$ placeholders are
+    always available without being passed explicitly:
+    * $template_name$ — stem of the template file (e.g. 'sine')
+    * $plot_folder$   — defaults to Path('plots/') relative to CWD
+    * $result_folder$ — Insel.plot_path (where PLOT blocks write their .gpl files)
+
+    Returns the same value as insel.template() for the .insel part.
+
+    >>> insel.plot('plots/sine', x_max=720)   # writes plots/sine.png
+    >>> insel.plot('plots/double_plot')        # writes plots/sorted_sine_and_cosine.txt
+    """
     return Plot(template_path, **parameters).run()
 
 
