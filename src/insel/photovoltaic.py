@@ -63,7 +63,6 @@ class PhotovoltaicModuleModel:
         self.output_folder.mkdir(parents=True, exist_ok=True)
         insel.OneBlockModel("PVDET1", inputs=[], parameters=self._pvdet1_params(), outputs=6).run()
         self._validate()
-        self._write_example_insel()
 
     def _validate(self):
         if self.alpha_i < 0:
@@ -114,6 +113,9 @@ class PhotovoltaicModuleModel:
                 print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
             print(f"  dMPP / dT: {self.dmpp_dt:.2f} % / K")
             print(f"  Fill Factor: {self.simulated_fill_factor():.1f} %")
+        example = self.output_folder / f"pv{self.pv_id}_example.insel"
+        self.write_example_insel()
+        print(f"INSEL example written to {example}")
 
     @property
     def simulation_parameters(self) -> dict:
@@ -223,7 +225,7 @@ class PhotovoltaicModuleModel:
         print(output.read_text())
         return output
 
-    def _write_example_insel(self):
+    def write_example_insel(self):
         from .template import Template
         t = Template(
             _TEMPLATES_DIR / "ivt_curves",

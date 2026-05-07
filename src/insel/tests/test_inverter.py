@@ -1,4 +1,6 @@
 import os
+import shutil
+import tempfile
 from pathlib import Path
 
 from insel import Inverter
@@ -35,16 +37,18 @@ class InverterChecks(CustomAssertions):
 
     @classmethod
     def setUpClass(cls):
-        cls.inv = Inverter(**cls.inverter_params)
+        cls.tmp = Path(tempfile.mkdtemp())
+        cls.inv = Inverter(**cls.inverter_params, output_folder=cls.tmp)
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp)
 
     def test_params_are_set(self):
         self.assertIn("p_self", self.inv.params)
         self.assertIn("v_loss", self.inv.params)
         self.assertIn("r_loss", self.inv.params)
         self.assertEqual(self.inv.params["nominal_power"], self.inv.nominal_power)
-
-    def test_example_insel_file_is_created(self):
-        self.assertTrue((self.inv.output_folder / f"inverter_{self.inv.inverter_id}_example.insel").exists())
 
     def test_simulated_eta_euro_close_to_specified(self):
         self.assertAlmostEqual(self.inv.simulated_eta_euro, self.inv.eta_euro,
@@ -71,6 +75,7 @@ class InverterChecks(CustomAssertions):
 
     def test_report_runs_without_error(self):
         self.inv.report()
+        self.assertTrue((self.inv.output_folder / f"inverter_{self.inv.inverter_id}_example.insel").exists())
 
 
 class TestFroniusSymo(InverterChecks):

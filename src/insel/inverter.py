@@ -106,7 +106,6 @@ class Inverter:
         self.output_folder.mkdir(parents=True, exist_ok=True)
         self.params = self._find_corrected_params()
         self.params["nominal_power"] = self.nominal_power
-        self._write_example_insel()
 
     def __str__(self) -> str:
         return f"{self.name} ({self.nominal_power} W)"
@@ -208,8 +207,11 @@ class Inverter:
                 percent = (simulated - original) / original * 100
                 print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
             print(f"  η_CEC: {self.simulated_eta_cec * 100:.1f} %")
+        example = self.output_folder / f"inverter_{self.inverter_id}_example.insel"
+        self.write_example_insel()
+        print(f"INSEL example written to {example}")
 
-    def _write_example_insel(self):
+    def write_example_insel(self):
         from .template import Template
         t = Template(
             _TEMPLATES_DIR / "inverter_eta_curve",
