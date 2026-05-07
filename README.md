@@ -95,9 +95,8 @@ It can also simply run complete models:
 
 ## PV modules
 
-`PhotovoltaicModuleModel` runs the PVDET1 block to fit a single-diode model from
-datasheet specifications. A `.bp` file is written to `output_folder` (default:
-`./output/`) and used by all subsequent simulation calls.
+`PhotovoltaicModuleModel` runs the PVDET1 block to fit a single-diode model from datasheet specifications.
+A `.bp` file is written to `output_folder` (default: `./output/`) and used by all subsequent simulation calls.
 
 ```python
 from insel import PhotovoltaicModuleModel
@@ -127,8 +126,7 @@ module.plot()     # I(V) and P(V) curves via gnuplot → plots/iv_curve_v410.txt
 
 ## Inverters
 
-`Inverter` fits the three IVP block loss parameters that reproduce the specified
-η_max and η_euro.
+`Inverter` fits the three IVP block loss parameters that reproduce the specified $η_{max}$ and $η_{euro}$.
 
 ```python
 from insel import Inverter
