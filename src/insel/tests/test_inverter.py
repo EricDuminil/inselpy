@@ -93,4 +93,4 @@ class TestDeyeSUN600(InverterChecks, CustomAssertions):
 
     def test_str(self):
         self.assertEqual(str(self.inv), "Deye SUN600G3-EU-230 (600 W)")
-        self.assertEqual(self.inv.inverter_id, "d600")
+        self.assertEqual(self.inv.inverter_id, "s600")
