@@ -85,6 +85,15 @@ If no value is specified in Python, the value defined in the block will be used 
 
 If the Vseit model contains a PLOT block, it will be deactivated by default. In order to launch gnuplot anyway, `insel.template('model.vseit', gnuplot=True)` can be used.
 
+## Gnuplot
+
+`insel.plot()` works like `insel.template()` but also runs gnuplot on the result.
+The template must contain a PLOT block whose gnuplot script produces the desired output.
+
+```python
+insel.plot('photovoltaic/iv_curve_text', pv_id='v410', u_max=45.0, ...)
+```
+
 ## INSEL models
 
 It can also simply run complete models:
@@ -120,8 +129,8 @@ module = PhotovoltaicModuleModel(
     parallel=2,
 )
 
-module.report()   # datasheet vs. simulated comparison table
-module.plot()     # I(V) and P(V) curves via gnuplot → plots/iv_curve_v410.txt
+module.report()   # datasheet vs. simulated comparison table; also writes an example .insel file to output_folder
+module.plot()     # I(V,T) curves via gnuplot, displayed in terminal → plots/iv_curve_v410.txt
 ```
 
 ## Inverters
