@@ -84,7 +84,7 @@ class TestFroniusSymo(InverterChecks, CustomAssertions):
     inverter_params = FRONIUS_SYMO
 
     def test_str(self):
-        self.assertEqual(str(self.inv), "Symo 10k (10000 W)")
+        self.assertEqual(str(self.inv), "Fronius Symo 10k (10000 W)")
         self.assertEqual(self.inv.inverter_id, "s10")
 
 
