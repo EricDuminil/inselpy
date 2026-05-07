@@ -10,7 +10,7 @@ from .custom_assertions import CustomAssertions
 
 os.chdir(SCRIPT_DIR)
 
-# JA Solar JAM54D40 460W (monocrystalline bifacial, 18×6 cells, 2 parallel strings)
+# JA Solar JAM54D40 460W (monocrystalline bifacial, 18×6 cells, half-cells)
 JA_SOLAR_460 = dict(
     manufacturer_name="JASolar",
     name="JAM54D40 460W",
@@ -34,8 +34,27 @@ JA_SOLAR_460 = dict(
     parallel=2,
 )
 
+# Trina Vertex TSM-DEG19C.20 410W (monocrystalline, 5×24 cells, half-cells, 2 parallel strings)
+TRINA_VERTEX_410 = dict(
+    manufacturer_name="Trina",
+    name="Vertex TSM 410",
+    mpp=410.0,
+    u_oc=41.6,
+    i_sc=12.40,
+    u_mpp=34.6,
+    i_mpp=11.85,
+    noct=43.0,
+    alpha_u_percent=-0.25,
+    alpha_i_percent=0.04,
+    rows=5,
+    columns=24,
+    height=1.754,
+    width=1.096,
+    eta=21.3,
+    parallel=2,
+)
+
 # Sunpower SPR-X21-345 (monocrystalline, 8×12 cells)
-# alpha values converted from absolute [V/K, A/K] to percent
 SPR_345 = dict(
     manufacturer_name="Sunpower",
     name="SPR-X21-345",
@@ -51,7 +70,7 @@ SPR_345 = dict(
     rows=8,
     columns=12,
     module_tolerance=3.0,
-    height=1.559,
+    height=1.558,
     width=1.046,
     mass=18.6,
     eta=21.5,
@@ -132,6 +151,9 @@ class PhotovoltaicModuleChecks(CustomAssertions):
         self.assertEqual(self.module.plot(), output)
         self.assertTrue(output.exists())
 
+    def test_simulated_fill_factor(self):
+        self.assertAlmostEqual(self.module.simulated_fill_factor(), 80, delta=1)
+
     def test_report_runs_without_error(self):
         self.module.report()
 
@@ -150,3 +172,14 @@ class TestSPR345(PhotovoltaicModuleChecks):
 
     def test_cells_in_series(self):
         self.assertEqual(self.module.serie, 96)  # 96 cells, 1 string
+
+
+class TestTrinaVertex410(PhotovoltaicModuleChecks):
+    __test__ = True
+    module_params = TRINA_VERTEX_410
+
+    def _delta(self, value, percent=0.4):
+        return abs(value) * percent / 100
+
+    def test_cells_in_series(self):
+        self.assertEqual(self.module.serie, 60)  # 120 cells / 2 parallel strings
