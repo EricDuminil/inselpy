@@ -1,0 +1,26 @@
+s 1	CONST
+p 1
+	$nominal_power$
+
+s 2	DO
+p 2
+	0.001
+	1.15
+	0.001
+
+s 3	MUL 2.1 1.1
+
+s 4	IVP 3.1
+p 4
+	$nominal_power$
+	$p_self$
+	$v_loss$
+	$r_loss$
+
+s 5	ATT 4.1
+p 5
+	$nominal_power$
+
+s 6	PLOT 5.1 4.2
+p 6
+	'insel.gnu'

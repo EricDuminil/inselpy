@@ -43,6 +43,9 @@ class InverterChecks(CustomAssertions):
         self.assertIn("r_loss", self.inv.params)
         self.assertEqual(self.inv.params["nominal_power"], self.inv.nominal_power)
 
+    def test_example_insel_file_is_created(self):
+        self.assertTrue((self.inv.output_folder / f"inverter_{self.inv.inverter_id}_example.insel").exists())
+
     def test_simulated_eta_euro_close_to_specified(self):
         self.assertAlmostEqual(self.inv.simulated_eta_euro, self.inv.eta_euro,
                                delta=self.inv.eta_euro * 0.01)

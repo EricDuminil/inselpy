@@ -63,6 +63,7 @@ class PhotovoltaicModuleModel:
         self.output_folder.mkdir(parents=True, exist_ok=True)
         insel.OneBlockModel("PVDET1", inputs=[], parameters=self._pvdet1_params(), outputs=6).run()
         self._validate()
+        self._write_example_insel()
 
     def _validate(self):
         if self.alpha_i < 0:
@@ -206,7 +207,7 @@ class PhotovoltaicModuleModel:
         """Render I(V) and P(V) curves at STC to plots/ as a text file. Requires gnuplot.
 
         Sweeps voltage from 0 to u_max (u_oc at -25 °C, 1000 W/m²) in 0.1 V steps.
-        Returns the path of the generated text file.
+        Prints the curve to the terminal and returns the path of the generated text file.
         """
         Path("plots").mkdir(exist_ok=True)
         insel.plot(
@@ -218,7 +219,21 @@ class PhotovoltaicModuleModel:
             tty_height=tty_height,
             **self.simulation_parameters,
         )
-        return Path("plots") / f"iv_curve_{self.pv_id}.txt"
+        output = Path("plots") / f"iv_curve_{self.pv_id}.txt"
+        print(output.read_text())
+        return output
+
+    def _write_example_insel(self):
+        from .template import Template
+        t = Template(
+            _TEMPLATES_DIR / "ivt_curves",
+            run_in_templates_folder=False,
+            gnuplot=True,
+            u_max=self.u_max,
+            i_max=self.i_max,
+            **self.simulation_parameters,
+        )
+        (self.output_folder / f"pv{self.pv_id}_example.insel").write_text(t.content())
 
     def _pvdet1_params(self) -> list:
         return [

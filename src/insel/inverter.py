@@ -1,5 +1,5 @@
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import insel
@@ -91,6 +91,7 @@ class Inverter:
     eta_euro: float
     p_for_eta_max: float = 0.40
     inverter_id: str = ""
+    output_folder: Path = field(default_factory=lambda: Path.cwd() / "output")
 
     _OK = "dark_cyan"
     _WARNING = "dark_orange"
@@ -101,8 +102,11 @@ class Inverter:
             if nominal_power >= 1000:
                 nominal_power /= 1000
             self.inverter_id = f"{self.name[0].lower()}{int(nominal_power)}"
+        self.output_folder = Path(self.output_folder)
+        self.output_folder.mkdir(parents=True, exist_ok=True)
         self.params = self._find_corrected_params()
         self.params["nominal_power"] = self.nominal_power
+        self._write_example_insel()
 
     def __str__(self) -> str:
         return f"{self.name} ({self.nominal_power} W)"
@@ -204,6 +208,16 @@ class Inverter:
                 percent = (simulated - original) / original * 100
                 print(f"  {row_name}: {simulated:.1f} {unit} ({percent:+.2f} %)")
             print(f"  η_CEC: {self.simulated_eta_cec * 100:.1f} %")
+
+    def _write_example_insel(self):
+        from .template import Template
+        t = Template(
+            _TEMPLATES_DIR / "inverter_eta_curve",
+            run_in_templates_folder=False,
+            gnuplot=True,
+            **self.params,
+        )
+        (self.output_folder / f"inverter_{self.inverter_id}_example.insel").write_text(t.content())
 
     def _find_params(self, p_max: float) -> dict:
         p_self, v_loss, r_loss = EtaCurve.find_params(p_max, self.eta_max, self.eta_euro)

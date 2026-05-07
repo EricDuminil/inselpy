@@ -97,6 +97,9 @@ class PhotovoltaicModuleChecks(CustomAssertions):
     def test_bp_file_is_created(self):
         self.assertTrue((self.tmp / f"pv{self.module.pv_id}.bp").exists())
 
+    def test_example_insel_file_is_created(self):
+        self.assertTrue((self.tmp / f"pv{self.module.pv_id}_example.insel").exists())
+
     def test_simulated_mpp(self):
         self.assertAlmostEqual(self.module.simulated_mpp(), self.module.mpp,
                                delta=self._delta(self.module.mpp))
