@@ -253,7 +253,7 @@ class PhotovoltaicModuleModel:
             _TEMPLATES_DIR / "iv_curve_text",
             u_max=math.ceil(self.u_max / 5) * 5,
             i_max=math.ceil(self.i_max) + 1,
-            p_max=math.ceil(self.p_max / 50) * 5,
+            p_max=math.ceil(self.p_max / 50) * 50,
             tty_width=tty_width,
             tty_height=tty_height,
             plots_folder=plots_folder,
@@ -273,7 +273,7 @@ class PhotovoltaicModuleModel:
             name=self.name,
             u_max=math.ceil(self.u_max / 5) * 5,
             i_max=math.ceil(self.i_max) + 1,
-            p_max=math.ceil(self.p_max / 50) * 5,
+            p_max=math.ceil(self.p_max / 50) * 50,
             **bp_params,
         )
         (self.output_folder / f"pv{self.pv_id}_example.vseit").write_text(t.content())
