@@ -276,7 +276,7 @@ class PhotovoltaicModuleModel:
             p_max=math.ceil(self.p_max / 50) * 50,
             **bp_params,
         )
-        (self.output_folder / f"pv{self.pv_id}_example.vseit").write_text(t.content())
+        (self.output_folder / f"pv{self.pv_id}_example.vseit").write_text(t.content(), encoding="utf-8")
 
     def _read_bp_values(self) -> list:
         """Read the 29 parameter values from the PVDET1-generated .bp file."""

@@ -251,7 +251,7 @@ class Inverter:
             **self.params,
         )
         (self.output_folder / f"inverter_{self.inverter_id}_example.vseit").write_text(
-            t.content()
+            t.content(), encoding="utf-8"
         )
 
     def _find_params(self, p_max: float) -> dict:
